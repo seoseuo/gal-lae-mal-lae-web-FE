@@ -101,9 +101,93 @@
 }
 
 body {
-  width: 390px;
+  width: 393px;
   height: 852px;
   background-color: #ffffff; /* 4 배경은 흰색 */
   font-family: "Noto Sans KR", sans-serif; /* 기본 폰트 설정 */
   margin: 0 auto; /* 가로 가운데 정렬 */  
+
+
+    /* 하단의 스타일들은 전체 화면에서도 아이폰 16화면으로 강제 적용 속성 */
+    /* 버튼 컴포넌트 */
+    .active-button {
+      background-color: #490085;
+      color: #ffffff;
+      border-radius: 10px;
+      width: 144px;
+      height: 51px;
+      font-size: 17px;
+    }
+  
+    .nomal-button {
+      background-color: #C4C4C4;
+      color: #ffffff;
+      border-radius: 10px;
+      width: 144px;
+      height: 51px;
+      font-size: 17px;
+    }
+  
+    /* 긴 버튼 컴포넌트 */
+    .long-active-button {
+      background-color: #490085;
+      color: #ffffff;
+      border-radius: 10px;
+      width: 327px;
+      height: 51px;
+      font-size: 17px;
+    }
+  
+    .long-nomal-button {
+      background-color: #C4C4C4;
+      color: #ffffff;
+      border-radius: 10px;
+      width: 327px;
+      height: 51px;
+      font-size: 17px;
+    }
+  
+    /* 중간 버튼 컴포넌트 */
+    .middle-active-button {
+      background-color: #490085;
+      color: #ffffff;
+      border-radius: 10px;
+      width: 288px;
+      height: 51px;
+      font-size: 17px;
+    }
+  
+    .middle-nomal-button {
+      background-color: #C4C4C4;
+      color: #ffffff;
+      border-radius: 10px;
+      width: 288px;
+      height: 51px;
+      font-size: 17px;
+    }
+  
+    /* 블랙 - 가장 굵게 */
+    .black {
+      font-weight: 900;
+    }
+  
+    /* 볼드 */
+    .bold {
+      font-weight: 700;
+    }
+  
+    /* 미디엄 */
+    .medium {
+      font-weight: 400;
+    }
+  
+    /* 레귤러 */
+    .regular {
+      font-weight: 300;
+    }
+  
+    /* 라이트 */
+    .light {
+      font-weight: 200;
+    }
 }

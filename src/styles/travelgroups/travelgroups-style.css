@@ -1,0 +1,48 @@
+.travelgroup-container {
+    /* 수직 정렬 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }  
+
+  .travelgroup-list-view-container {
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .travelgroup-list-view-img {
+    /* 동그라미 , 121*121 */
+    width: 121px;
+    height: 121px;
+    border-radius: 50%;
+    border: 1px solid #000000;      
+  }
+
+  .travelgroup-list-view-tag-container {
+    display: flex;
+    flex-direction: column;
+    margin-left: 30px;
+    margin-right: 120px;
+  }
+
+  .travelgroup-list-view-tag {
+    text-align: center;
+    padding: 0 5px 0 5px;
+    border: 1px solid #000000;
+    border-radius: 8px;
+  }
+
+  .add-button {
+    background-color: #ffffff;
+    border: 1px #490085 solid;
+    border-radius: 10px;
+    width: 327px;
+    height: 51px;
+    font-size: 17px;
+  }
+
+  .add-button-text {
+    color: #ffffff;
+    border :50%
+  }

@@ -1,48 +1,189 @@
 .travelgroup-container {
-    /* 수직 정렬 */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
-  .travelgroup-list-view-container {
-    display: flex;
-    flex-direction: row;
-  }
-  
-  .travelgroup-list-view-img {
-    /* 동그라미 , 121*121 */
-    width: 121px;
-    height: 121px;
-    border-radius: 50%;
-    border: 1px solid #000000;      
-  }
+.travelgroup-list-view-container {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 25px;
+}
 
-  .travelgroup-list-view-tag-container {
-    display: flex;
-    flex-direction: column;
-    margin-left: 30px;
-    margin-right: 120px;
-  }
+.travelgroup-list-view-img {
+  /* 동그라미 , 121*121 */
+  width: 121px;
+  height: 121px;
+  border-radius: 50%;
+  border: 1px solid #000000;
+}
 
-  .travelgroup-list-view-tag {
-    text-align: center;
-    padding: 0 5px 0 5px;
-    border: 1px solid #000000;
-    border-radius: 8px;
-  }
+.travelgroup-list-view-tag-container {
+  display: flex;
+  flex-direction: column;
+  margin-left: 30px;
+  margin-right: 120px;
+}
 
-  .add-button {
-    background-color: #ffffff;
-    border: 1px #490085 solid;
-    border-radius: 10px;
-    width: 327px;
-    height: 51px;
-    font-size: 17px;
-  }
+.travelgroup-list-view-tag {
+  text-align: center;
+  padding: 0 5px 0 5px;
+  border: 1px solid #000000;
+  border-radius: 8px;
+}
 
-  .add-button-text {
-    color: #ffffff;
-    border :50%
-  }
+.add-button {
+  background-color: #ffffff;
+  border: 1px #490085 solid;
+  border-radius: 10px;
+  width: 327px;
+  height: 51px;
+  font-size: 17px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.add-button-text {
+  color: #ffffff;
+  background-color: #490085;
+  width: 23px;
+  border-radius: 50%;
+}
+
+
+
+.member-list-container {
+  margin: 20px 0 40px 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4열 */
+  row-gap: 10;
+  column-gap : 30;
+}
+
+.member-profile {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.member-profile-img {
+  width: 57px;
+  height: 57px;
+  border-radius: 50%;
+}
+
+.member-profile-text {
+  margin-top: 8;
+  font-size: 10px;
+}
+
+.travel-list-view {
+  margin-top: 20px;
+  width: 345px;
+  height: 284px;
+  border-radius: 26px;
+  border: 1px #787676 solid;
+  display: flex;
+  flex-direction: column;
+}
+
+.travel-list-view-text {
+  padding: 15px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.travel-list-img-view {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;    
+  padding:0 8 0 8;
+}
+
+.travel-list-img {
+  width: 159px;
+  height: 201px;
+  border: 1px blue solid;
+  border-radius: 13px;  
+}
+
+.travel-list-img-bar {
+  margin-top: 10px;
+  width: 54;
+  height: 11;
+  border: #490085 1px solid;
+  border-radius: 5.5;
+}
+
+.travelgroups-option-button {
+  background-color: #490085;
+
+}
+
+
+
+.member-admin-list-container {
+  margin: 20px 0 40px 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 4열 */
+  row-gap: 10;
+  column-gap : 40;
+}
+
+.member-admin-profile {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.member-admin-profile-img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+}
+
+.member-admin-profile-text {
+  margin-top: 20;
+  font-size: 8px;
+}
+
+.location-do-list-view {  
+  text-align: center;
+  align-items: center;
+  justify-items: center;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3열 */
+  gap: 30px;
+}
+
+.location-do-list-view-item {    
+  border: #000000 1px solid;
+  width: 103px;
+  height: 42px;
+  border-radius: 56px;
+  display: flex;
+  align-items: center;    /* 세로 중앙 정렬 */
+  justify-content: center; /* 수평 중앙 정렬 */
+}
+
+.location-do-list-view-item-spe {    
+  border: #490085 1px solid;
+  color: #490085;
+  width: 103px;
+  height: 42px;
+  border-radius: 56px;
+  display: flex;
+  align-items: center;    /* 세로 중앙 정렬 */
+  justify-content: center; /* 수평 중앙 정렬 */
+}
+
+.search-bar {
+  width: 343px;
+  height: 44px;
+  border: #000000 1px solid;
+  border-radius: 56px;
+  display: flex;
+  flex-direction: row;
+}

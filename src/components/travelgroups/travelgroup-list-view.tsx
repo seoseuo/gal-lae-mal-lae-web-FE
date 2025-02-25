@@ -11,7 +11,7 @@ export default function TravelgroupListView() {
                 <br></br>
                 <div className="travelgroup-list-view-tag">명수</div>
                 <div className="travelgroup-list-view-tag">여행지</div>
-            </div>
+            </div>            
         </div>
     )
 }

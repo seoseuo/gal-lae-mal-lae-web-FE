@@ -8,8 +8,7 @@ export default function Home() {
 
       <div className="travelgroup-container">
         <TravelgroupListView />
-        <button className="add-button"><p className="add-button-text">+</p></button>
-        
+        <button className="add-button bottom-button-postion"><p className="add-button-text bold">+</p></button>        
       </div>
     </div>
   );

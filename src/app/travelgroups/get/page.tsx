@@ -16,14 +16,14 @@ export default function Home() {
         <hr style={{ margin: "0 0 20px 0" }} />
       </div>
 
-      <div>        
-        <span className='bold' style={{ marginLeft: '30px', fontSize: '10px'}}>모임 인원</span>
+      <div>
+        <span className='bold' style={{ marginLeft: '30px', fontSize: '10px' }}>모임 인원</span>
       </div>
       <div className="travelgroup-container">
         <MemberListView />
       </div>
       <div>
-        <span className='bold' style={{ marginLeft: '30px' }}>모임여행</span>
+        <span className='bold' style={{ marginLeft: '30px', fontSize: '10px' }}>모임여행</span>
       </div>
       <div className="travelgroup-container">
         <TravelListView />

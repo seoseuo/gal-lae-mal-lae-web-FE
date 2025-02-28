@@ -5,7 +5,7 @@ import "@/styles/travelgroups/travelgroups-style.css";
 
 export default function Home() {
     return (
-        <div className="travelgroup-container">
+        <div>
             <Header text="관광지 선정" icon="back"></Header>
             <div className="travelgroup-container">
                 <div className="search-bar">

@@ -1,6 +1,6 @@
 import "@/styles/travelgroups/travelgroups-style.css";
 
-export default function MemberListView() {
+export default function MemberListInviteView() {
     return (
         <div className="member-list-container">
 

@@ -1,6 +1,6 @@
 import "@/styles/travelgroups/travelgroups-style.css";
 
-export default function MemberListView() {
+export default function TourSpotsListView() {
     return (
         <div className="tour-spots-container">
             <div className="tour-spots-view">

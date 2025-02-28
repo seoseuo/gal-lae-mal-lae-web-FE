@@ -5,7 +5,7 @@ export default function Header({ text, icon }: { text: string; icon: string }) {
       <p className="header">
         <img src={`/${icon}.svg`} alt={`${icon}-icon`} className="header-icon" />
         <span className="header-text bold">{text}</span>
-        <img src={`/${icon}.svg`} alt={`${icon}-icon`} className="header-icon" />
+        
       </p>
       <hr style={{ margin: "0 0 40px 0" }} />
     </div>

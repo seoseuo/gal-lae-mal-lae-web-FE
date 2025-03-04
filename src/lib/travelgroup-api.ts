@@ -14,7 +14,7 @@ const api = axios.create({
 const getAuthTokens = () => {
   // const accessToken = Cookies.get("accessToken");
   const accessToken =
-    "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ3YW5uYWdvIiwiZXhwIjoxNzQxMDgzMTM2LCJVU05BTUUiOiLquYDsnbjsp4EiLCJVU0VNQUlMIjoiZ2Ftc3RAbmF2ZXIuY29tIiwiVVNJRFgiOjIsIlVTUFJPRklMRSI6InByb2ZpbGUucG5nIiwiVVNTVEFURSI6MX0.bwDS9T2Q53o-g_1kaIcfddOmEpCtlxBX1kal_otupIs";
+    "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ3YW5uYWdvIiwiZXhwIjoxNzQxMDg5MDA4LCJVU05BTUUiOiLquYDsnbjsp4EiLCJVU0VNQUlMIjoiZ2Ftc3RAbmF2ZXIuY29tIiwiVVNJRFgiOjIsIlVTUFJPRklMRSI6InByb2ZpbGUucG5nIiwiVVNTVEFURSI6MX0.uImpKAXVQz83QasTUFRZ5bjM3YrAd-mfWTM9L_WBcT4";
   const refreshToken = Cookies.get("refreshToken");
   return { accessToken, refreshToken };
 };
@@ -64,8 +64,9 @@ export const postGroup = async (formData: FormData) => {
   }
 };
 
-export async function getTravelGroup(grIdx: string) {
-  // 여기에 로직 추가 (예: API 호출 등)
+export async function getGroup(grIdx: number) {
+  console.log("getGroup 호출");
+  console.log(grIdx);
   try {
     const response = await api.get("/travelgroups/"+grIdx); 
     console.log(response.data);    

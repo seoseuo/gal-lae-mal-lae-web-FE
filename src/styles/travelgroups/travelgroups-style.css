@@ -8,7 +8,11 @@
   display: flex;
   flex-direction: row;
   margin-bottom: 25px;
+  width: 90vw;
+  
+  
 }
+
 
 .travelgroup-list-view-img {
   /* 동그라미 , 121*121 */
@@ -19,17 +23,25 @@
 }
 
 .travelgroup-list-view-tag-container {
-  display: flex;
+  display: flex;  
   flex-direction: column;
-  margin-left: 30px;
-  margin-right: 120px;
+  margin-left: 30px;  
+  
+}
+
+.travelgroup-list-view-tag-row {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
 }
 
 .travelgroup-list-view-tag {
   text-align: center;
   padding: 0 5px 0 5px;
   border: 1px solid #000000;
-  border-radius: 8px;
+  border-radius: 12px;
+  margin-bottom: 5px;
+  width: fit-content;  
 }
 
 .add-button {
@@ -98,12 +110,13 @@
   flex-direction: row;
   gap: 10px;
   padding: 0 8 0 8;
+  overflow: hidden;
+  overflow-x: auto;
 }
 
 .travel-list-img {
   width: 159px;
-  height: 201px;
-  border: 1px blue solid;
+  height: 201px;  
   border-radius: 13px;
 }
 

@@ -14,7 +14,7 @@ const api = axios.create({
 const getAuthTokens = () => {
   // const accessToken = Cookies.get("accessToken");
   const accessToken =
-    "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ3YW5uYWdvIiwiZXhwIjoxNzQxMTcwODAyLCJVU05BTUUiOiLquYDsnbjsp4EiLCJVU0VNQUlMIjoiZ2Ftc3RAbmF2ZXIuY29tIiwiVVNJRFgiOjIsIlVTUFJPRklMRSI6InByb2ZpbGUucG5nIiwiVVNTVEFURSI6MX0.q6gn_fCbS8-deTWFDQ0BjU4cgp8NsA5NiY3NRownZ98";
+    "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ3YW5uYWdvIiwiZXhwIjoxNzQxMTc0ODcwLCJVU05BTUUiOiLquYDsnbjsp4EiLCJVU0VNQUlMIjoiZ2Ftc3RAbmF2ZXIuY29tIiwiVVNJRFgiOjIsIlVTUFJPRklMRSI6InByb2ZpbGUucG5nIiwiVVNTVEFURSI6MX0.SehL5GxAdzIw072uwRMc93n2-MNNnalDKGUcKO_WA08";
   const refreshToken = Cookies.get("refreshToken");
   return { accessToken, refreshToken };
 };
@@ -82,9 +82,11 @@ export async function getGroup(grIdx: number) {
 export const searchUser = async (usEmail: string) => {
   try {
     console.log("searchUser 호출 , usEmail : ", usEmail);    
+    const grIdx = localStorage.getItem('grIdx');
     const response = await api.get('/travelgroups/search', {
       params: {
-        usEmail: usEmail
+        usEmail: usEmail,
+        grIdx: grIdx
       }
     });
     console.log(response.data); 
@@ -94,3 +96,20 @@ export const searchUser = async (usEmail: string) => {
     throw error;
   }
 };
+
+export const inviteUser = async (usIdx: number) => {
+  try {
+    console.log("inviteUser 호출");
+    console.log(usIdx);
+    const selectedUser = document.getElementById(usIdx.toString());
+    selectedUser?.remove();
+    const grIdx = localStorage.getItem('grIdx');
+    const response = await api.patch('/travelgroups/'+grIdx+'/invite/'+usIdx);
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error('Error posting group:', error);
+    throw error;
+  }
+};
+

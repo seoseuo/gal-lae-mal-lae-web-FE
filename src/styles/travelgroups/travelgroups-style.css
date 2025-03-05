@@ -1,16 +1,14 @@
 .travelgroup-container {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: center;  
 }
 
 .travelgroup-list-view-container {
   display: flex;
   flex-direction: row;
   margin-bottom: 25px;
-  width: 90vw;
-  
-  
+  width: 90vw; 
 }
 
 
@@ -69,6 +67,12 @@
   grid-template-columns: repeat(4, 1fr); /* 4열 */
   row-gap: 10;
   column-gap: 30;
+}
+
+.member-list-view-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .member-profile {

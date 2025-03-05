@@ -1,9 +1,9 @@
 import axios, { AxiosError } from "axios";
 import Cookies from "js-cookie"; // js-cookie 라이브러리 사용
 
-
 // 환경 변수에서 API 주소 가져오기
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -14,7 +14,7 @@ const api = axios.create({
 const getAuthTokens = () => {
   // const accessToken = Cookies.get("accessToken");
   const accessToken =
-    "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ3YW5uYWdvIiwiZXhwIjoxNzQxMTg2NDE2LCJVU05BTUUiOiLquYDsnbjsp4EiLCJVU0VNQUlMIjoiZ2Ftc3RAbmF2ZXIuY29tIiwiVVNJRFgiOjIsIlVTUFJPRklMRSI6InByb2ZpbGUucG5nIiwiVVNTVEFURSI6MX0.a5Xa6VcSaLraJupuUISZtP9UcG1iSWGXhcDrvQ4KpzE";
+    "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ3YW5uYWdvIiwiZXhwIjoxNzQxMTkwMTQ4LCJVU05BTUUiOiLquYDsnbjsp4EiLCJVU0VNQUlMIjoiZ2Ftc3RAbmF2ZXIuY29tIiwiVVNJRFgiOjIsIlVTUFJPRklMRSI6InByb2ZpbGUucG5nIiwiVVNTVEFURSI6MX0.VvB2NcqDMlz23gui3MV_iWjLQgrndoqwk-H2-7ZNNSs";
   const refreshToken = Cookies.get("refreshToken");
   return { accessToken, refreshToken };
 };
@@ -133,6 +133,18 @@ export const updateAdmin = async (usIdx: number) => {
     return response.data;
   } catch (error) {
     console.error('Error updating admin:', error);
+    throw error;
+  }
+}
+
+export const leaveGroup = async () => {
+  try {
+    const grIdx = localStorage.getItem("grIdx");
+    const response = await api.patch("/travelgroups/" + grIdx + "/leave");
+    console.log(response.data);
+    window.location.href = "/travelgroups";
+  } catch (error) {
+    console.error("Error leaving group:", error);
     throw error;
   }
 }

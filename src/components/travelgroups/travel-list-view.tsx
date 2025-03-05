@@ -13,15 +13,15 @@ export default function TravelListView({ travelList }: { travelList: any[] }) {
 
                     {travel.tlImgList.length === 0 && (
                         <div className="travel-list-img-view">
-                            <img className="travel-list-img" src="/travelgroups/travelView.png" alt="travelImg" style={{width: '318px'}}/>                            
-                            
+                            <img className="travel-list-img" src="/travelgroups/travelView.png" alt="travelImg" style={{ width: '100%' }}/>
+                                                                                    
                         </div>
                     )}
 
                     {travel.tlImgList.length === 1 && (
                         <div className="travel-list-img-view">
                             <img className="travel-list-img" src={travel.tlImgList[0]} alt="travelImg" />
-                            <img className="travel-list-img" src="/travelgroups/travelView.png" alt="travelImg" />
+                            <img className="travel-list-img" src="/travelgroups/travelView.png" alt="travelImg" />                                                       
                         </div>
                     )}
 
@@ -33,9 +33,11 @@ export default function TravelListView({ travelList }: { travelList: any[] }) {
                         </div>
                     )}
 
-                    <div className="travelgroup-container">
-                        <div className="travel-list-img-bar"></div>
+                    
+                    <div className="travelgroup-container" >
+                        <div id="scroll-bar" className="travel-list-img-bar"></div>
                     </div>
+                    
                 </div>
             ))}
 

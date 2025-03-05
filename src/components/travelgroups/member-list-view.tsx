@@ -1,6 +1,9 @@
 import "@/styles/travelgroups/travelgroups-style.css";
+import { useRouter } from 'next/navigation';
 
 export default function MemberListView({ memberList }: { memberList: any[] }) {
+    const router = useRouter();
+
     return (
         <div className="member-list-container">
 
@@ -21,7 +24,15 @@ export default function MemberListView({ memberList }: { memberList: any[] }) {
                 </div>
             ))}
 
-            
+            {/* 모임 인원 추가 버튼 */}
+
+            <div className="member-profile" style={{ cursor: 'pointer' }} onClick={() => router.push('/travelgroups/invite')}>
+                <div style={{ height: '16px' }}></div>
+                <img className="member-profile-img" src="/travelgroups/invite-btn.svg" alt="admin-profile-img" />
+                <span className="medium member-profile-text">NEW</span>
+            </div>
+
+
 
         </div>
     );

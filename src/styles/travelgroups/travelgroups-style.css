@@ -190,6 +190,7 @@
 .search-bar {
   width: 343px;
   height: 44px;
+  padding: 1px;
   border: #000000 1px solid;
   border-radius: 56px;
   display: flex;
@@ -218,8 +219,14 @@
 .invite-profile {
   width: 57px;
   height: 57px;
-  border-radius: 50%;
-  border: #000000 1px solid;
+  border-radius: 50%;   
+}
+
+.invite-profile-text {
+  display: flex;
+  flex-direction: column;
+  margin-right: 140px;
+  margin-left: 10px;
 }
 
 .random-dot-container {

@@ -14,7 +14,7 @@ const api = axios.create({
 const getAuthTokens = () => {
   // const accessToken = Cookies.get("accessToken");
   const accessToken =
-    "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ3YW5uYWdvIiwiZXhwIjoxNzQxMTc0ODcwLCJVU05BTUUiOiLquYDsnbjsp4EiLCJVU0VNQUlMIjoiZ2Ftc3RAbmF2ZXIuY29tIiwiVVNJRFgiOjIsIlVTUFJPRklMRSI6InByb2ZpbGUucG5nIiwiVVNTVEFURSI6MX0.SehL5GxAdzIw072uwRMc93n2-MNNnalDKGUcKO_WA08";
+    "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ3YW5uYWdvIiwiZXhwIjoxNzQxMTg2NDE2LCJVU05BTUUiOiLquYDsnbjsp4EiLCJVU0VNQUlMIjoiZ2Ftc3RAbmF2ZXIuY29tIiwiVVNJRFgiOjIsIlVTUFJPRklMRSI6InByb2ZpbGUucG5nIiwiVVNTVEFURSI6MX0.a5Xa6VcSaLraJupuUISZtP9UcG1iSWGXhcDrvQ4KpzE";
   const refreshToken = Cookies.get("refreshToken");
   return { accessToken, refreshToken };
 };
@@ -113,3 +113,26 @@ export const inviteUser = async (usIdx: number) => {
   }
 };
 
+export const getMe = async () => {
+  try {
+    const response = await api.get('/users/me');
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error('Error getting me:', error);
+    throw error;
+  }
+};
+
+export const updateAdmin = async (usIdx: number) => {
+  try {
+    const grIdx = localStorage.getItem('grIdx');
+    const response = await api.patch('/travelgroups/'+grIdx+'/admin/'+usIdx);
+    console.log(response.data);
+    getGroup(parseInt(grIdx || '0'));
+    return response.data;
+  } catch (error) {
+    console.error('Error updating admin:', error);
+    throw error;
+  }
+}

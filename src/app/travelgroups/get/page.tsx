@@ -24,7 +24,7 @@ export default function Home() {
   if (!result) return <div>Loading...</div>;
 
   return (
-    <div>
+    <div className="travelgroup-get-container">
       <div>
         <p className="header">
           <img src="/back.svg" alt="back-icon" className="header-icon" style={{cursor: 'pointer'}} onClick={() => window.history.back()} />

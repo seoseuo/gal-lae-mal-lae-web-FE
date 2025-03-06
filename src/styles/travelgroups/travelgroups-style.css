@@ -11,6 +11,10 @@
   width: 90vw; 
 }
 
+.travelgroup-get-container {
+  overflow: scroll;
+}
+
 
 .travelgroup-list-view-img {
   /* 동그라미 , 121*121 */

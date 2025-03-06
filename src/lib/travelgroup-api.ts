@@ -13,7 +13,7 @@ const api = axios.create({
 const getAuthTokens = () => {
   // const accessToken = Cookies.get("accessToken");
   const accessToken =
-    "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ3YW5uYWdvIiwiZXhwIjoxNzQxMjQ5MDIzLCJVU05BTUUiOiLquYDsnbjsp4EiLCJVU0VNQUlMIjoiZ2Ftc3RAbmF2ZXIuY29tIiwiVVNJRFgiOjIsIlVTUFJPRklMRSI6InByb2ZpbGUucG5nIiwiVVNTVEFURSI6MX0.cYeZmI2qIu6W1I5HQfymoUdf8OYIHlUqXbya3R7Iuzk";
+    "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ3YW5uYWdvIiwiZXhwIjoxNzQxMjUyODgyLCJVU05BTUUiOiLquYDsnbjsp4EiLCJVU0VNQUlMIjoiZ2Ftc3RAbmF2ZXIuY29tIiwiVVNJRFgiOjIsIlVTUFJPRklMRSI6InByb2ZpbGUucG5nIiwiVVNTVEFURSI6MX0.FFMOMS5kfuZL7DLyP7JdIECh7OSmugH6SNSgVWtp60A";
   const refreshToken = Cookies.get("refreshToken");
   return { accessToken, refreshToken };
 };
@@ -188,7 +188,7 @@ export const saveLocationSi = async (lsIdx: number) => {
       "/travelgroups/" + grIdx + "/travel/location/do/si/" + lsIdx
     );
     console.log(response.data);
-    window.location.href = "/travelgroups";
+    window.location.href = "/travelgroups/travel/period";
     return response.data;
   } catch (error) {
     console.error("Error leaving group:", error);
@@ -199,16 +199,18 @@ export const saveLocationSi = async (lsIdx: number) => {
 export const savePeriod = async (trStartTime: string, trEndTime: string) => {
   try {
     const grIdx = localStorage.getItem("grIdx");
+    if (!grIdx) return; // grIdx가 null인 경우 처리
+
     const response = await api.post(
       "/travelgroups/" + grIdx + "/travel/period",
       {
-        grIdx: grIdx, // 그룹 인덱스 추가
-        trStartTime: trStartTime, // 여행 시작 시간
-        trEndTime: trEndTime, // 여행 종료 시간
+        grIdx: grIdx,
+        trStartTime: trStartTime,
+        trEndTime: trEndTime,
       }
     );
     console.log(response.data);
-    window.location.href = "/travelgroups";
+    getGroup(parseInt(grIdx));
     return response.data;
   } catch (error) {
     console.error("Error leaving group:", error);

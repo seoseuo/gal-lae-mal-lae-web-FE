@@ -72,9 +72,11 @@ export default function Home() {
 
                         {isAdmin && (
                             <>
-                                <div className="travelgroup-container admin-icon" style={{ cursor: 'pointer' }}>
+                                <div className="travelgroup-container admin-icon" style={{ cursor: 'pointer' }} onClick={() => {
+                                    router.push('/travelgroups/travel/location-do');
+                                }}>
                                     <img src="/travelgroups/new-travel.svg" alt="새로운 여행지" />
-                                    <span className='regular' style={{ fontSize: '8px', marginTop: '5px' }}>새로운 여행지</span>
+                                    <span className='regular' style={{ fontSize: '8px', marginTop: '5px' }} >새로운 여행지</span>
                                 </div>
 
                                 <div className="travelgroup-container admin-icon" style={{ cursor: 'pointer' }} onClick={() => {

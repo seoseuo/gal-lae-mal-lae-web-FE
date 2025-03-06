@@ -11,6 +11,10 @@
   width: 90vw; 
 }
 
+.travelgroup-get-container {
+  overflow: scroll;
+}
+
 
 .travelgroup-list-view-img {
   /* 동그라미 , 121*121 */
@@ -486,6 +490,37 @@
   
 }
 
-#travelgroups-post-editer-content {
+.period-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;  
+  justify-content: center;
+}
+
+.calander-container {
+  width: 284px;
+  height: 296px;
+}
+
+.calander-text-container {  
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.calander-day-container {
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;  
+}
+
+.calander-item {
+  width: 37px;
+  height: 37px;
+  border-radius: 50%;
   
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

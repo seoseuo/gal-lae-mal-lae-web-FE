@@ -1,5 +1,6 @@
 "use client"
 
+import { useRouter } from 'next/navigation';
 import "@/styles/travelgroups/travelgroups-style.css";
 import MemberListView from "@/components/travelgroups/member-list-view";
 import TravelListView from "@/components/travelgroups/travel-list-view";
@@ -8,6 +9,7 @@ import { useEffect, useState } from "react";
 
 export default function Home() {
   const [result, setResult] = useState<any>(null);
+  const router = useRouter();
 
   useEffect(() => {
     const grIdx = localStorage.getItem('grIdx');
@@ -24,10 +26,10 @@ export default function Home() {
   if (!result) return <div>Loading...</div>;
 
   return (
-    <div>
+    <div className="travelgroup-get-container">
       <div>
         <p className="header">
-          <img src="/back.svg" alt="back-icon" className="header-icon" style={{cursor: 'pointer'}} onClick={() => window.history.back()} />
+          <img src="/back.svg" alt="back-icon" className="header-icon" style={{cursor: 'pointer'}} onClick={() => router.push("/travelgroups")} />
           <span className="header-text bold">{result.travelGroup.grName}</span>
           <img src="/option.svg" alt="option-icon" className="header-icon-option" style={{cursor: 'pointer'}} onClick={() => location.href = '/travelgroups/option'} />
         </p>

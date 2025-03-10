@@ -1,14 +1,20 @@
 .travelgroup-container {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: center;  
 }
 
 .travelgroup-list-view-container {
   display: flex;
   flex-direction: row;
   margin-bottom: 25px;
+  width: 90vw; 
 }
+
+.travelgroup-get-container {
+  overflow: scroll;
+}
+
 
 .travelgroup-list-view-img {
   /* 동그라미 , 121*121 */
@@ -19,17 +25,25 @@
 }
 
 .travelgroup-list-view-tag-container {
-  display: flex;
+  display: flex;  
   flex-direction: column;
-  margin-left: 30px;
-  margin-right: 120px;
+  margin-left: 30px;  
+  
+}
+
+.travelgroup-list-view-tag-row {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
 }
 
 .travelgroup-list-view-tag {
   text-align: center;
   padding: 0 5px 0 5px;
   border: 1px solid #000000;
-  border-radius: 8px;
+  border-radius: 12px;
+  margin-bottom: 5px;
+  width: fit-content;  
 }
 
 .add-button {
@@ -57,6 +71,12 @@
   grid-template-columns: repeat(4, 1fr); /* 4열 */
   row-gap: 10;
   column-gap: 30;
+}
+
+.member-list-view-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .member-profile {
@@ -98,12 +118,13 @@
   flex-direction: row;
   gap: 10px;
   padding: 0 8 0 8;
+  overflow: hidden;
+  overflow-x: auto;
 }
 
 .travel-list-img {
   width: 159px;
-  height: 201px;
-  border: 1px blue solid;
+  height: 201px;  
   border-radius: 13px;
 }
 
@@ -177,6 +198,7 @@
 .search-bar {
   width: 343px;
   height: 44px;
+  padding: 1px;
   border: #000000 1px solid;
   border-radius: 56px;
   display: flex;
@@ -205,8 +227,14 @@
 .invite-profile {
   width: 57px;
   height: 57px;
-  border-radius: 50%;
-  border: #000000 1px solid;
+  border-radius: 50%;   
+}
+
+.invite-profile-text {
+  display: flex;
+  flex-direction: column;
+  margin-right: 140px;
+  margin-left: 10px;
 }
 
 .random-dot-container {
@@ -462,6 +490,37 @@
   
 }
 
-#travelgroups-post-editer-content {
+.period-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;  
+  justify-content: center;
+}
+
+.calander-container {
+  width: 284px;
+  height: 296px;
+}
+
+.calander-text-container {  
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.calander-day-container {
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;  
+}
+
+.calander-item {
+  width: 37px;
+  height: 37px;
+  border-radius: 50%;
   
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

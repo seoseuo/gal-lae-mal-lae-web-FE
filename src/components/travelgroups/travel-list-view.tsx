@@ -1,27 +1,50 @@
 import "@/styles/travelgroups/travelgroups-style.css";
 
-export default function TravelListView() {
+export default function TravelListView({ travelList }: { travelList: any[] }) {
     return (
         <div>
-            <div className="travel-list-view">
-                <div className="travel-list-view-text">
-                    <span>ㅇㅇ도 - ㅇㅇ시</span>
-                    <img src="/travelgroups/delete.svg" alt="delete" style={{ width: '8px' }} />
-                </div>
 
-                <div className="travel-list-img-view">
-                    <img className="travel-list-img" src="/travelgroups/profile.png" alt="travelImg" />
-                    <img className="travel-list-img" src="/travelgroups/profile.png" alt="travelImg" />
-                </div>
+            {travelList.map((travel) => (
+                <div className="travel-list-view" key={travel.trIdx}>
+                    <div className="travel-list-view-text">
+                        <span>{travel.ldName} {travel.lsName}</span>
+                        <img src="/travelgroups/delete.svg" alt="delete" style={{ width: '8px' }} />
+                    </div>
 
-                <div className="travelgroup-container">
-                    <div className="travel-list-img-bar"></div>
+                    {travel.tlImgList.length === 0 && (
+                        <div className="travel-list-img-view">
+                            <img className="travel-list-img" src="/travelgroups/travelView.png" alt="travelImg" style={{ width: '100%' }}/>
+                                                                                    
+                        </div>
+                    )}
+
+                    {travel.tlImgList.length === 1 && (
+                        <div className="travel-list-img-view">
+                            <img className="travel-list-img" src={travel.tlImgList[0]} alt="travelImg" />
+                            <img className="travel-list-img" src="/travelgroups/travelView.png" alt="travelImg" />                                                       
+                        </div>
+                    )}
+
+                    {travel.tlImgList.length > 1 && (
+                        <div className="travel-list-img-view">
+                            {travel.tlImgList.map((img: string) => (
+                                <img className="travel-list-img" src={img} alt="travelImg" key={img} />
+                            ))}
+                        </div>
+                    )}
+
+                    
+                    <div className="travelgroup-container" >
+                        <div id="scroll-bar" className="travel-list-img-bar"></div>
+                    </div>
+                    
                 </div>
-            </div>
+            ))}
 
             <br />
             <br />
-            <br />
+
+
 
         </div>
     );

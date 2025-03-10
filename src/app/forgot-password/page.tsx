@@ -1,7 +1,11 @@
 'use client'
+import axios from 'axios';
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function ForgotPassword() {
+  const router = useRouter();
+  const [email, setEmail] = useState("");
   const [selectedDomain, setSelectedDomain] = useState("");
   const [customDomain, setCustomDomain] = useState("");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -12,7 +16,21 @@ export default function ForgotPassword() {
     { value: "gmail.com", label: "gmail.com" },
     { value: "daum.net", label: "daum.net" },
     { value: "hanmail.net", label: "hanmail.net" }
-  ];
+  ]; 
+  const forgotPassword = () => {
+    const fullEmail = email + "@" + selectedDomain;
+    console.log(fullEmail);
+    axios.post("/api/auth/temporary/password?email=" + fullEmail).then((response) => {
+      if(response.data.success){
+        alert("임시 비밀번호를 발송했습니다.");
+        router.push("/login");
+      }else{
+        alert("이메일을 찾을 수 없습니다.");
+      }
+    }).catch((error) => {
+      console.log(error);
+    });
+  }
 
   return (
     <section className="relative h-[852px] overflow-hidden bg-white">
@@ -40,6 +58,8 @@ export default function ForgotPassword() {
           type="email"
           placeholder="이메일"
           className="absolute left-[29px] top-[206px] flex items-center gap-[6px] w-[153px] h-[39px] bg-white rounded-[5px] border border-[#C4C4C4] px-[6px] py-5 text-[#787676] text-left font-['NotoSansKr-Regular'] text-[10px] tracking-[-0.17px]"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
         />
         <span className="absolute left-[190px] top-[215px] w-[15px] h-[18px] text-[#C4C4C4] text-center font-['NotoSansKr-Regular'] text-base tracking-[-0.17px]">
           @
@@ -108,6 +128,7 @@ export default function ForgotPassword() {
       <button 
         type="button"
         className="absolute left-1/2 -translate-x-1/2 top-[374px] flex flex-col gap-2 items-center w-[292px]"
+        onClick={forgotPassword}
       >
         <div className="w-full flex items-center justify-center gap-[13px] bg-[#C4C4C4] rounded-xl px-6 py-[15px]">
           <span className="text-white text-right font-['NotoSansKr-Medium'] text-[17px] leading-[22px] tracking-[-0.41px] font-medium">

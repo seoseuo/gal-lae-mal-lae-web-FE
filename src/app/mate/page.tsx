@@ -1,7 +1,10 @@
+'use client'
 import Footer from "@/component/footer";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function Mate() {
+  const router = useRouter();
     const mateList = [
         {
             id: 1,
@@ -130,7 +133,10 @@ export default function Mate() {
 
       {/* 글쓰기 버튼 */}
       <div className="fixed right-[25px] bottom-[25px]">
-        <button className="w-[39px] h-[39px] flex items-center justify-center rounded-[20px] bg-[#490085]">
+        <button
+          onClick={() => router.push("/mate/notice/upload")}
+          className="w-[39px] h-[39px] flex items-center justify-center rounded-[20px] bg-[#490085]"
+        >
           <img src="write.svg" alt="글쓰기" className="w-[39px] h-[39px]" />
         </button>
       </div>

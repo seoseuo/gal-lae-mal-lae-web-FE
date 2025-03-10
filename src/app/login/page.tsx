@@ -1,11 +1,14 @@
 "use client";
+import axios from "axios";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Login() {
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
-  const [selectedDomain, setSelectedDomain] = useState("");
-  const [customDomain, setCustomDomain] = useState("");
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [email, setEmail] = useState("");
+  const [domain, setDomain] = useState("");
+  const [password, setPassword] = useState("");
 
   const domains = [
     { value: "direct", label: "직접입력" },
@@ -14,6 +17,32 @@ export default function Login() {
     { value: "daum.net", label: "daum.net" },
     { value: "hanmail.net", label: "hanmail.net" }
   ];
+
+  const login = () => {
+    console.log("로그인 버튼 클릭됨");
+    if(email == "" || password == "" ){
+      alert("이메일과 비밀번호를 입력해주세요.");
+      return;
+    }
+
+    const data = {
+      usEmail: email,
+      usPassword: password
+    }
+    console.log(data);
+    axios.post('api/auth/login', data)
+      .then((response) => {
+        console.log(response);
+        if(response.data.success){
+          router.push('/');
+        }else{
+          alert("로그인 실패");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 
   return (
     <section className="relative h-[852px] overflow-hidden bg-white">
@@ -40,70 +69,12 @@ export default function Login() {
           </label>
           <input 
             id="email"
-            type="email"
+            type="text"
             placeholder="이메일"
-            className="absolute left-[29px] top-[206px] flex items-center gap-[6px] w-[153px] h-[39px] bg-white rounded-[5px] border border-[#DADADA] px-[6px] py-5 text-black placeholder:text-[#C4C4C4] text-left font-['NotoSansKr-Regular'] text-[13px] tracking-[-0.17px]"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="absolute left-[28px] top-[206px] flex items-center gap-[6px] w-[338px] h-[39px] bg-white rounded-[5px] border border-[#DADADA] px-[6px] py-5 text-black placeholder:text-[#C4C4C4] text-left font-['NotoSansKr-Regular'] text-[13px] tracking-[-0.17px]"
           />
-          <span className="absolute left-[190px] top-[215px] w-[15px] h-[18px] text-[#C4C4C4] text-center font-['NotoSansKr-Regular'] text-base tracking-[-0.17px]">
-            @
-          </span>
-          {selectedDomain === "direct" ? (
-            <div className="flex items-center relative">
-              <input
-                type="text"
-                placeholder="도메인 입력"
-                value={customDomain}
-                onChange={(e) => {
-                  const value = e.target.value;
-                  setCustomDomain(value);
-                  if (!value) {
-                    setSelectedDomain("");
-                  }
-                }}
-                className="absolute left-[213px] top-[206px] w-[123px] h-[39px] rounded-l-[5px] bg-white border border-r-0 border-[#DADADA] px-[6px] text-black placeholder:text-[#C4C4C4] font-['NotoSansKr-Regular'] text-[13px]"
-              />
-              <button
-                type="button"
-                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                className="absolute left-[336px] top-[206px] w-[30px] h-[39px] rounded-r-[5px] bg-white border border-[#DADADA] flex items-center justify-center"
-              >
-                <img src="drop-down.svg" alt="드롭다운" className="w-3 h-3" />
-              </button>
-              {isDropdownOpen && (
-                <div className="absolute left-[213px] top-[245px] w-[153px] bg-white border border-[#DADADA] rounded-[5px] z-10">
-                  {domains.map((domain) => (
-                    <button
-                      key={domain.value}
-                      type="button"
-                      onClick={() => {
-                        setSelectedDomain(domain.value);
-                        setCustomDomain("");
-                        setIsDropdownOpen(false);
-                      }}
-                      className="w-full px-[6px] py-2 text-left text-[13px] text-black hover:bg-gray-100"
-                    >
-                      {domain.label}
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
-          ) : (
-            <select 
-              id="emailDomain"
-              aria-label="이메일 도메인 선택"
-              className="absolute left-[213px] top-[206px] w-[153px] h-[39px] rounded-[5px] bg-white border border-[#DADADA] px-[6px] text-[#C4C4C4] font-['NotoSansKr-Regular'] text-[13px]"
-              value={selectedDomain}
-              onChange={(e) => setSelectedDomain(e.target.value)}
-            >
-              <option value="">선택</option>
-              {domains.map((domain) => (
-                <option key={domain.value} value={domain.value}>
-                  {domain.label}
-                </option>
-              ))}
-            </select>
-          )}
         </div>
 
         <div>
@@ -118,6 +89,8 @@ export default function Login() {
               id="password"
               type={showPassword ? "text" : "password"}
               placeholder="비밀번호"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               className="absolute left-[28px] top-[305px] flex items-center gap-[6px] w-[338px] h-[39px] bg-white rounded-[5px] border border-[#DADADA] px-[6px] py-5 text-black placeholder:text-[#C4C4C4] text-left font-['NotoSansKr-Regular'] text-[13px] tracking-[-0.17px]"
             />
             <button
@@ -149,10 +122,19 @@ export default function Login() {
         </a>
 
         <button 
-          type="submit"
+          type="button"
           className="absolute left-1/2 -translate-x-1/2 top-[651px] flex flex-col gap-2 items-center w-[292px]"
+          onClick={(e) => {
+            e.preventDefault();
+            login();
+          }}
+          disabled={!email || !password}
         >
-          <div className="w-full flex items-center justify-center gap-[13px] bg-[#C4C4C4] rounded-xl px-6 py-[15px]">
+          <div className={`w-full flex items-center justify-center gap-[13px] rounded-xl px-6 py-[15px] ${
+            email && password 
+              ? 'bg-[#490085] hover:bg-[#3a006c] cursor-pointer' 
+              : 'bg-[#C4C4C4] cursor-not-allowed'
+          }`}>
             <span className="text-white text-right font-['NotoSansKr-Medium'] text-[17px] leading-[22px] tracking-[-0.41px] font-medium">
               다음
             </span>

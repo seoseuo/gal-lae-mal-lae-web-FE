@@ -1,20 +1,19 @@
 .travelgroup-container {
   display: flex;
   flex-direction: column;
-  align-items: center;    
+  align-items: center;
 }
 
 .travelgroup-list-view-container {
   display: flex;
   flex-direction: row;
   margin-bottom: 25px;
-  width: 90vw;   
+  width: 90vw;
 }
 
 .travelgroup-get-container {
   overflow: auto;
 }
-
 
 .travelgroup-list-view-img {
   /* 동그라미 , 121*121 */
@@ -25,17 +24,24 @@
 }
 
 .travelgroup-list-view-tag-container {
-  display: flex;  
+  display: flex;
   flex-direction: column;
-  margin-left: 30px;  
-
+  margin-left: 30px;
 }
 
 .travelgroup-list-view-tag-row {
   display: flex;
   flex-direction: row;
-  gap: 5px;  
-  
+  gap: 5px;
+
+  overflow-x: auto; /* 가로 스크롤 허용 */
+  white-space: nowrap; /* 요소들이 줄 바꿈되지 않도록 설정 */
+
+  scrollbar-width: none; /* Firefox에서 스크롤바 숨기기 */
+}
+
+.travelgroup-list-view-tag-row::-webkit-scrollbar {
+  display: none; /* Chrome, Safari에서 스크롤바 숨기기 */
 }
 
 .travelgroup-list-view-tag {
@@ -44,7 +50,7 @@
   border: 1px solid #000000;
   border-radius: 12px;
   margin-bottom: 5px;
-  width: fit-content;    
+  width: fit-content;
 }
 
 .add-button {
@@ -124,7 +130,7 @@
 
 .travel-list-img {
   width: 159px;
-  height: 201px;  
+  height: 201px;
   border-radius: 13px;
 }
 
@@ -227,7 +233,7 @@
 .invite-profile {
   width: 57px;
   height: 57px;
-  border-radius: 50%;   
+  border-radius: 50%;
 }
 
 .invite-profile-text {
@@ -254,15 +260,15 @@
 .travel-header-container {
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: center;  
   margin-left: 20px;
 }
 
 .travel-box-container {
   display: flex;
   margin-top: 10px;
-  width: 393px;
-  height: 709px;
+  width: 100vw;
+  height: 724px;
   border: 1px solid black;
   border-radius: 40px 40px 0px 0px;
   flex-direction: column;
@@ -308,7 +314,7 @@
   height: 20px;
   position: absolute;
   z-index: 10;
-  position: fixed;  
+  position: fixed;
 }
 
 #ai-btn-postion {
@@ -436,7 +442,7 @@
 .travelgroups-list-view-container {
   display: flex;
   flex-direction: column;
-  align-items: center;  
+  align-items: center;
   z-index: 1;
   background-color: #ffffff;
 }
@@ -444,7 +450,7 @@
 .travelgroups-list-view {
   display: flex;
   flex-direction: column;
-  
+
   justify-content: center;
   padding: 20px 0 20px 0;
 }
@@ -458,7 +464,7 @@
 
 .travelgroups-list-view-profile {
   display: flex;
-   
+
   align-items: center;
 }
 
@@ -487,13 +493,12 @@
   justify-content: end;
   margin-right: 20px;
   gap: 40px;
-  
 }
 
 .period-container {
   display: flex;
   flex-direction: column;
-  align-items: center;  
+  align-items: center;
   justify-content: center;
 }
 
@@ -502,7 +507,7 @@
   height: 296px;
 }
 
-.calander-text-container {  
+.calander-text-container {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -512,15 +517,28 @@
   margin-top: 10px;
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  text-align: center;  
+  text-align: center;
 }
 
 .calander-item {
   width: 37px;
   height: 37px;
   border-radius: 50%;
-  
+
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.travel-box-parent-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.travel-box-parent-container-img {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  border: 1px solid rgb(199, 199, 199);
 }

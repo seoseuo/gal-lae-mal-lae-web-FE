@@ -10,6 +10,7 @@ export default function TravelgroupListView({ travelGroupList }: { travelGroupLi
                 travelGroupList.map((group) => (
                     <div key={group.grIdx} onClick={() => {
                         router.push(`/travelgroups/get`);
+                        // 로컬 스토리지에 지금 grIdx 저장
                         localStorage.setItem('grIdx', group.grIdx.toString());
                     }}>
                         <div className="travelgroup-list-view-container" style={{ cursor: 'pointer', minWidth: '400px' }}>
@@ -29,10 +30,11 @@ export default function TravelgroupListView({ travelGroupList }: { travelGroupLi
                                         gap: '5px'
                                     }}>
                                         {group.grLdList.map((item: string, index: number) => (
-                                            <div className="travelgroup-list-view-tag" key={index} style={{flexShrink: 0}}>{item}</div>
+                                            <div className="travelgroup-list-view-tag" key={index} style={{display: 'inline-block'}}>{item}</div>
                                         ))}
                                     </div>
                                 )}
+
                             </div>
                         </div>
                     </div>

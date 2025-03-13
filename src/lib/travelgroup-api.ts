@@ -1,30 +1,17 @@
 import axios, { AxiosError } from "axios";
-import Cookies from "js-cookie"; // js-cookie 라이브러리 사용
 
 // 환경 변수에서 API 주소 가져오기
 const API_BASE_URL = "/api";
 
 const api = axios.create({
   baseURL: API_BASE_URL,
-  withCredentials: true, // 쿠키를 포함하려면 true로 설정
+  withCredentials: true, // 쿠키를 포함하려면 true로 설정 (HttpOnly 쿠키 활용)
 });
 
-// 쿠키에서 accessToken, refreshToken 가져오기
-const getAuthTokens = () => {
-  // const accessToken = Cookies.get("accessToken");
-  const accessToken =
-    "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ3YW5uYWdvIiwiZXhwIjoxNzQxMjUyODgyLCJVU05BTUUiOiLquYDsnbjsp4EiLCJVU0VNQUlMIjoiZ2Ftc3RAbmF2ZXIuY29tIiwiVVNJRFgiOjIsIlVTUFJPRklMRSI6InByb2ZpbGUucG5nIiwiVVNTVEFURSI6MX0.FFMOMS5kfuZL7DLyP7JdIECh7OSmugH6SNSgVWtp60A";
-  const refreshToken = Cookies.get("refreshToken");
-  return { accessToken, refreshToken };
-};
-
-// Axios 요청 시, 토큰을 헤더에 설정
+// 요청 인터셉터 (JWT 토큰을 직접 헤더에 추가하지 않음)
 api.interceptors.request.use(
   (config) => {
-    const { accessToken } = getAuthTokens();
-    if (accessToken) {
-      config.headers["Authorization"] = `Bearer ${accessToken}`;
-    }
+    console.log("API 요청:", config.url);
     return config;
   },
   (error) => {
@@ -32,28 +19,49 @@ api.interceptors.request.use(
   }
 );
 
-// 내 모임 목록 조회
+// 응답 인터셉터 (401 처리 가능)
+api.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    if (error instanceof AxiosError && error.response) {
+      console.error("API 에러:", error.response.data.message);
+
+      // 401 Unauthorized 시, 리프레시 토큰 요청 가능 (선택적)
+      if (error.response.status === 401) {
+        console.warn("토큰 만료됨, 리프레시 시도...");
+        try {
+          await api.post("/auth/refresh"); // 서버에서 자동으로 새로운 JWT 발급
+          return api(error.config); // 원래 요청 다시 시도
+        } catch (refreshError) {
+          console.error("리프레시 토큰 요청 실패:", refreshError);
+          window.location.href = "/login"; // 로그인 페이지로 이동
+        }
+      }
+    }
+    return Promise.reject(error);
+  }
+);
+
+// ==================== API 요청 함수 ====================
+
+// 1. 내 모임 목록 조회
 export async function getTravelGroupList() {
   try {
-    const response = await api.get("/travelgroups"); // /travelgroups API 호출
+    const response = await api.get("/travelgroups");
     console.log(response.data);
     return response.data;
-  } catch (error: unknown) {
-    if (error instanceof AxiosError && error.response) {
-      console.error("Error:", error.response.data.message);
-    }
+  } catch (error) {
+    console.error("Error fetching travel groups:", error);
     throw error;
   }
 }
 
+// 2. 모임 생성
 export const postGroup = async (formData: FormData) => {
   try {
     console.log("postGroup 호출");
-    console.log(formData);
     const response = await api.post("/travelgroups", formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
+      headers: { "Content-Type": "multipart/form-data" },
     });
     console.log(response.data);
     location.href = "/travelgroups";
@@ -63,76 +71,64 @@ export const postGroup = async (formData: FormData) => {
   }
 };
 
+// 3. 특정 모임 조회
 export async function getGroup(grIdx: number) {
-  console.log("getGroup 호출");
-  console.log(grIdx);
   try {
-    const response = await api.get("/travelgroups/" + grIdx);
+    const response = await api.get(`/travelgroups/${grIdx}`);
     console.log(response.data);
     return response.data;
-  } catch (error: unknown) {
-    if (error instanceof AxiosError && error.response) {
-      console.error("Error:", error.response.data.message);
-    }
+  } catch (error) {
+    console.error("Error fetching group:", error);
     throw error;
   }
 }
 
+// 4. 사용자 검색
 export const searchUser = async (usEmail: string) => {
   try {
-    console.log("searchUser 호출 , usEmail : ", usEmail);
     const grIdx = localStorage.getItem("grIdx");
     const response = await api.get("/travelgroups/search", {
-      params: {
-        usEmail: usEmail,
-        grIdx: grIdx,
-      },
+      params: { usEmail, grIdx },
     });
     console.log(response.data);
     return response.data;
   } catch (error) {
-    console.error("Error posting group:", error);
+    console.error("Error searching user:", error);
     throw error;
   }
 };
 
+// 5. 사용자 초대
 export const inviteUser = async (usIdx: number) => {
   try {
-    console.log("inviteUser 호출");
-    console.log(usIdx);
-    const selectedUser = document.getElementById(usIdx.toString());
-    selectedUser?.remove();
     const grIdx = localStorage.getItem("grIdx");
-    const response = await api.patch(
-      "/travelgroups/" + grIdx + "/invite/" + usIdx
-    );
+    const response = await api.patch(`/travelgroups/${grIdx}/invite/${usIdx}`);
     console.log(response.data);
     return response.data;
   } catch (error) {
-    console.error("Error posting group:", error);
+    console.error("Error inviting user:", error);
     throw error;
   }
 };
 
+// 6. 내 정보 가져오기
 export const getMe = async () => {
   try {
     const response = await api.get("/users/me");
     console.log(response.data);
     return response.data;
   } catch (error) {
-    console.error("Error getting me:", error);
+    console.error("Error fetching user info:", error);
     throw error;
   }
 };
 
+// 7. 그룹 관리자 변경
 export const updateAdmin = async (usIdx: number) => {
   try {
     const grIdx = localStorage.getItem("grIdx");
-    const response = await api.patch(
-      "/travelgroups/" + grIdx + "/admin/" + usIdx
-    );
+    const response = await api.patch(`/travelgroups/${grIdx}/admin/${usIdx}`);
     console.log(response.data);
-    getGroup(parseInt(grIdx || "0"));
     return response.data;
   } catch (error) {
     console.error("Error updating admin:", error);
@@ -140,11 +136,11 @@ export const updateAdmin = async (usIdx: number) => {
   }
 };
 
+// 8. 그룹 나가기
 export const leaveGroup = async () => {
   try {
     const grIdx = localStorage.getItem("grIdx");
-    const response = await api.patch("/travelgroups/" + grIdx + "/leave");
-    console.log(response.data);
+    await api.patch(`/travelgroups/${grIdx}/leave`);
     window.location.href = "/travelgroups";
   } catch (error) {
     console.error("Error leaving group:", error);
@@ -152,68 +148,99 @@ export const leaveGroup = async () => {
   }
 };
 
+// 9. 여행 지역(도) 저장
 export const saveLocationDo = async (ldIdx: number) => {
   try {
     const grIdx = localStorage.getItem("grIdx");
-    const response = await api.post(
-      "/travelgroups/" + grIdx + "/travel/location/do/" + ldIdx
-    );
+    const response = await api.post(`/travelgroups/${grIdx}/travel/location/do/${ldIdx}`);
     console.log(response.data);
     return response.data;
   } catch (error) {
-    console.error("Error leaving group:", error);
+    console.error("Error saving location:", error);
     throw error;
   }
 };
 
+// 10. 여행 지역(시) 목록 가져오기
 export const getLocationSiList = async (ldIdx: number) => {
   try {
-    console.log("getLocationSiList 호출");
     const grIdx = localStorage.getItem("grIdx");
-    const response = await api.get(
-      "/travelgroups/" + grIdx + "/travel/location/do/" + ldIdx
-    );
+    const response = await api.get(`/travelgroups/${grIdx}/travel/location/do/${ldIdx}`);
     console.log(response.data);
     return response.data;
   } catch (error) {
-    console.error("Error leaving group:", error);
+    console.error("Error fetching location list:", error);
     throw error;
   }
 };
 
+// 11. 여행 지역(시) 저장
 export const saveLocationSi = async (lsIdx: number) => {
   try {
     const grIdx = localStorage.getItem("grIdx");
-    const response = await api.post(
-      "/travelgroups/" + grIdx + "/travel/location/do/si/" + lsIdx
-    );
-    console.log(response.data);
+    const response = await api.post(`/travelgroups/${grIdx}/travel/location/do/si/${lsIdx}`);
     window.location.href = "/travelgroups/travel/period";
     return response.data;
   } catch (error) {
-    console.error("Error leaving group:", error);
+    console.error("Error saving city location:", error);
     throw error;
   }
 };
 
+// 12. 여행 기간 저장
 export const savePeriod = async (trStartTime: string, trEndTime: string) => {
   try {
     const grIdx = localStorage.getItem("grIdx");
-    if (!grIdx) return; // grIdx가 null인 경우 처리
-
-    const response = await api.post(
-      "/travelgroups/" + grIdx + "/travel/period",
-      {
-        grIdx: grIdx,
-        trStartTime: trStartTime,
-        trEndTime: trEndTime,
-      }
-    );
-    console.log(response.data);
-    getGroup(parseInt(grIdx));
+    const response = await api.post(`/travelgroups/${grIdx}/travel/period`, {
+      grIdx,
+      trStartTime,
+      trEndTime,
+    });
+    if (grIdx) {
+      window.location.href = "/travelgroups/get";
+    }
     return response.data;
   } catch (error) {
-    console.error("Error leaving group:", error);
+    console.error("Error saving travel period:", error);
+    throw error;
+  }
+};
+
+// 여행지 일정 가져오기
+export const getTravel = async (trIdx: number) => {
+  try {
+    const grIdx = localStorage.getItem("grIdx");    
+    const response = await api.get(`/travelgroups/${grIdx}/travel/${trIdx}`);
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching travel:", error);
+    throw error;
+  }
+};
+
+// 랜덤 여행지 추천
+export const getRandomTravel = async () => {
+  try {
+    const grIdx = localStorage.getItem("grIdx");
+    const response = await api.get(`/travelgroups/${grIdx}/travel/location/random`);
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching random travel:", error);
+    throw error;
+  }
+};
+
+// 여행지 삭제
+export const deleteTravel = async (trIdx: number) => {
+  try {
+    const grIdx = localStorage.getItem("grIdx");    
+    const response = await api.delete(`/travelgroups/${grIdx}/travel/${trIdx}`);
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error deleting travel:", error);
     throw error;
   }
 };

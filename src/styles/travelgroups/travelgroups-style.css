@@ -267,7 +267,7 @@
 .travel-box-container {
   display: flex;
   margin-top: 10px;
-  width: 100vw;
+  width: 100%;
   height: 724px;
   border: 1px solid black;
   border-radius: 40px 40px 0px 0px;
@@ -532,8 +532,8 @@
 
 .travel-box-parent-container {
   display: flex;
-  flex-direction: column;
   align-items: center;
+  justify-content: center;
 }
 
 .travel-box-parent-container-img {
@@ -541,4 +541,11 @@
   height: 200px;
   border-radius: 50%;
   border: 1px solid rgb(199, 199, 199);
+}
+
+.delete-icon {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  z-index: 99;
 }

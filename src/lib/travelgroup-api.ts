@@ -231,3 +231,16 @@ export const getRandomTravel = async () => {
     throw error;
   }
 };
+
+// 여행지 삭제
+export const deleteTravel = async (trIdx: number) => {
+  try {
+    const grIdx = localStorage.getItem("grIdx");    
+    const response = await api.delete(`/travelgroups/${grIdx}/travel/${trIdx}`);
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error deleting travel:", error);
+    throw error;
+  }
+};

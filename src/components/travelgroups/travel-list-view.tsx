@@ -1,11 +1,19 @@
+"use client";
+
+
+import { useRouter } from 'next/navigation';
 import "@/styles/travelgroups/travelgroups-style.css";
 
 export default function TravelListView({ travelList }: { travelList: any[] }) {
+    const router = useRouter();
     return (
         <div>
 
             {travelList.map((travel) => (
-                <div className="travel-list-view" key={travel.trIdx}>
+                <div className="travel-list-view" style={{cursor:'pointer'}}key={travel.trIdx} onClick={() => {
+                    localStorage.setItem('trIdx', travel.trIdx.toString());                
+                    router.push("/travelgroups/travel/get")
+                }}>
                     <div className="travel-list-view-text">
                         <span>{travel.ldName} {travel.lsName}</span>
                         <img src="/travelgroups/delete.svg" alt="delete" style={{ width: '8px' }} />
@@ -37,7 +45,6 @@ export default function TravelListView({ travelList }: { travelList: any[] }) {
                     <div className="travelgroup-container" >
                         <div id="scroll-bar" className="travel-list-img-bar"></div>
                     </div>
-                    
                 </div>
             ))}
 

@@ -209,12 +209,25 @@ export const savePeriod = async (trStartTime: string, trEndTime: string) => {
 // 여행지 일정 가져오기
 export const getTravel = async (trIdx: number) => {
   try {
-    const grIdx = localStorage.getItem("grIdx");
+    const grIdx = localStorage.getItem("grIdx");    
     const response = await api.get(`/travelgroups/${grIdx}/travel/${trIdx}`);
     console.log(response.data);
     return response.data;
   } catch (error) {
     console.error("Error fetching travel:", error);
+    throw error;
+  }
+};
+
+// 랜덤 여행지 추천
+export const getRandomTravel = async () => {
+  try {
+    const grIdx = localStorage.getItem("grIdx");
+    const response = await api.get(`/travelgroups/${grIdx}/travel/location/random`);
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching random travel:", error);
     throw error;
   }
 };

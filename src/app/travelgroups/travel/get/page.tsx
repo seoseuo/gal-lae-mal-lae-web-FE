@@ -16,10 +16,10 @@ export default function Home() {
     const [period, setPeriod] = useState<number>(0);
     const travelGroup = JSON.parse(localStorage.getItem("travelGroup") || "{}");
     const trIdx = localStorage.getItem("trIdx");
-    
+
     const [scheduleList, setScheduleList] = useState<any[]>([]);
     const [empty, setEmpty] = useState<boolean>(false);
-    
+    const [scDate, setScDate] = useState<number>(1);
     const clickPeriod = (index: number) => {
         console.log("index", index);
 
@@ -32,9 +32,7 @@ export default function Home() {
             //travel의 scheduleList 중 해당 scDate 일정 보여주기
             const scheduleList = travel.scheduleList;
             const filteredScheduleList = scheduleList.filter((schedule: any) => schedule.scDate === index);
-
-            // filteredScheduleList 의 scStartTime 으로 오름 차순 정렬
-            //filteredScheduleList.sort((a: any, b: any) => a.scStartTime - b.scStartTime);
+            setScDate(index);
 
             setScheduleList(filteredScheduleList);
             console.log("scheduleList", filteredScheduleList);
@@ -150,6 +148,8 @@ export default function Home() {
                                         <img className="travel-box-btn" id="ai-btn-postion" src="/travelgroups/ai-btn.svg" alt="ai-btn" /> */}
                                         <img className="travel-box-btn" id="plus-btn-postion" src="/travelgroups/plus-btn.svg" alt="edit-icon"
                                             onClick={() => {
+                                                
+                                                localStorage.setItem("scDate", scDate.toString());
                                                 router.push("/travelgroups/travel/tour-spots");
                                             }}
                                             style={{ cursor: 'pointer' }}
@@ -159,12 +159,14 @@ export default function Home() {
                                     <div>
                                         <img className="travel-box-btn" id="ai-btn-postion" src="/travelgroups/plus-btn.svg" alt="plus-icon"
                                             onClick={() => {
+                                                localStorage.setItem("scDate", scDate.toString());
                                                 router.push("/travelgroups/travel/tour-spots");
                                             }}
                                             style={{ cursor: 'pointer' }}
                                         />
                                         <img className="travel-box-btn" id="plus-btn-postion" src="/travelgroups/edit-icon.svg" alt="edit-icon"
                                             onClick={() => {
+                                                localStorage.setItem("scDate", scDate.toString());
                                                 router.push("/travelgroups/travel/schedule/edit");
                                             }}
                                             style={{ cursor: 'pointer' }}

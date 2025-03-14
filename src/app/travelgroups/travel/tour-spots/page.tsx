@@ -5,6 +5,7 @@ import TourSpotsListView from "../../../../components/travelgroups/tour-spots-li
 import "@/styles/travelgroups/travelgroups-style.css";
 import { useState, useEffect, useRef } from "react";
 import { getTourSpotList } from "@/lib/travelgroup-api";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
     const [tourSpotList, setTourSpotList] = useState<any[]>([]);
@@ -13,6 +14,8 @@ export default function Home() {
     const [searchParams, setSearchParams] = useState({ searchValue: "", selectedValue: "" });
     const observer = useRef<IntersectionObserver | null>(null);
     const travel = JSON.parse(localStorage.getItem("travel") || "{}");
+    const scDate = localStorage.getItem("scDate");
+    const filteredScheduleList = JSON.parse(localStorage.getItem("filteredScheduleList") || "[]");
 
     useEffect(() => {
         loadTourSpots(page, searchParams.searchValue, searchParams.selectedValue);
@@ -61,9 +64,14 @@ export default function Home() {
         setPage(0); // 검색 시 페이지를 0으로 초기화
     };
 
+    // filteredScheduleList와 tsIdx가 겹치는 항목을 필터링
+    const filteredTourSpotList = tourSpotList.filter(tourSpot =>
+        !filteredScheduleList.some(schedule => schedule.tsIdx === tourSpot.tsIdx)
+    );
+
     return (
         <div>
-            <Header text="관광지 선정" icon="back"></Header>
+            <Header text={`${scDate}일차 관광지 선정`} icon="back"></Header>
             <div className="travelgroup-container">
                 <div className="search-bar">
                     <img src="/travelgroups/search.svg" alt="search" style={{ width: '17.49px', margin: '0 15px 0 15px' }} />
@@ -89,9 +97,9 @@ export default function Home() {
                     </select>
                 </div>
 
-                <TourSpotsListView tourSpotList={tourSpotList} />
+                {/* 필터링된 tourSpotList를 TourSpotsListView로 전달 */}
+                <TourSpotsListView tourSpotList={filteredTourSpotList} scDate={scDate} />
                 <div ref={lastElementRef} style={{ height: '1px' }}></div>
-                <button className="long-nomal-button bottom-button-postion travelgroups-font-size">추가</button>
             </div>
         </div>
     );

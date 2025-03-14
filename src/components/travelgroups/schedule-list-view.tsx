@@ -8,7 +8,7 @@ export default function ScheduleListView({ scheduleList }: { scheduleList: any[]
             <div className="schedule-list-view-container">
                 {scheduleList.slice().reverse().map((schedule, index) => (
                     <div key={index} className="schedule-list-view" style={{ marginBottom: '20px' }}>
-                        <img src={schedule.tsFirstImage} alt="img" className="schedule-list-view-img" />
+                        <img src={schedule.tsFirstImage ? schedule.tsFirstImage : "/travelgroups/tour-spot.png"} alt="img" className="schedule-list-view-img" />
                         <div>
                             <div className="schedule-list-view-text">
                                 <span className='medium' style={{ fontSize: '13px', marginLeft: '5px' }}>{schedule.tsName}</span>

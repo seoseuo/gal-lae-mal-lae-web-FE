@@ -268,7 +268,7 @@ export const getTourSpotList = async (
       `/travelgroups/${grIdx}/travel/location/tour-spots`,
       {
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json",
         },
         params: {
           page,
@@ -277,13 +277,46 @@ export const getTourSpotList = async (
           ldIdx,
           tsName,
           c1Code,
-        }
+        },
       }
     );
     console.log(response.data);
     return response.data;
   } catch (error) {
     console.error("Error fetching tour spot list:", error);
+    throw error;
+  }
+};
+
+// 여행 장소 추가
+export const saveTourSpot = async (tsIdxList: number[], scDate: number) => {
+  try {
+    const grIdx = localStorage.getItem("grIdx");
+    const trIdx = localStorage.getItem("trIdx");
+
+    const scheduleList = tsIdxList.map((tsIdx) => ({
+      scDate,
+      trIdx,
+      tsIdx,
+    }));
+
+    console.log('scheduleList:', scheduleList); // 배열 형태로 확인
+
+    // 바로 scheduleList 배열을 전송
+    const response = await api.post(
+      `/travelgroups/${grIdx}/travel/${trIdx}/schedule`,
+      scheduleList, // scheduleDTOList 없이 배열만 전송
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error saving tour spot:", error);
     throw error;
   }
 };

@@ -5,7 +5,7 @@ import Header from "../../../header";
 import "@/styles/travelgroups/travelgroups-style.css";
 import { getRandomTravel } from "@/lib/travelgroup-api";
 import { useRouter } from 'next/navigation';
-import { saveLocationDo, saveLocationSi } from "@/lib/travelgroup-api";
+import { saveRandomTravel } from "@/lib/travelgroup-api";
 
 export default function Home() {
     const router = useRouter();
@@ -24,7 +24,7 @@ export default function Home() {
 
     return (
         <div>
-            <Header text="여행지 설정" icon="back"></Header>
+            <Header text="여행지 설정" icon="back" parent="/travelgroups/get"></Header>
             {randomTravel && (
                 <span className='regular' style={{ fontSize: '14px', marginLeft: '10px' }}>
                     {isWithinRange ? (
@@ -66,10 +66,9 @@ export default function Home() {
                 onClick={() => {
                     //여행지 도 저장 , 여행지 시 저장하고 travelgroup/travel/period로 이동
                     if (isWithinRange) {
-                        saveLocationDo(randomTravel.ldIdx);
+                        saveRandomTravel(randomTravel.ldIdx, randomTravel.lsIdx);
                     } else {
-                        saveLocationDo(randomTravel.ldIdx);
-                        saveLocationSi(randomTravel.lsIdx);
+                        saveRandomTravel(randomTravel.ldIdx, randomTravel.lsIdx);                        
                     }
                     router.push(`/travelgroups/travel/period`);
                 }}>갈래요</button>

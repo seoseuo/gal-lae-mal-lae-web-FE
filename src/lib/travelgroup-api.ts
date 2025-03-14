@@ -193,6 +193,27 @@ export const saveLocationSi = async (lsIdx: number) => {
   }
 };
 
+// 랜덤 여행지 저장
+export const saveRandomTravel = async (ldIdx: number, lsIdx: number) => {
+  try {
+    // saveLoactionDo 의 요청, saveLocationSi 의 요청 두번 보내기
+    const grIdx = localStorage.getItem("grIdx");
+    const response1 = await api.post(
+      `/travelgroups/${grIdx}/travel/location/do/${ldIdx}`
+    );
+    const response2 = await api.post(
+      `/travelgroups/${grIdx}/travel/location/do/si/${lsIdx}`
+    );
+
+    console.log(response1.data);
+    console.log(response2.data);
+    return response1.data;
+  } catch (error) {
+    console.error("Error saving random travel:", error);
+    throw error;
+  }
+};
+
 // 12. 여행 기간 저장
 export const savePeriod = async (trStartTime: string, trEndTime: string) => {
   try {
@@ -300,7 +321,7 @@ export const saveTourSpot = async (tsIdxList: number[], scDate: number) => {
       tsIdx,
     }));
 
-    console.log('scheduleList:', scheduleList); // 배열 형태로 확인
+    console.log("scheduleList:", scheduleList); // 배열 형태로 확인
 
     // 바로 scheduleList 배열을 전송
     const response = await api.post(
@@ -320,3 +341,5 @@ export const saveTourSpot = async (tsIdxList: number[], scDate: number) => {
     throw error;
   }
 };
+
+// 일정 시간 변경

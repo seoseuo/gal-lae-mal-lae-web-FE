@@ -17,6 +17,7 @@ export default function Home() {
       getGroup(parseInt(grIdx)).then(data => {
         setResult(data);
         console.log("data-memberList",data.memberList);
+        localStorage.setItem('memberList', data.memberList);
         localStorage.setItem('memberList', JSON.stringify(data.memberList));
         localStorage.setItem('travelGroup', JSON.stringify(data.travelGroup));
       });

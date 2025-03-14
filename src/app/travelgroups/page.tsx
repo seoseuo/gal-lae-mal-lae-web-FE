@@ -5,11 +5,19 @@ import TravelgroupListView from "@/components/travelgroups/travelgroup-list-view
 import { getTravelGroupList } from "@/lib/travelgroup-api";
 import { useEffect, useState } from "react";
 import { useRouter } from 'next/navigation';
-
+import { getMe } from "@/lib/travelgroup-api";
 
 export default function Home() {
   const [travelGroupList, setTravelGroupList] = useState([]);
   const router = useRouter();
+
+  useEffect(() => {
+    async function fetchData() {
+      const userData = await getMe();
+      localStorage.setItem("user", JSON.stringify(userData));
+    }
+    fetchData();
+  }, []);
 
   useEffect(() => {
     async function fetchData() {
@@ -25,8 +33,8 @@ export default function Home() {
 
       <div className="travelgroup-container">
         <TravelgroupListView travelGroupList={travelGroupList} />
-        <button 
-          className="add-button bottom-button-postion" 
+        <button
+          className="add-button bottom-button-postion"
           onClick={() => router.push('/travelgroups/post')}
         >
           <p className="add-button-text bold">+</p>

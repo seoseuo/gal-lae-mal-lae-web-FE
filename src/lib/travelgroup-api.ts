@@ -343,3 +343,26 @@ export const saveTourSpot = async (tsIdxList: number[], scDate: number) => {
 };
 
 // 일정 시간 변경
+// /travelgroups/{grIdx}/travel/{trIdx}/schedule
+// JSON 형식으로
+export const editScheduleTime = async (scIdx: number, scStartTime: string, scEndTime: string) => {
+  try {
+    const grIdx = localStorage.getItem("grIdx");
+    const trIdx = localStorage.getItem("trIdx");
+
+    const response = await api.patch(`/travelgroups/${grIdx}/travel/${trIdx}/schedule`, {
+      scIdx,
+      scStartTime,
+      scEndTime,
+    }, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error editing schedule time:", error);
+    throw error;
+  }
+};

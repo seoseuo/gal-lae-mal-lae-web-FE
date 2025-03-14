@@ -16,6 +16,11 @@ export default function Home() {
     const [period, setPeriod] = useState<number>(0);
     const travelGroup = JSON.parse(localStorage.getItem("travelGroup") || "{}");
     const trIdx = localStorage.getItem("trIdx");
+    const user = JSON.parse(localStorage.getItem("user") || "{}");
+    const memberList = JSON.parse(localStorage.getItem("memberList") || "{}");
+
+    const isAdmin = memberList.some((member: any) => member.meRole === 'ADMIN');
+
 
     const [scheduleList, setScheduleList] = useState<any[]>([]);
     const [empty, setEmpty] = useState<boolean>(false);
@@ -141,45 +146,47 @@ export default function Home() {
 
                                 <ScheduleListView scheduleList={scheduleList} />
 
-                                {empty ? (
+                                {isAdmin && (
                                     <div>
-                                        {/* <img id="tip-box" src="/travelgroups/tipbox.svg" alt="tipbox" />
-                                        <span id="tip-box-text" className='bold' style={{ fontSize: '12px', color: '#696969' }}>Tip) 어떻게 일정을 짜야할 지 모르시겠다고요 ?<br />그럼 AI가 추천해주는 일정으로 떠나보세요 !</span>
-                                        <img className="travel-box-btn" id="ai-btn-postion" src="/travelgroups/ai-btn.svg" alt="ai-btn" /> */}
-                                        <img className="travel-box-btn" id="plus-btn-postion" src="/travelgroups/plus-btn.svg" alt="edit-icon"
-                                            onClick={() => {
-                                                
-                                                localStorage.setItem("scDate", scDate.toString());
-                                                router.push("/travelgroups/travel/tour-spots");
-                                            }}
-                                            style={{ cursor: 'pointer' }}
-                                        />
-                                    </div>
-                                ) : (
-                                    <div>
-                                        <img className="travel-box-btn" id="ai-btn-postion" src="/travelgroups/plus-btn.svg" alt="plus-icon"
-                                            onClick={() => {
-                                                localStorage.setItem("scDate", scDate.toString());
-                                                router.push("/travelgroups/travel/tour-spots");
-                                            }}
-                                            style={{ cursor: 'pointer' }}
-                                        />
-                                        <img className="travel-box-btn" id="plus-btn-postion" src="/travelgroups/edit-icon.svg" alt="edit-icon"
-                                            onClick={() => {
-                                                localStorage.setItem("scDate", scDate.toString());
-                                                router.push("/travelgroups/travel/schedule/edit");
-                                            }}
-                                            style={{ cursor: 'pointer' }}
-                                        />
+                                        {empty ? (
+                                            <img className="travel-box-btn" id="plus-btn-postion" src="/travelgroups/plus-btn.svg" alt="edit-icon"
+                                                onClick={() => {
+                                                    localStorage.setItem("scDate", scDate.toString());
+                                                    router.push("/travelgroups/travel/tour-spots");
+                                                }}
+                                                style={{ cursor: 'pointer' }}
+                                            />
+                                        ) : (
+                                            <>
+                                                <img className="travel-box-btn" id="ai-btn-postion" src="/travelgroups/plus-btn.svg" alt="plus-icon"
+                                                    onClick={() => {
+                                                        localStorage.setItem("scDate", scDate.toString());
+                                                        router.push("/travelgroups/travel/tour-spots");
+                                                    }}
+                                                    style={{ cursor: 'pointer' }}
+                                                />
+                                                <img className="travel-box-btn" id="plus-btn-postion" src="/travelgroups/edit-icon.svg" alt="edit-icon"
+                                                    onClick={() => {
+                                                        localStorage.setItem("filteredScheduleList", JSON.stringify(scheduleList));
+                                                        localStorage.setItem("scDate", scDate.toString());
+                                                        router.push("/travelgroups/travel/schedule/edit");
+                                                    }}
+                                                    style={{ cursor: 'pointer' }}
+                                                />
+                                            </>
+                                        )}
                                     </div>
                                 )}
                             </>
                         )}
+
                         {show !== "schedule" && (
                             <div>
                                 <img className="travel-box-btn" id="plus-btn-postion" src="/travelgroups/plus-btn.svg" alt="plus-btn" />
                             </div>
                         )}
+
+
 
 
                     </div>

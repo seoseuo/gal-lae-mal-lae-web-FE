@@ -21,7 +21,7 @@ export default function Home() {
 
   return (
     <div>
-      <Header text="모임 관리" icon="back"></Header>
+      <Header text="모임 관리" icon="back" parent="/"></Header>
 
       <div className="travelgroup-container">
         <TravelgroupListView travelGroupList={travelGroupList} />

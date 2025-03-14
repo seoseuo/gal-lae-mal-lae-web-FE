@@ -25,7 +25,7 @@ export default function Home() {
 
     return (
         <div>
-            <Header text="설정" icon="back" />
+            <Header text="설정" icon="back" parent="/travelgroups/get" />
 
             <div className="travelgroup-container">
                 <br />

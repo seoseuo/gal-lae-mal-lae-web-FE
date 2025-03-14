@@ -85,7 +85,7 @@ export default function Home() {
 
     return (
         <div>
-            <Header text="일정" icon="back"></Header>
+            <Header text="일정" icon="back" parent="/travelgroups/get"></Header>
 
             <div className="travel-header-container" style={{ marginTop: '-30px' }}>
                 <img src="/travelgroups/user-icon.svg" alt="user-icon" />

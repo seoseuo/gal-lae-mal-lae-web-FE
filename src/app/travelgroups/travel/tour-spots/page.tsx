@@ -71,7 +71,7 @@ export default function Home() {
 
     return (
         <div>
-            <Header text={`${scDate}일차 관광지 선정`} icon="back"></Header>
+            <Header text={`${scDate}일차 관광지 선정`} icon="back" parent="/travelgroups/travel/get"></Header>
             <div className="travelgroup-container">
                 <div className="search-bar">
                     <img src="/travelgroups/search.svg" alt="search" style={{ width: '17.49px', margin: '0 15px 0 15px' }} />

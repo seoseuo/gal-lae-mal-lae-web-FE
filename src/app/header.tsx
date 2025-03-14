@@ -9,7 +9,11 @@ export default function Header({ text, icon, parent }: { text: string; icon: str
   return (
     <div>
       <p className="header">
-        <img src={`/${icon}.svg`} alt={`${icon}-icon`} className="header-icon" onClick={() => router.push(`${parent}`)} style={{cursor:'pointer'}}/>
+        {parent ? (
+          <img src={`/${icon}.svg`} alt={`${icon}-icon`} className="header-icon" onClick={() => router.push(`${parent}`)} style={{cursor:'pointer'}}/>
+        ) : (
+          <img src={`/${icon}.svg`} alt={`${icon}-icon`} className="header-icon" onClick={() => router.back()} style={{cursor:'pointer'}}/>
+        )}
         <span className="header-text bold">{text}</span>
         
       </p>

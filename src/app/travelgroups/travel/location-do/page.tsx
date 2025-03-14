@@ -11,6 +11,8 @@ export default function Home() {
     const selectDo = (value: any) => {
         if (value >= 1 && value <= 8) {
             console.log(`특별시/광역시 선택: ${value}`);
+            saveLocationDo(value);
+            router.push("/travelgroups/travel/period");
         } else {
             if (value == "random") {
                 console.log(`랜덤 여행지: ${value}`);

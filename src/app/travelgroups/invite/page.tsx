@@ -25,7 +25,7 @@ export default function Home() {
 
     return (
         <div>
-            <Header text="초대" icon="back"></Header>
+            <Header text="초대" icon="back" parent="/travelgroups/get"></Header>
             <div className="travelgroup-container">
                 <form method="get" name="invite-form" onSubmit={handleSubmit}>
                     <div className="search-bar">

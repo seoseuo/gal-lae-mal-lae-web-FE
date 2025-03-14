@@ -1,3 +1,8 @@
+html {
+  scroll-behavior: smooth;
+}
+
+
 .travelgroup-container {
   display: flex;
   flex-direction: column;

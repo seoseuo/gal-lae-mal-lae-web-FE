@@ -382,3 +382,21 @@ export const deleteSchedule = async (scIdx: number) => {
     throw error;
   }
 };
+
+// 랜덤 여행지 미리보기
+export const getRandomTravelPreview = async (ldIdx: number, lsIdx: number) => {
+  try {
+    const grIdx = localStorage.getItem("grIdx");
+    const response = await api.get(`/travelgroups/${grIdx}/travel/location/random/preview`, {
+      params: {
+        ldIdx,
+        lsIdx,
+      },
+    });
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching random travel preview:", error);
+    throw error;
+  }
+};

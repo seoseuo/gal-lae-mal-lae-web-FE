@@ -621,3 +621,71 @@ html {
   color: #ffffff;
   text-align: center;
 }
+
+#bottom-button-postion-time {
+  position: fixed;
+  top : 750px;
+  left: 40px;
+  z-index: 99;  
+}
+
+#bottom-button-postion-delete {
+  position: fixed;
+  right: 40px;
+  top : 750px;
+  z-index: 99;  
+}
+
+/* 래퍼: 오버플로우 숨기고 전체 너비 지정 */
+.tour-spots-preview-wrapper {
+  overflow: hidden;
+  width: 100%;
+  position: relative;
+  margin: 10px 0; /* 필요에 따라 조정 */
+}
+
+/* 애니메이션 적용된 컨테이너: 내부 아이템들을 가로로 배치하고, 애니메이션으로 무한 스크롤 */
+.tour-spots-preview-container {
+  margin-top: 15px;
+  display: flex;
+  gap: 15px;                /* 아이템 간 간격 */
+  width: max-content;       /* 자식 콘텐츠 너비만큼 확장 */
+  height: 150px;            /* 컨테이너 높이 */
+  align-items: center;
+  justify-content: center;
+  animation: scroll 45s linear infinite; /* 30초로 속도 조절 */
+}
+
+/* 개별 아이템: 가로 정렬 고정 */
+.tour-spots-preview-item {
+  flex: 0 0 auto;
+  margin-right: 10px; /* 아이템 간 간격 (필요 시) */
+}
+
+/* preview 카드 스타일 */
+.tour-spots-preview-card {
+  width: 100px;
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;  
+  
+}
+
+/* 이미지 스타일 */
+.tour-spots-preview-card-img {  
+  width: 100px;
+  height: 100px;
+  border-radius: 12px; 
+}
+
+/* 스크롤 애니메이션 keyframes */
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    /* 리스트를 복제해서 붙였으므로 전체 너비의 절반만큼 이동 */
+    transform: translateX(-50%);
+  }
+}

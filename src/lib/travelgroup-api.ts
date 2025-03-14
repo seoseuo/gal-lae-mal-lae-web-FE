@@ -152,7 +152,9 @@ export const leaveGroup = async () => {
 export const saveLocationDo = async (ldIdx: number) => {
   try {
     const grIdx = localStorage.getItem("grIdx");
-    const response = await api.post(`/travelgroups/${grIdx}/travel/location/do/${ldIdx}`);
+    const response = await api.post(
+      `/travelgroups/${grIdx}/travel/location/do/${ldIdx}`
+    );
     console.log(response.data);
     return response.data;
   } catch (error) {
@@ -165,7 +167,9 @@ export const saveLocationDo = async (ldIdx: number) => {
 export const getLocationSiList = async (ldIdx: number) => {
   try {
     const grIdx = localStorage.getItem("grIdx");
-    const response = await api.get(`/travelgroups/${grIdx}/travel/location/do/${ldIdx}`);
+    const response = await api.get(
+      `/travelgroups/${grIdx}/travel/location/do/${ldIdx}`
+    );
     console.log(response.data);
     return response.data;
   } catch (error) {
@@ -178,11 +182,34 @@ export const getLocationSiList = async (ldIdx: number) => {
 export const saveLocationSi = async (lsIdx: number) => {
   try {
     const grIdx = localStorage.getItem("grIdx");
-    const response = await api.post(`/travelgroups/${grIdx}/travel/location/do/si/${lsIdx}`);
+    const response = await api.post(
+      `/travelgroups/${grIdx}/travel/location/do/si/${lsIdx}`
+    );
     window.location.href = "/travelgroups/travel/period";
     return response.data;
   } catch (error) {
     console.error("Error saving city location:", error);
+    throw error;
+  }
+};
+
+// 랜덤 여행지 저장
+export const saveRandomTravel = async (ldIdx: number, lsIdx: number) => {
+  try {
+    // saveLoactionDo 의 요청, saveLocationSi 의 요청 두번 보내기
+    const grIdx = localStorage.getItem("grIdx");
+    const response1 = await api.post(
+      `/travelgroups/${grIdx}/travel/location/do/${ldIdx}`
+    );
+    const response2 = await api.post(
+      `/travelgroups/${grIdx}/travel/location/do/si/${lsIdx}`
+    );
+
+    console.log(response1.data);
+    console.log(response2.data);
+    return response1.data;
+  } catch (error) {
+    console.error("Error saving random travel:", error);
     throw error;
   }
 };
@@ -209,7 +236,7 @@ export const savePeriod = async (trStartTime: string, trEndTime: string) => {
 // 여행지 일정 가져오기
 export const getTravel = async (trIdx: number) => {
   try {
-    const grIdx = localStorage.getItem("grIdx");    
+    const grIdx = localStorage.getItem("grIdx");
     const response = await api.get(`/travelgroups/${grIdx}/travel/${trIdx}`);
     console.log(response.data);
     return response.data;
@@ -223,7 +250,9 @@ export const getTravel = async (trIdx: number) => {
 export const getRandomTravel = async () => {
   try {
     const grIdx = localStorage.getItem("grIdx");
-    const response = await api.get(`/travelgroups/${grIdx}/travel/location/random`);
+    const response = await api.get(
+      `/travelgroups/${grIdx}/travel/location/random`
+    );
     console.log(response.data);
     return response.data;
   } catch (error) {
@@ -235,12 +264,139 @@ export const getRandomTravel = async () => {
 // 여행지 삭제
 export const deleteTravel = async (trIdx: number) => {
   try {
-    const grIdx = localStorage.getItem("grIdx");    
+    const grIdx = localStorage.getItem("grIdx");
     const response = await api.delete(`/travelgroups/${grIdx}/travel/${trIdx}`);
     console.log(response.data);
     return response.data;
   } catch (error) {
     console.error("Error deleting travel:", error);
+    throw error;
+  }
+};
+
+// 여행 장소 목록 가져오기
+export const getTourSpotList = async (
+  page: number,
+  size: number,
+  lsIdx: number,
+  ldIdx: number,
+  tsName: string,
+  c1Code: string
+) => {
+  try {
+    const grIdx = localStorage.getItem("grIdx");
+    const response = await api.get(
+      `/travelgroups/${grIdx}/travel/location/tour-spots`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        params: {
+          page,
+          size,
+          lsIdx,
+          ldIdx,
+          tsName,
+          c1Code,
+        },
+      }
+    );
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching tour spot list:", error);
+    throw error;
+  }
+};
+
+// 여행 장소 추가
+export const saveTourSpot = async (tsIdxList: number[], scDate: number) => {
+  try {
+    const grIdx = localStorage.getItem("grIdx");
+    const trIdx = localStorage.getItem("trIdx");
+
+    const scheduleList = tsIdxList.map((tsIdx) => ({
+      scDate,
+      trIdx,
+      tsIdx,
+    }));
+
+    console.log("scheduleList:", scheduleList); // 배열 형태로 확인
+
+    // 바로 scheduleList 배열을 전송
+    const response = await api.post(
+      `/travelgroups/${grIdx}/travel/${trIdx}/schedule`,
+      scheduleList, // scheduleDTOList 없이 배열만 전송
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error saving tour spot:", error);
+    throw error;
+  }
+};
+
+// 일정 시간 변경
+// /travelgroups/{grIdx}/travel/{trIdx}/schedule
+// JSON 형식으로
+export const editScheduleTime = async (scIdx: number, scStartTime: string, scEndTime: string) => {
+  try {
+    const grIdx = localStorage.getItem("grIdx");
+    const trIdx = localStorage.getItem("trIdx");
+
+    const response = await api.patch(`/travelgroups/${grIdx}/travel/${trIdx}/schedule`, {
+      scIdx,
+      scStartTime,
+      scEndTime,
+    }, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error editing schedule time:", error);
+    throw error;
+  }
+};
+
+
+// 일정 삭제
+// /travelgroups/{grIdx}/travel/{trIdx}/schedule/{scIdx}
+export const deleteSchedule = async (scIdx: number) => {
+  try {
+    const grIdx = localStorage.getItem("grIdx");
+    const trIdx = localStorage.getItem("trIdx");
+    const response = await api.delete(`/travelgroups/${grIdx}/travel/${trIdx}/schedule/${scIdx}`);
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error deleting schedule:", error);
+    throw error;
+  }
+};
+
+// 랜덤 여행지 미리보기
+export const getRandomTravelPreview = async (ldIdx: number, lsIdx: number) => {
+  try {
+    const grIdx = localStorage.getItem("grIdx");
+    const response = await api.get(`/travelgroups/${grIdx}/travel/location/random/preview`, {
+      params: {
+        ldIdx,
+        lsIdx,
+      },
+    });
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching random travel preview:", error);
     throw error;
   }
 };

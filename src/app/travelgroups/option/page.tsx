@@ -12,7 +12,7 @@ export default function Home() {
 
     useEffect(() => {
         async function fetchData() {
-            const userData = await getMe();
+            const userData = JSON.parse(localStorage.getItem('user') || '{}');
             setUser(userData);
             const memberList = JSON.parse(localStorage.getItem('memberList') || '[]');
             const adminCheck = memberList.find((member) => member.usIdx === userData.usIdx)?.meRole === 'ADMIN';
@@ -25,7 +25,7 @@ export default function Home() {
 
     return (
         <div>
-            <Header text="설정" icon="back" />
+            <Header text="설정" icon="back" parent="/travelgroups/get" />
 
             <div className="travelgroup-container">
                 <br />

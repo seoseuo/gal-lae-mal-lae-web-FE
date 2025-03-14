@@ -25,6 +25,13 @@ export default function ScheduleListView({ scheduleList }: { scheduleList: any[]
                                 <span className='regular' style={{ fontSize: '12px', marginLeft: '5px' }}>{schedule.tsAddr1}</span>
                             </div>
 
+                            <div className="schedule-list-view-text">
+                                <img src="/travelgroups/call.svg" alt="phone-icon" style={{ width: '15px', height: '15px' }}/>
+                                <span className='regular' style={{ fontSize: '12px', marginLeft: '5px'}}>
+                                    {schedule.tsTel ? schedule.tsTel : "전화번호가 없습니다."}
+                                </span>
+                            </div>
+
                             {/* <div className="schedule-list-view-text">
                                 <img src="/travelgroups/location-black.svg" alt="location" />
                                 <span className='regular' style={{ fontSize: '12px', marginLeft: '5px' }}>{schedule.tsTel}</span>

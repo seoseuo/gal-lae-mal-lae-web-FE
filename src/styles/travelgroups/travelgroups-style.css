@@ -346,13 +346,15 @@
 .tour-spots-container {
   display: flex;
   justify-content: center;
+  overflow-y: auto;
+  flex-direction: column;
 }
 
 .tour-spots-view {
   display: flex;
   width: 319px;
   height: 55px;
-  margin-top: 28px;
+  margin-top: 15px;
 }
 
 .tour-spots-checkbox {
@@ -381,11 +383,23 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  width: 60%;
+  
 }
 .tour-spots-detail-box {
   display: flex;
   margin-left: 5px;
-  margin-top: 7px;
+  margin-top: 7px;  
+}
+
+.tour-span-img {
+  width: 5px;
+}
+
+.tour-span-text {
+  width: 100%;
+  display: flex;
+  align-items: center;
 }
 
 .schedule-set-modal-container {
@@ -548,4 +562,25 @@
   height: 20px;
   cursor: pointer;
   z-index: 99;
+}
+
+.filter-container {
+  margin-top: 20px;
+  width: 340px;
+  height: 30px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  color: #000000;
+  border-radius: 10px;
+  border: 1px solid #000000;
+  padding: 0 120px 0 120px;
+  background-color: #ffffff;
+}
+
+.filter-select {
+  background-color: #ffffff;
+  border: none;
+  width: 100%;
 }

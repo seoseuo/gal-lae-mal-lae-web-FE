@@ -366,3 +366,19 @@ export const editScheduleTime = async (scIdx: number, scStartTime: string, scEnd
     throw error;
   }
 };
+
+
+// 일정 삭제
+// /travelgroups/{grIdx}/travel/{trIdx}/schedule/{scIdx}
+export const deleteSchedule = async (scIdx: number) => {
+  try {
+    const grIdx = localStorage.getItem("grIdx");
+    const trIdx = localStorage.getItem("trIdx");
+    const response = await api.delete(`/travelgroups/${grIdx}/travel/${trIdx}/schedule/${scIdx}`);
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error deleting schedule:", error);
+    throw error;
+  }
+};

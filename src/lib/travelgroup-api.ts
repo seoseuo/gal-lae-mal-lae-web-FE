@@ -42,6 +42,26 @@ api.interceptors.response.use(
   }
 );
 
+
+
+
+// 토큰 만료 시 처리 함수
+export const handleTokenExpired = () => {
+  // 모든 쿠키 삭제
+  alert("인증 토큰이 만료되었어요.");
+  document.cookie.split(";").forEach((cookie) => {
+    const cookieName = cookie.split("=")[0].trim();
+    document.cookie = `${cookieName}=; max-age=0; path=/;`;
+  });
+
+  // 로컬 스토리지 비우기
+  localStorage.clear();
+
+  // 로그인 페이지로 이동
+  window.location.href = "/login";
+};
+
+
 // ==================== API 요청 함수 ====================
 
 // 1. 내 모임 목록 조회
@@ -477,13 +497,13 @@ export const getRandomTravelPreview = async (ldIdx: number, lsIdx: number) => {
 export const saveTravelogue = async (
   tlTitle: string,
   tlContent: string,
-  tlImage: File,
+  setTlImage: FileList,
   tlPublicBool: boolean
 ) => {
   try {
-    let tlPublic = 0;
+    let tlPublic = "0";
     if (tlPublicBool) {
-      tlPublic = 1;
+      tlPublic = "1";
     }
 
     const grIdx = localStorage.getItem("grIdx");
@@ -494,40 +514,27 @@ export const saveTravelogue = async (
       throw new Error("Group or travel index is missing");
     }
 
+    console.log("setTlImage:", setTlImage);
+    console.log("setTlImage[0]:", setTlImage[0]);
+
     const formData = new FormData();
-    formData.append("trIdx", trIdx); // trIdx는 string이므로 null 체크가 필요하지 않음
     formData.append("tlTitle", tlTitle);
     formData.append("tlContent", tlContent);
-    formData.append("tlImage", tlImage);
-    formData.append("tlPublic", tlPublic.toString());
+    formData.append("tlPublic", tlPublic);
+    formData.append("trIdx", trIdx);
+    formData.append("setTlImage", setTlImage[0]);
 
     const response = await api.post(
       `/travelgroups/${grIdx}/travel/${trIdx}/travelogue`,
       formData
     );
+    
+    window.location.href = "/travelgroups/travel/get";
+
     console.log(response.data);
     return response.data;
   } catch (error) {
-    if (error instanceof AxiosError && error.response?.status === 401) {
-      handleTokenExpired();
-    }
-    console.error("Error saving travelogue:", error);
+    console.error("Error saving travelogue:", error);    
     throw error;
   }
-};
-
-// 토큰 만료 시 처리 함수
-export const handleTokenExpired = () => {
-  // 모든 쿠키 삭제
-  alert("인증 토큰이 만료되었어요.");
-  document.cookie.split(";").forEach((cookie) => {
-    const cookieName = cookie.split("=")[0].trim();
-    document.cookie = `${cookieName}=; max-age=0; path=/;`;
-  });
-
-  // 로컬 스토리지 비우기
-  localStorage.clear();
-
-  // 로그인 페이지로 이동
-  window.location.href = "/login";
 };

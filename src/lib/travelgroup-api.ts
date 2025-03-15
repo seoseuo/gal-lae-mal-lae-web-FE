@@ -42,9 +42,6 @@ api.interceptors.response.use(
   }
 );
 
-
-
-
 // 토큰 만료 시 처리 함수
 export const handleTokenExpired = () => {
   // 모든 쿠키 삭제
@@ -60,7 +57,6 @@ export const handleTokenExpired = () => {
   // 로그인 페이지로 이동
   window.location.href = "/login";
 };
-
 
 // ==================== API 요청 함수 ====================
 
@@ -528,13 +524,32 @@ export const saveTravelogue = async (
       `/travelgroups/${grIdx}/travel/${trIdx}/travelogue`,
       formData
     );
-    
+
     window.location.href = "/travelgroups/travel/get";
 
     console.log(response.data);
     return response.data;
   } catch (error) {
-    console.error("Error saving travelogue:", error);    
+    console.error("Error saving travelogue:", error);
+    throw error;
+  }
+};
+
+// 여행록 삭제
+export const deleteTravelogue = async (tlIdx: number) => {
+  try {
+    const grIdx = localStorage.getItem("grIdx");
+    const trIdx = localStorage.getItem("trIdx");
+    const response = await api.delete(
+      `/travelgroups/${grIdx}/travel/${trIdx}/travelogue/${tlIdx}`
+    );
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    if (error instanceof AxiosError && error.response?.status === 401) {
+      handleTokenExpired();
+    }
+    console.error("Error deleting travelogue:", error);
     throw error;
   }
 };

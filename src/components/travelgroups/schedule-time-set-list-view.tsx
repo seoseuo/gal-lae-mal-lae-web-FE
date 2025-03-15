@@ -128,7 +128,11 @@ export default function ScheduleTimeSetListView({ scheduleList, scDate }: { sche
 
   // 시작 시간(scStartTime) 기준 오름차순 정렬된 스케줄 리스트
   const sortedScheduleList = useMemo(() => {
+    // null 일 때 예외처리 -> 그냥 비교 안하고 넘어가기
     return localScheduleList.slice().sort((a, b) => {
+      if (!a.scStartTime || !b.scStartTime) {
+        return 0;
+      }
       // HH:MM:SS 형식이라면 문자열 비교로도 정렬 가능
       return a.scStartTime.localeCompare(b.scStartTime);
     });
@@ -178,14 +182,16 @@ export default function ScheduleTimeSetListView({ scheduleList, scDate }: { sche
         ))}
       </fieldset>
 
-      <div className="bottom-button-postion">
+      <div>
         <button
+          id="bottom-button-postion-time"
           className={selectedSchedule ? "active-button travelgroups-font-size" : "nomal-button travelgroups-font-size"}
           onClick={handleTimeChangeClick}
         >
           시간 변경
         </button>
         <button
+          id="bottom-button-postion-delete"
           className={selectedSchedule ? "active-button travelgroups-font-size" : "nomal-button travelgroups-font-size"}
           style={{ marginLeft: '20px' }}
           onClick={handleDeleteClick}

@@ -556,10 +556,10 @@ export const deleteTravelogue = async (tlIdx: number) => {
 
 // 공개 여행록 목록 가져오기
 ///travelogues?page&size
-export const getPublicTravelogueList = async (page: number, size: number) => {
+export const getPublicTravelogueList = async (page: number, size: number, keyword: string) => {
   try {
     const response = await api.get("/travelogues", {
-      params: { page, size },
+      params: { page, size, keyword },
     });
     console.log(response.data);
     return response.data;
@@ -571,4 +571,3 @@ export const getPublicTravelogueList = async (page: number, size: number) => {
     throw error;
   }
 }
-

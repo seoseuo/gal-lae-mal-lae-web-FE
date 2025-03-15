@@ -66,6 +66,9 @@ export const postGroup = async (formData: FormData) => {
     console.log(response.data);
     location.href = "/travelgroups";
   } catch (error) {
+    if (error instanceof AxiosError && error.response?.status === 401) {
+      handleTokenExpired();
+    }
     console.error("Error posting group:", error);
     throw error;
   }
@@ -78,6 +81,9 @@ export async function getGroup(grIdx: number) {
     console.log(response.data);
     return response.data;
   } catch (error) {
+    if (error instanceof AxiosError && error.response?.status === 401) {
+      handleTokenExpired();
+    }
     console.error("Error fetching group:", error);
     throw error;
   }
@@ -93,6 +99,9 @@ export const searchUser = async (usEmail: string) => {
     console.log(response.data);
     return response.data;
   } catch (error) {
+    if (error instanceof AxiosError && error.response?.status === 401) {
+      handleTokenExpired();
+    }
     console.error("Error searching user:", error);
     throw error;
   }
@@ -106,6 +115,9 @@ export const inviteUser = async (usIdx: number) => {
     console.log(response.data);
     return response.data;
   } catch (error) {
+    if (error instanceof AxiosError && error.response?.status === 401) {
+      handleTokenExpired();
+    }
     console.error("Error inviting user:", error);
     throw error;
   }
@@ -118,6 +130,9 @@ export const getMe = async () => {
     console.log(response.data);
     return response.data;
   } catch (error) {
+    if (error instanceof AxiosError && error.response?.status === 401) {
+      handleTokenExpired();
+    }
     console.error("Error fetching user info:", error);
     throw error;
   }
@@ -131,6 +146,9 @@ export const updateAdmin = async (usIdx: number) => {
     console.log(response.data);
     return response.data;
   } catch (error) {
+    if (error instanceof AxiosError && error.response?.status === 401) {
+      handleTokenExpired();
+    }
     console.error("Error updating admin:", error);
     throw error;
   }
@@ -143,6 +161,9 @@ export const leaveGroup = async () => {
     await api.patch(`/travelgroups/${grIdx}/leave`);
     window.location.href = "/travelgroups";
   } catch (error) {
+    if (error instanceof AxiosError && error.response?.status === 401) {
+      handleTokenExpired();
+    }
     console.error("Error leaving group:", error);
     throw error;
   }
@@ -158,6 +179,9 @@ export const saveLocationDo = async (ldIdx: number) => {
     console.log(response.data);
     return response.data;
   } catch (error) {
+    if (error instanceof AxiosError && error.response?.status === 401) {
+      handleTokenExpired();
+    }
     console.error("Error saving location:", error);
     throw error;
   }
@@ -173,6 +197,9 @@ export const getLocationSiList = async (ldIdx: number) => {
     console.log(response.data);
     return response.data;
   } catch (error) {
+    if (error instanceof AxiosError && error.response?.status === 401) {
+      handleTokenExpired();
+    }
     console.error("Error fetching location list:", error);
     throw error;
   }
@@ -188,6 +215,9 @@ export const saveLocationSi = async (lsIdx: number) => {
     window.location.href = "/travelgroups/travel/period";
     return response.data;
   } catch (error) {
+    if (error instanceof AxiosError && error.response?.status === 401) {
+      handleTokenExpired();
+    }
     console.error("Error saving city location:", error);
     throw error;
   }
@@ -209,6 +239,9 @@ export const saveRandomTravel = async (ldIdx: number, lsIdx: number) => {
     console.log(response2.data);
     return response1.data;
   } catch (error) {
+    if (error instanceof AxiosError && error.response?.status === 401) {
+      handleTokenExpired();
+    }
     console.error("Error saving random travel:", error);
     throw error;
   }
@@ -228,6 +261,9 @@ export const savePeriod = async (trStartTime: string, trEndTime: string) => {
     }
     return response.data;
   } catch (error) {
+    if (error instanceof AxiosError && error.response?.status === 401) {
+      handleTokenExpired();
+    }
     console.error("Error saving travel period:", error);
     throw error;
   }
@@ -241,6 +277,9 @@ export const getTravel = async (trIdx: number) => {
     console.log(response.data);
     return response.data;
   } catch (error) {
+    if (error instanceof AxiosError && error.response?.status === 401) {
+      handleTokenExpired();
+    }
     console.error("Error fetching travel:", error);
     throw error;
   }
@@ -256,6 +295,9 @@ export const getRandomTravel = async () => {
     console.log(response.data);
     return response.data;
   } catch (error) {
+    if (error instanceof AxiosError && error.response?.status === 401) {
+      handleTokenExpired();
+    }
     console.error("Error fetching random travel:", error);
     throw error;
   }
@@ -269,6 +311,9 @@ export const deleteTravel = async (trIdx: number) => {
     console.log(response.data);
     return response.data;
   } catch (error) {
+    if (error instanceof AxiosError && error.response?.status === 401) {
+      handleTokenExpired();
+    }
     console.error("Error deleting travel:", error);
     throw error;
   }
@@ -304,6 +349,9 @@ export const getTourSpotList = async (
     console.log(response.data);
     return response.data;
   } catch (error) {
+    if (error instanceof AxiosError && error.response?.status === 401) {
+      handleTokenExpired();
+    }
     console.error("Error fetching tour spot list:", error);
     throw error;
   }
@@ -337,6 +385,9 @@ export const saveTourSpot = async (tsIdxList: number[], scDate: number) => {
     console.log(response.data);
     return response.data;
   } catch (error) {
+    if (error instanceof AxiosError && error.response?.status === 401) {
+      handleTokenExpired();
+    }
     console.error("Error saving tour spot:", error);
     throw error;
   }
@@ -345,28 +396,38 @@ export const saveTourSpot = async (tsIdxList: number[], scDate: number) => {
 // 일정 시간 변경
 // /travelgroups/{grIdx}/travel/{trIdx}/schedule
 // JSON 형식으로
-export const editScheduleTime = async (scIdx: number, scStartTime: string, scEndTime: string) => {
+export const editScheduleTime = async (
+  scIdx: number,
+  scStartTime: string,
+  scEndTime: string
+) => {
   try {
     const grIdx = localStorage.getItem("grIdx");
     const trIdx = localStorage.getItem("trIdx");
 
-    const response = await api.patch(`/travelgroups/${grIdx}/travel/${trIdx}/schedule`, {
-      scIdx,
-      scStartTime,
-      scEndTime,
-    }, {
-      headers: {
-        "Content-Type": "application/json",
+    const response = await api.patch(
+      `/travelgroups/${grIdx}/travel/${trIdx}/schedule`,
+      {
+        scIdx,
+        scStartTime,
+        scEndTime,
       },
-    });
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
     console.log(response.data);
     return response.data;
   } catch (error) {
+    if (error instanceof AxiosError && error.response?.status === 401) {
+      handleTokenExpired();
+    }
     console.error("Error editing schedule time:", error);
     throw error;
   }
 };
-
 
 // 일정 삭제
 // /travelgroups/{grIdx}/travel/{trIdx}/schedule/{scIdx}
@@ -374,10 +435,15 @@ export const deleteSchedule = async (scIdx: number) => {
   try {
     const grIdx = localStorage.getItem("grIdx");
     const trIdx = localStorage.getItem("trIdx");
-    const response = await api.delete(`/travelgroups/${grIdx}/travel/${trIdx}/schedule/${scIdx}`);
+    const response = await api.delete(
+      `/travelgroups/${grIdx}/travel/${trIdx}/schedule/${scIdx}`
+    );
     console.log(response.data);
     return response.data;
   } catch (error) {
+    if (error instanceof AxiosError && error.response?.status === 401) {
+      handleTokenExpired();
+    }
     console.error("Error deleting schedule:", error);
     throw error;
   }
@@ -387,16 +453,81 @@ export const deleteSchedule = async (scIdx: number) => {
 export const getRandomTravelPreview = async (ldIdx: number, lsIdx: number) => {
   try {
     const grIdx = localStorage.getItem("grIdx");
-    const response = await api.get(`/travelgroups/${grIdx}/travel/location/random/preview`, {
-      params: {
-        ldIdx,
-        lsIdx,
-      },
-    });
+    const response = await api.get(
+      `/travelgroups/${grIdx}/travel/location/random/preview`,
+      {
+        params: {
+          ldIdx,
+          lsIdx,
+        },
+      }
+    );
     console.log(response.data);
     return response.data;
   } catch (error) {
+    if (error instanceof AxiosError && error.response?.status === 401) {
+      handleTokenExpired();
+    }
     console.error("Error fetching random travel preview:", error);
     throw error;
   }
+};
+
+// 여행록 등록
+export const saveTravelogue = async (
+  tlTitle: string,
+  tlContent: string,
+  tlImage: File,
+  tlPublicBool: boolean
+) => {
+  try {
+    let tlPublic = 0;
+    if (tlPublicBool) {
+      tlPublic = 1;
+    }
+
+    const grIdx = localStorage.getItem("grIdx");
+    const trIdx = localStorage.getItem("trIdx");
+
+    // grIdx와 trIdx가 null인 경우 처리
+    if (!grIdx || !trIdx) {
+      throw new Error("Group or travel index is missing");
+    }
+
+    const formData = new FormData();
+    formData.append("trIdx", trIdx); // trIdx는 string이므로 null 체크가 필요하지 않음
+    formData.append("tlTitle", tlTitle);
+    formData.append("tlContent", tlContent);
+    formData.append("tlImage", tlImage);
+    formData.append("tlPublic", tlPublic.toString());
+
+    const response = await api.post(
+      `/travelgroups/${grIdx}/travel/${trIdx}/travelogue`,
+      formData
+    );
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    if (error instanceof AxiosError && error.response?.status === 401) {
+      handleTokenExpired();
+    }
+    console.error("Error saving travelogue:", error);
+    throw error;
+  }
+};
+
+// 토큰 만료 시 처리 함수
+export const handleTokenExpired = () => {
+  // 모든 쿠키 삭제
+  alert("인증 토큰이 만료되었어요.");
+  document.cookie.split(";").forEach((cookie) => {
+    const cookieName = cookie.split("=")[0].trim();
+    document.cookie = `${cookieName}=; max-age=0; path=/;`;
+  });
+
+  // 로컬 스토리지 비우기
+  localStorage.clear();
+
+  // 로그인 페이지로 이동
+  window.location.href = "/login";
 };

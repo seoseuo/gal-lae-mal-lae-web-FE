@@ -6,6 +6,7 @@ import Header from "../../../header";
 import "@/styles/travelgroups/travelgroups-style.css";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import TravelogueListView from "@/components/travelgroups/travelogue-list-view";
 
 export default function Home() {
     const router = useRouter();
@@ -16,9 +17,9 @@ export default function Home() {
     const [period, setPeriod] = useState<number>(0);
     const travelGroup = JSON.parse(localStorage.getItem("travelGroup") || "{}");
     const trIdx = localStorage.getItem("trIdx");
-    const user = JSON.parse(localStorage.getItem("user") || "{}");
+    // const user = JSON.parse(localStorage.getItem("user") || "{}");
     const memberList = JSON.parse(localStorage.getItem("memberList") || "{}");
-
+    const [travelogueList, setTravelogueList] = useState<any[]>([]);
     const isAdmin = memberList.some((member: any) => member.meRole === 'ADMIN');
 
 
@@ -79,6 +80,8 @@ export default function Home() {
 
             localStorage.setItem("travel", JSON.stringify(travel.travel));
 
+            const travelogueList = travel.travelogueList;
+            setTravelogueList(travelogueList);
             // 기본 스케쥴 리스트
             const defaultScheduleList = travel.scheduleList.filter((schedule: any) => schedule.scDate === 1);
             setScheduleList(defaultScheduleList);
@@ -182,7 +185,16 @@ export default function Home() {
 
                         {show !== "schedule" && (
                             <div>
-                                <img className="travel-box-btn" id="plus-btn-postion" src="/travelgroups/plus-btn.svg" alt="plus-btn" />
+                                <TravelogueListView travelogueList={travelogueList} />
+
+                                <div onClick={() => {
+                                    localStorage.setItem("scDate", scDate.toString());
+                                    router.push("/travelgroups/travel/travelogues/post");
+                                }}
+                                    style={{ cursor: 'pointer' }}
+                                >
+                                    <img className="travel-box-btn" id="plus-btn-postion" src="/travelgroups/plus-btn.svg" alt="plus-btn" />
+                                </div>
                             </div>
                         )}
 

@@ -1,7 +1,8 @@
 html {
   scroll-behavior: smooth;
+  scrollbar-width: none; /* Firefox에서 스크롤바 숨기기 */
+  -webkit-scrollbar-width: none; /* Chrome, Safari에서 스크롤바 숨기기 */
 }
-
 
 .travelgroup-container {
   display: flex;
@@ -12,8 +13,11 @@ html {
 .travelgroup-list-view-container {
   display: flex;
   flex-direction: row;
+  justify-content: center;
+  padding: 0 0 0 10px;
   margin-bottom: 25px;
   width: 90vw;
+  
 }
 
 .travelgroup-get-container {
@@ -130,13 +134,16 @@ html {
   flex-direction: row;
   gap: 10px;
   padding: 0 8 0 8;
-  overflow-x: auto;
+  overflow-x: scroll;
+  scrollbar-width: none; /* Firefox에서 스크롤바 숨기기 */
+  -webkit-scrollbar-width: none; /* Chrome, Safari에서 스크롤바 숨기기 */
 }
 
 .travel-list-img {
   width: 159px;
   height: 201px;
   border-radius: 13px;
+  border: 1px solid red;
 }
 
 .travel-list-img-bar {
@@ -206,10 +213,10 @@ html {
   justify-content: center; /* 수평 중앙 정렬 */
 }
 
-.search-bar {
+.search-bar {  
   width: 343px;
   height: 44px;
-  padding: 1px;
+  padding: 3px;
   border: #000000 1px solid;
   border-radius: 56px;
   display: flex;
@@ -265,7 +272,7 @@ html {
 .travel-header-container {
   display: flex;
   flex-direction: row;
-  align-items: center;  
+  align-items: center;
   margin-left: 20px;
 }
 
@@ -389,12 +396,11 @@ html {
   flex-direction: column;
   justify-content: center;
   width: 60%;
-  
 }
 .tour-spots-detail-box {
   display: flex;
   margin-left: 5px;
-  margin-top: 7px;  
+  margin-top: 7px;
 }
 
 .tour-span-img {
@@ -406,8 +412,6 @@ html {
   display: flex;
   align-items: center;
 }
-
-
 
 .schedule-set-modal-text {
   display: flex;
@@ -454,6 +458,8 @@ html {
   align-items: center;
   z-index: 1;
   background-color: #ffffff;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .travelgroups-list-view {
@@ -487,14 +493,14 @@ html {
 .travelgroups-list-view-content-img {
   width: 324px;
   height: 207px;
-  border-radius: 16px;
-  border: 1px solid black;
+  border-radius: 16px;  
 }
 
 .travelgroups-post-editer {
   margin: 0 0 10px 10px;
   font-size: 12px;
   width: 95%;
+
 }
 
 .travelgroups-post-editer-icons {
@@ -561,21 +567,21 @@ html {
 
 .filter-container {
   margin-top: 20px;
-  
+
   height: 25px;
-  display: flex;  
+  display: flex;
   justify-content: center;
   align-items: center;
-  color: #490085;;
+  color: #490085;
   border-radius: 10px;
   border: 1px solid #490085;
-  padding: 0 120px 0 120px;  
-  background-color: #FFFFFF;
+  padding: 0 120px 0 120px;
+  background-color: #ffffff;
 }
 
-.filter-select {  
-  background-color: #FFFFFF;
-  border: none;    
+.filter-select {
+  background-color: #ffffff;
+  border: none;
 }
 
 .schedule-set-modal-container {
@@ -616,7 +622,7 @@ html {
 .time-set-slider-input {
   width: 100%;
   height: 30px;
-  border-radius: 5px;  
+  border-radius: 5px;
   background-color: #490085;
   color: #ffffff;
   text-align: center;
@@ -624,16 +630,16 @@ html {
 
 #bottom-button-postion-time {
   position: fixed;
-  top : 750px;
+  top: 750px;
   left: 40px;
-  z-index: 99;  
+  z-index: 99;
 }
 
 #bottom-button-postion-delete {
   position: fixed;
   right: 40px;
-  top : 750px;
-  z-index: 99;  
+  top: 750px;
+  z-index: 99;
 }
 
 /* 래퍼: 오버플로우 숨기고 전체 너비 지정 */
@@ -648,9 +654,9 @@ html {
 .tour-spots-preview-container {
   margin-top: 15px;
   display: flex;
-  gap: 15px;                /* 아이템 간 간격 */
-  width: max-content;       /* 자식 콘텐츠 너비만큼 확장 */
-  height: 150px;            /* 컨테이너 높이 */
+  gap: 15px; /* 아이템 간 간격 */
+  width: max-content; /* 자식 콘텐츠 너비만큼 확장 */
+  height: 150px; /* 컨테이너 높이 */
   align-items: center;
   justify-content: center;
   animation: scroll 45s linear infinite; /* 30초로 속도 조절 */
@@ -668,15 +674,14 @@ html {
   height: 150px;
   display: flex;
   flex-direction: column;
-  align-items: center;  
-  
+  align-items: center;
 }
 
 /* 이미지 스타일 */
-.tour-spots-preview-card-img {  
+.tour-spots-preview-card-img {
   width: 100px;
   height: 100px;
-  border-radius: 12px; 
+  border-radius: 12px;
 }
 
 /* 스크롤 애니메이션 keyframes */
@@ -688,4 +693,35 @@ html {
     /* 리스트를 복제해서 붙였으므로 전체 너비의 절반만큼 이동 */
     transform: translateX(-50%);
   }
+}
+
+.travelogue-public-view-profile {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  border-radius: 16px;
+  
+  
+}
+
+.travelogue-public-view-profile-img {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 1px solid #490085;  
+}
+
+.travelogue-public-view-content-img {
+  margin-top: 10px;
+  width: 289px;
+  height: 184px;
+  border-radius: 16px;
+  border: 1px solid #490085;
+  ;
+}
+
+.travelogue-public-view-content-text {
+  
+  margin-bottom: 30px;
 }

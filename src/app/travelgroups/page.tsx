@@ -31,7 +31,7 @@ export default function Home() {
     <div>
       <Header text="모임 관리" icon="back" parent="/"></Header>
 
-      <div className="travelgroup-container">
+      <div className="travelgroup-container">        
         <TravelgroupListView travelGroupList={travelGroupList} />
         <button
           className="add-button bottom-button-postion"

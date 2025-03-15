@@ -1,16 +1,28 @@
 "use client";
 
 import { useRouter } from 'next/navigation';
-import "@/styles/travelgroups/travelgroups-style.css";
 import { useState } from 'react';
+import "@/styles/travelgroups/travelgroups-style.css";
 import { deleteTravel } from '@/lib/travelgroup-api';
+
 export default function TravelListView({ travelList }: { travelList: any[] }) {
     const router = useRouter();
     const [list, setList] = useState(travelList);
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+    const [selectedTravelIdx, setSelectedTravelIdx] = useState<number | null>(null);
 
-    const handleDelete = (trIdx: number) => {
-        deleteTravel(trIdx);
-        setList(list.filter(travel => travel.trIdx !== trIdx));
+    const handleDeleteClick = (trIdx: number) => {
+        setSelectedTravelIdx(trIdx);
+        setIsDeleteModalOpen(true);
+    };
+
+    const confirmDelete = () => {
+        if (selectedTravelIdx !== null) {
+            deleteTravel(selectedTravelIdx);
+            setList(list.filter(travel => travel.trIdx !== selectedTravelIdx));
+        }
+        setIsDeleteModalOpen(false);
+        setSelectedTravelIdx(null);
     };
 
     return (
@@ -24,7 +36,7 @@ export default function TravelListView({ travelList }: { travelList: any[] }) {
                         <span>{travel.ldName} {travel.lsName}</span>
                         <img className="delete-icon" src="/travelgroups/delete.svg" alt="delete" onClick={(e) => {
                             e.stopPropagation();
-                            handleDelete(travel.trIdx);
+                            handleDeleteClick(travel.trIdx);
                         }} />
                     </div>
 
@@ -36,15 +48,15 @@ export default function TravelListView({ travelList }: { travelList: any[] }) {
 
                     {travel.tlImgList.length === 1 && (
                         <div className="travel-list-img-view">
-                            <img className="travel-list-img" src={travel.tlImgList[0]} alt="travelImg" />
-                            <img className="travel-list-img" src="/travelgroups/travelView.png" alt="travelImg" />                                                       
+                            <img className="travel-list-img" src={travel.tlImgList[0]} alt={travel.tlImgList[0]} />
+                            <img className="travel-list-img" src="/travelgroups/travelView.png" alt="travelImg" />                                                        
                         </div>
                     )}
 
                     {travel.tlImgList.length > 1 && (
                         <div className="travel-list-img-view">
                             {travel.tlImgList.map((img: string) => (
-                                <img className="travel-list-img" src={img} alt="travelImg" key={img} />
+                                <img className="travel-list-img" src={img} alt={img} key={img} />
                             ))}
                         </div>
                     )}
@@ -55,6 +67,38 @@ export default function TravelListView({ travelList }: { travelList: any[] }) {
                 </div>
             ))}
 
+            {/* 삭제 확인 모달 */}
+            {isDeleteModalOpen && (
+                <div className="modal-overlay" style={{
+                    position: 'fixed',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    height: '100%',
+                    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    zIndex: '1000'
+                }}>
+                    <div className="modal" style={{
+                        backgroundColor: '#fff',
+                        padding: '20px',
+                        borderRadius: '10px',
+                        boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+                        textAlign: 'center',
+                        width: '90%',
+                        height: '140px'
+                    }}>
+                        <p>정말로 삭제하시겠어요?</p>
+                        <div style={{marginTop: '20px'}}>
+                            <button className="nomal-button" onClick={confirmDelete} >삭제</button>
+                            <button className="active-button" onClick={() => setIsDeleteModalOpen(false)} style={{marginLeft: '10px'}}>취소</button>
+                        </div>
+                    </div>
+                </div>
+            )}
+            
             <br />
             <br />
         </div>

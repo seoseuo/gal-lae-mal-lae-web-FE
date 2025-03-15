@@ -553,3 +553,22 @@ export const deleteTravelogue = async (tlIdx: number) => {
     throw error;
   }
 };
+
+// 공개 여행록 목록 가져오기
+///travelogues?page&size
+export const getPublicTravelogueList = async (page: number, size: number) => {
+  try {
+    const response = await api.get("/travelogues", {
+      params: { page, size },
+    });
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    if (error instanceof AxiosError && error.response?.status === 401) {
+      handleTokenExpired();
+    }
+    console.error("Error fetching public travelogue list:", error);
+    throw error;
+  }
+}
+

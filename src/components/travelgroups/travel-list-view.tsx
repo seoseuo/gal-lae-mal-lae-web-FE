@@ -48,7 +48,7 @@ export default function TravelListView({ travelList }: { travelList: any[] }) {
 
                     {travel.tlImgList.length === 1 && (
                         <div className="travel-list-img-view">
-                            <img className="travel-list-img" src={travel.tlImgList[0]} alt="travelImg" />
+                            <img className="travel-list-img" src={travel.tlImgList[0]} alt={travel.tlImgList[0]} />
                             <img className="travel-list-img" src="/travelgroups/travelView.png" alt="travelImg" />                                                        
                         </div>
                     )}
@@ -56,7 +56,7 @@ export default function TravelListView({ travelList }: { travelList: any[] }) {
                     {travel.tlImgList.length > 1 && (
                         <div className="travel-list-img-view">
                             {travel.tlImgList.map((img: string) => (
-                                <img className="travel-list-img" src={img} alt="travelImg" key={img} />
+                                <img className="travel-list-img" src={img} alt={img} key={img} />
                             ))}
                         </div>
                     )}
@@ -91,9 +91,10 @@ export default function TravelListView({ travelList }: { travelList: any[] }) {
                         height: '140px'
                     }}>
                         <p>정말로 삭제하시겠어요?</p>
-                        <div style={{marginTop: '20px'}}></div>
-                        <button className="nomal-button" onClick={confirmDelete} >삭제</button>
-                        <button className="active-button" onClick={() => setIsDeleteModalOpen(false)} style={{marginLeft: '10px'}}>취소</button>
+                        <div style={{marginTop: '20px'}}>
+                            <button className="nomal-button" onClick={confirmDelete} >삭제</button>
+                            <button className="active-button" onClick={() => setIsDeleteModalOpen(false)} style={{marginLeft: '10px'}}>취소</button>
+                        </div>
                     </div>
                 </div>
             )}

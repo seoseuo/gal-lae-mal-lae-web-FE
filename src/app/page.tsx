@@ -7,7 +7,15 @@ export default function Home() {
       <Header text="헤더" icon="back"></Header>
       <button className="active-button medium" onClick={() => {
         window.location.href = "/travelgroups";
-      }}>travelGroups</button>        
-    </div>    
+      }}>travelGroups</button>
+
+      <button className="active-button medium" onClick={() => {
+        window.location.href = "/travelogues";
+      }}>Travelogues</button>
+
+    </div>
+
+
+
   );
 }

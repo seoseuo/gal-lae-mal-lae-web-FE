@@ -17,7 +17,7 @@ export default function Home() {
     const [period, setPeriod] = useState<number>(0);
     const travelGroup = JSON.parse(localStorage.getItem("travelGroup") || "{}");
     const trIdx = localStorage.getItem("trIdx");
-    const user = JSON.parse(localStorage.getItem("user") || "{}");
+    // const user = JSON.parse(localStorage.getItem("user") || "{}");
     const memberList = JSON.parse(localStorage.getItem("memberList") || "{}");
     const [travelogueList, setTravelogueList] = useState<any[]>([]);
     const isAdmin = memberList.some((member: any) => member.meRole === 'ADMIN');

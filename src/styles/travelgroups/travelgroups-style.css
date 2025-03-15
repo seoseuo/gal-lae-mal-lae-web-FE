@@ -1,5 +1,7 @@
 html {
   scroll-behavior: smooth;
+  scrollbar-width: none; /* Firefox에서 스크롤바 숨기기 */
+  -webkit-scrollbar-width: none; /* Chrome, Safari에서 스크롤바 숨기기 */
 }
 
 .travelgroup-container {
@@ -15,7 +17,7 @@ html {
   padding: 0 0 0 10px;
   margin-bottom: 25px;
   width: 90vw;
-  border: 1px solid black;
+  
 }
 
 .travelgroup-get-container {
@@ -132,13 +134,16 @@ html {
   flex-direction: row;
   gap: 10px;
   padding: 0 8 0 8;
-  overflow-x: auto;
+  overflow-x: scroll;
+  scrollbar-width: none; /* Firefox에서 스크롤바 숨기기 */
+  -webkit-scrollbar-width: none; /* Chrome, Safari에서 스크롤바 숨기기 */
 }
 
 .travel-list-img {
   width: 159px;
   height: 201px;
   border-radius: 13px;
+  border: 1px solid red;
 }
 
 .travel-list-img-bar {
@@ -208,10 +213,10 @@ html {
   justify-content: center; /* 수평 중앙 정렬 */
 }
 
-.search-bar {
+.search-bar {  
   width: 343px;
   height: 44px;
-  padding: 1px;
+  padding: 3px;
   border: #000000 1px solid;
   border-radius: 56px;
   display: flex;
@@ -453,6 +458,8 @@ html {
   align-items: center;
   z-index: 1;
   background-color: #ffffff;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .travelgroups-list-view {
@@ -486,14 +493,14 @@ html {
 .travelgroups-list-view-content-img {
   width: 324px;
   height: 207px;
-  border-radius: 16px;
-  border: 1px solid black;
+  border-radius: 16px;  
 }
 
 .travelgroups-post-editer {
   margin: 0 0 10px 10px;
   font-size: 12px;
   width: 95%;
+
 }
 
 .travelgroups-post-editer-icons {
@@ -686,4 +693,35 @@ html {
     /* 리스트를 복제해서 붙였으므로 전체 너비의 절반만큼 이동 */
     transform: translateX(-50%);
   }
+}
+
+.travelogue-public-view-profile {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  border-radius: 16px;
+  
+  
+}
+
+.travelogue-public-view-profile-img {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 1px solid #490085;  
+}
+
+.travelogue-public-view-content-img {
+  margin-top: 10px;
+  width: 289px;
+  height: 184px;
+  border-radius: 16px;
+  border: 1px solid #490085;
+  ;
+}
+
+.travelogue-public-view-content-text {
+  
+  margin-bottom: 30px;
 }

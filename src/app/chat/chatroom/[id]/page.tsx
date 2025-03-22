@@ -1,59 +1,254 @@
+'use client'
+import { useParams, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { Client } from "@stomp/stompjs";
+import SockJS from "sockjs-client";
+
+interface User {
+  usIdx: number;
+  usName: string;
+  usProfile: string;
+}
+interface ChatRoom{
+  crIdx: number;
+  myUser: User;
+  otherUser: User;
+}
+interface Chat {
+  msgIdx: number;
+  msgSender: number;
+  msgContent: string;
+  crIdx: number;
+  msgCreatedAt: string;
+  msgRead: 'READ' | 'UNREAD';
+  msgState: number;
+}
+
 export default function ChatRoom() {
+  const router = useRouter();
+  const params = useParams();
+  const id = params.id;
+
+  const [chatList, setChatList] = useState<Chat[]>([]);
+  const [chatRoom, setChatRoom] = useState<ChatRoom>();
+  const [stompClient, setStompClient] = useState<Client | null>(null);
+  const [message, setMessage] = useState<string>('');
+  const socket = new SockJS(`${process.env.NEXT_PUBLIC_WEBSOCKET_URL}`);
+
+  useEffect(() => {
+    getChatRoom();
+  }, [id]);
+
+  useEffect(() => {
+    if(chatRoom){
+      getChatList();
+      connectWebSocket();
+    }
+  }, [chatRoom]);
+
+  const connectWebSocket = () => {
+    if(!chatRoom) return;
+    const client = new Client({
+      webSocketFactory: () => socket,
+      debug: (str) => {
+        console.log(str);
+      },
+      reconnectDelay: 5000,
+      onConnect: () => {
+        console.log('WebSocket 연결 성공 채팅방 번호:', chatRoom?.crIdx);
+        client.subscribe(`/sub/chat/${chatRoom?.crIdx}`, (message) => {
+          try{
+            const chat = JSON.parse(message.body);
+            setChatList((prev) => [...prev, chat]);
+          } catch (error) {
+            console.error('WebSocket 메시지 파싱 오류:', error);
+          }
+        });
+      },
+      onDisconnect: () => {
+        console.log('WebSocket 연결 끊김 채팅방 번호:', chatRoom?.crIdx);
+      },
+    });
+    client.activate();
+    setStompClient(client);
+
+    return () => {
+      if(client){
+        console.log('WebSocket 연결 해제 채팅방 번호:', chatRoom?.crIdx);
+        client.deactivate();
+      }
+    }
+  }
+  const getChatList = async () => {
+    try {
+      const response = await axios.get(`/api/chat/message/${chatRoom?.crIdx}`);
+      setChatList(response.data);
+    } catch (error) {
+      console.error('Error fetching chat list:', error)
+    }
+  }
+  
+  const getChatRoom = async () => {
+    try {
+      const response = await axios.get(`/api/chat/room?usIdx=${id}`);
+      setChatRoom(response.data);
+    } catch (error) {
+      console.error('Error fetching chat room:', error)
+    }
+  }
+
+  const getFormattedDate = (date: string) => {
+    const dateObj = new Date(date);
+    const year = dateObj.getFullYear();
+    const month = dateObj.getMonth() + 1;
+    const day = dateObj.getDate();
+    const weekdays = ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'];
+    const weekday = weekdays[dateObj.getDay()];
+    return `${year}년 ${month}월 ${day}일 ${weekday}`;
+  };
+
+  const getFormattedTime = (date: string) => {
+    const dateObj = new Date(date);
+    const hours = dateObj.getHours();
+    const minutes = dateObj.getMinutes().toString().padStart(2, '0');
+    const ampm = hours >= 12 ? '오후' : '오전';
+    const formattedHours = hours > 12 ? hours - 12 : hours;
+    return `${ampm} ${formattedHours}:${minutes}`;
+  };
+
+  // 날짜만 추출하는 함수 (그룹화를 위해)
+  const getDateOnly = (date: string) => {
+    return date.split('T')[0];
+  };
+
+  const getUser = (id: number) => {
+    if (!chatRoom) return null;
+    return id === chatRoom.myUser.usIdx 
+      ? { ...chatRoom.myUser, isMine: true }
+      : { ...chatRoom.otherUser, isMine: false };
+  };
+
+  const sendMessage = () => {
+    if (!stompClient || !chatRoom || !message.trim()) return;
+  
+    const chatMessage = {
+      sender: chatRoom.myUser.usIdx, // 내 ID
+      message: message,
+      crIdx: chatRoom.crIdx, // 채팅방 ID
+    };
+    stompClient.publish({
+      destination: `/pub/chat`,
+      body: JSON.stringify(chatMessage),
+    });
+  
+    setMessage(""); // 입력창 초기화
+  };
+  
   return (
-    <main className="min-h-screen bg-white relative overflow-hidden">
-      {/* Status Bar */}
-      <div className="w-full max-w-[393px] h-[5vh] absolute left-1/2 -translate-x-1/2 top-0">
-        <div className="w-[17%] absolute right-[3.5%] top-1/2 -translate-y-1/2">
-          <img src="container0.svg" className="absolute left-[0.5%] top-[8%]" />
-        </div>
-        <div className="absolute left-[5%] top-1/2 -translate-y-1/2 w-[14%] text-black text-center font-['NotoSansKr-Bold'] text-[15px] tracking-[-0.17px] font-bold">
-          9:41
-        </div>
-      </div>
-
-      {/* Title */}
-      <div className="absolute left-1/2 -translate-x-1/2 top-[8vh] text-black text-center font-['NotoSansKr-Bold'] text-[20px] tracking-[-0.17px] font-bold">
-        쪽지
-      </div>
-
-      {/* Divider */}
-      <div className="absolute left-0 top-[15vh] w-full h-[1px] border-t border-[#DADADA]"></div>
-
-      {/* Back Button */}
-      <img src="arrow-back-ios0.svg" className="absolute left-[12%] top-[8vh] w-[6%] h-auto" />
-
-      {/* Menu Button */}
-      <img src="group0.svg" className="absolute left-[83%] top-[8.5vh]" />
-
-      {/* Profile */}
-      <img src="ellipse-2970.png" className="absolute left-[5%] top-[34vh] w-[11%] aspect-square rounded-full object-cover" />
-      <div className="absolute left-[18%] top-[36vh] text-black font-['NotoSansKr-Regular'] text-[16px] tracking-[-0.17px]">
-        최지호
-      </div>
-
-      {/* Chat Messages */}
-      <div className="absolute left-[39%] top-[21vh] w-[54%] h-auto py-[3vh] border border-[#490085] rounded-[30px_0px_24px_30px] bg-white">
-        <div className="absolute left-[8%] top-[29%] text-black font-['NotoSansKr-Regular'] text-[12px] tracking-[-0.17px]">
-          안녕하세요! 여행에 참여하고 싶어서<br />연락드렸어요!
-        </div>
-      </div>
-
-      <div className="absolute right-[39%] top-[43vh] w-[54%] h-auto py-[3vh] border border-[#490085] rounded-[30px_0px_24px_30px] bg-white scale-x-[-1]">
-        <div className="absolute left-[24%] top-[41%] text-black font-['NotoSansKr-Regular'] text-[12px] tracking-[-0.17px] scale-x-[-1]">
-          넵! 혹시 인적사항 여쭤봐도 될까요?
-        </div>
-      </div>
-
-      {/* Input Box - Fixed Position */}
-      <div className="fixed left-1/2 -translate-x-1/2 bottom-[3vh] w-[83%] max-w-[393px]">
-        <div className="relative bg-[#C4C4C4] rounded-[12px] h-[52px] px-[6%] py-[15px]">
-          <div className="text-white font-['NotoSansKr-Medium'] text-[17px] leading-[22px] tracking-[-0.41px]">
-            댓글을 입력하세요
+    <main className="min-h-screen bg-[#490085]/5 flex flex-col">
+      {/* Header - Fixed */}
+      <header className="fixed top-0 left-0 right-0 bg-white border-b border-[#DADADA] z-10">
+        <div className="container mx-auto px-4 py-4 flex items-center">
+          <img src="arrow-back-ios0.svg" className="w-6 h-6 cursor-pointer" />
+          <div className="flex-1 flex items-center justify-center gap-2">
+            <h1 className="text-[#490085] font-['NotoSansKr-Bold'] text-[18px]">
+              {chatRoom?.otherUser.usName}
+            </h1>
           </div>
+        </div>
+      </header>
+
+      {/* Chat Container */}
+      <div className="flex-1 container mx-auto px-4 py-4 overflow-y-auto mt-[60px] mb-[76px]">
+        {chatRoom && chatList.length > 0 ? (
+          Object.entries(
+            chatList.reduce((groups, chat) => {
+              const dateKey = getDateOnly(chat.msgCreatedAt);
+              if (!groups[dateKey]) {
+                groups[dateKey] = {
+                  date: chat.msgCreatedAt,
+                  messages: []
+                };
+              }
+              groups[dateKey].messages.push(chat);
+              return groups;
+            }, {} as Record<string, { date: string; messages: typeof chatList }>)
+          ).map(([dateKey, group], index) => (
+            <div key={dateKey} className={index > 0 ? 'mt-10' : ''}>
+              {/* Date Divider */}
+              <div className="flex justify-center mb-6">
+                <span className="text-xs text-[#490085] bg-[#490085]/10 px-3 py-1 rounded-full">
+                  {getFormattedDate(group.date)}
+                </span>
+              </div>
+
+              {/* Messages */}
+              <div className="space-y-4">
+                {group.messages.map((chat) => {
+                  const user = getUser(chat.msgSender);
+                  if (!user) return null;
+                  
+                  return user.isMine ? (
+                    // Sent Message
+                    <div key={chat.msgIdx} className="flex flex-row-reverse items-end gap-2">
+                      <div className="bg-[#490085]/70 rounded-2xl px-3 py-2 shadow-sm max-w-[70%]">
+                        <p className="text-white text-[15px]">
+                          {chat.msgContent}
+                        </p>
+                      </div>
+                      <div className="flex flex-col items-end gap-[2px]">
+                        <span className="text-xs text-[#490085]/70">
+                          {getFormattedTime(chat.msgCreatedAt)}
+                        </span>
+                      </div>
+                    </div>
+                  ) : (
+                    // Received Message
+                    <div key={chat.msgIdx} className="flex items-start gap-2">
+                      <img src={`/s3/${user.usProfile}`} className="w-9 h-9 rounded-full object-cover" />
+                      <div className="flex flex-col">
+                        <span className="text-sm text-[#490085] mb-1">{user.usName}</span>
+                        <div className="flex items-end gap-2">
+                          <div className="bg-white rounded-2xl px-3 py-2 shadow-sm max-w-[70%]">
+                            <p className="text-black text-[15px]">
+                              {chat.msgContent}
+                            </p>
+                          </div>
+                          <span className="text-xs text-[#490085]/70">{getFormattedTime(chat.msgCreatedAt)}</span>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          ))
+        ) : (
+          <div className="flex items-center justify-center h-full">
+            <p className="text-[#490085]/70">채팅 내역을 불러오는 중...</p>
+          </div>
+        )}
+      </div>
+
+      {/* Input Box - Fixed */}
+      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-2 z-10">
+        <div className="container mx-auto flex items-center gap-2">
+          <div className="flex-1 min-h-[40px] max-h-[100px] bg-[#490085]/5 rounded-full px-4 py-2">
+            <input 
+              type="text"
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              placeholder="메시지 보내기"
+              className="w-full bg-transparent outline-none text-[15px] placeholder:text-[#490085]/50"
+            />
+          </div>
+          <button className="w-10 h-10 flex items-center justify-center bg-[#490085] rounded-full" onClick={sendMessage}>
           <img 
             src="/send.svg" 
-            className="absolute right-[6%] top-1/2 -translate-y-1/2 w-[24px] h-[24px]" 
+              className="w-5 h-5 brightness-0 invert" 
           />
+          </button>
         </div>
       </div>
     </main>

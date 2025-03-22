@@ -10,6 +10,10 @@ const nextConfig: NextConfig = {
       {
         destination: `${process.env.NEXT_PUBLIC_S3_URL}/:path*`,
         source: '/s3/:path*',
+      },
+      {
+        destination: `${process.env.NEXT_PUBLIC_WEBSOCKET_URL}/:path*`,
+        source: '/ws/:path*',
       }
     ];
   },

@@ -1,18 +1,11 @@
 export default function TravelLogue() {
   return (
     <main className="min-h-screen bg-white flex flex-col">
-      {/* Status Bar */}
-      <header className="w-full h-12 flex justify-between items-center px-5">
-        <span className="text-black font-['NotoSansKr-Bold'] text-[15px] tracking-[-0.17px]">
-          9:41
-        </span>
-        <img src="container0.svg" className="h-3.5" />
-      </header>
 
       {/* Navigation */}
       <nav className="flex items-center justify-between px-8 py-4 relative">
         <button className="p-2">
-          <img src="vector0.svg" className="w-3 h-4" alt="뒤로가기" />
+          <img src="/back.svg" className="w-3 h-4" alt="뒤로가기" />
         </button>
         <h1 className="absolute left-1/2 -translate-x-1/2 text-black font-['NotoSansKr-Bold'] text-[20px] tracking-[-0.17px]">
           여행록
@@ -34,13 +27,13 @@ export default function TravelLogue() {
           {/* My Travel Log */}
           <button className="flex items-center w-full group">
             <div className="flex items-center flex-1">
-              <img src="group0.svg" className="w-[22px] h-[22px] mr-4" alt="나의 여행록 아이콘" />
+              <img src="/text.svg" className="w-[22px] h-[22px] mr-4" alt="나의 여행록 아이콘" />
               <span className="text-black font-['NotoSansKr-Regular'] text-[16px] tracking-[-0.17px]">
                 나의 여행록
               </span>
             </div>
             <img 
-              src="arrow-back-ios0.svg" 
+              src="/arrow-back-ios2.svg" 
               className="w-4 h-4 transition-transform group-hover:translate-x-1" 
               alt="화살표"
             />
@@ -49,13 +42,13 @@ export default function TravelLogue() {
           {/* Followed Travel Log */}
           <button className="flex items-center w-full group">
             <div className="flex items-center flex-1">
-              <img src="group1.svg" className="w-[22px] h-[22px] mr-4" alt="팔로우한 여행록 아이콘" />
+              <img src="/bell.svg" className="w-[22px] h-[22px] mr-4" alt="팔로우한 여행록 아이콘" />
               <span className="text-black font-['NotoSansKr-Regular'] text-[16px] tracking-[-0.17px]">
                 팔로우한 여행록
               </span>
             </div>
             <img 
-              src="arrow-back-ios1.svg" 
+              src="/arrow-back-ios2.svg" 
               className="w-4 h-4 transition-transform group-hover:translate-x-1" 
               alt="화살표"
             />

@@ -1,6 +1,7 @@
 "use client";
 import axios from 'axios';
 import { useState, useRef, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
 // 인터페이스 추가
 interface Region {
@@ -15,6 +16,8 @@ interface City {
 }
 
 export default function UploadPage() {
+  axios.defaults.withCredentials = true;
+  const router = useRouter();
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [title, setTitle] = useState<string>('');
   const [content, setContent] = useState<string>('');
@@ -123,7 +126,9 @@ export default function UploadPage() {
       lsIdx: city,
       boImg: file.name
     }
-    axios.post('/api/mate/board', data).then((res) => {
+    axios.post('/api/mate/board', data,{
+      withCredentials: true
+    }).then((res) => {
       console.log(res);
     }).catch((err) => {
       console.log(err);
@@ -135,7 +140,7 @@ export default function UploadPage() {
 
       {/* Navigation Header */}
       <nav className="flex items-center gap-[30px] px-6 py-4">
-        <button aria-label="뒤로 가기">
+        <button aria-label="뒤로 가기" onClick={() => router.push("/mate")}>
           <img src="vector0.svg" alt="뒤로가기 화살표" className="w-[11.67px] h-[19.8px]" />
         </button>
         <h1 className="text-[#1D0E07] font-['NotoSansKr-Bold'] text-[16px]">게시물 생성하기</h1>

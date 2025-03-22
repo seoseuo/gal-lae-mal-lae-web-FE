@@ -1,8 +1,10 @@
 "use client";
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function TipPage() {
   const [step, setStep] = useState(1);
+  const router = useRouter();
 
   return (
     <div className="min-h-[852px] bg-white flex flex-col items-center px-5">
@@ -60,6 +62,8 @@ export default function TipPage() {
           onClick={() => {
             if (step < 3) {
               setStep(step + 1);
+            }else{
+              router.push("/mate/notice/upload");
             }
           }}
           className="w-full bg-[#490085] rounded-[12px] py-[15px] px-6 text-white font-['NotoSansKr-Medium'] text-[17px] leading-[22px] tracking-[-0.41px]"

@@ -12,6 +12,11 @@
   user-select: none;
 }
 
+body {
+  width: 393px;
+  height: 852px;
+}
+
 /* 아이폰 16 기준 반응형 설정  393 */
 @media screen and (max-width: 393px) {
   body {
@@ -231,7 +236,7 @@
     bottom: 0;
     width: 100%;
     height: 50px; /* 원하는 높이 설정 */
-    
+    z-index: 999;
     background-color: white; /* 배경색 */
     display: flex;
     justify-content: space-around; /* 아이템 간 충분한 간격 */
@@ -240,4 +245,70 @@
   .footer-item {
     cursor: pointer; /* 마우스 올릴 때 포인터 */
   }
+
+  .main-top {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between; /* 양 끝 배치 */
+    padding: 0 10 0 10;
+  }
+
+  .main-list-container {
+    display: flex;
+    gap: 10px;
+
+    margin-top: 10px;
+    width: 345px;
+    height: 328px;
+    
+    overflow: auto;
+
+    scroll-behavior: smooth;
+    scrollbar-width: none; /* Firefox에서 스크롤바 숨기기 */
+    -webkit-scrollbar-width: none; /* Chrome, Safari에서 스크롤바 숨기기 */
+  }
+
+  .main-list-item {
+    position: relative;
+  }
+
+  .main-list-img {
+    width: 330px;
+    height: 328px;
+    border-radius: 35px;
+    border: 1px solid black;
+    background-color: #747474;
+  }
+
+  .main-list-text {
+    color: #ffffff;
+    z-index: 10;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    margin-left: 25px;
+    margin-bottom: 15px;
+  }
+
+  .main-list-profile {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    z-index: 10;
+    position: absolute;
+    border: #ffffff 1px solid;
+    left: 0;
+    bottom: 0;
+    margin-left: 25px;
+    margin-bottom: 15px;
+  }
+
+  /* .main-dot {
+    width: 10px;
+    height: 10px;
+    background-color: #490085; 
+    border-radius: 50%;
+    margin: 0 2px;
+    transition: background-color 0.3s ease;
+  } */
 }

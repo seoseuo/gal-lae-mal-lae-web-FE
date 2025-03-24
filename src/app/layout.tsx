@@ -17,9 +17,8 @@ export default function RootLayout({
     <html lang="en">
       <body>
         {children}
+        <Footer /> {/* ✅ <body> 안으로 이동 */}
       </body>
-      <Footer></Footer>
     </html>
-
   );
 }

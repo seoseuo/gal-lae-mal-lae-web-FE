@@ -33,6 +33,7 @@ export default function Home() {
 
       <div className="travelgroup-container">        
         <TravelgroupListView travelGroupList={travelGroupList} />
+        
         <button
           className="add-button bottom-button-postion"
           onClick={() => router.push('/travelgroups/post')}

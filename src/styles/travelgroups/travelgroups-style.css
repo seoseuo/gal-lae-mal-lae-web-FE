@@ -152,6 +152,7 @@ html {
   height: 11;
   border: #490085 1px solid;
   border-radius: 5.5;
+  background-color: #490085;
 }
 
 .travelgroups-option-button {
@@ -331,12 +332,12 @@ html {
 
 #ai-btn-postion {
   right: 60px;
-  bottom: 30px;
+  bottom: 60px;
 }
 
 #plus-btn-postion {
   right: 30px;
-  bottom: 30px;
+  bottom: 60px;
 }
 
 #tip-box {
@@ -725,3 +726,4 @@ html {
   
   margin-bottom: 30px;
 }
+

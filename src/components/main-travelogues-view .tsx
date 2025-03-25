@@ -23,17 +23,19 @@ export function MainTraveloguesView({ mainTraveloguesViewList }: { mainTravelogu
                         >
                             <img
                                 className="main-list-img"
-                                src={group.tlImage ? group.tlImage : "/default-img.svg"} // 여행 일지 이미지
+                                src={`/s3/${group.tlImage || 'default-img.svg'}`}
+
                                 alt={group.tlTitle} // 제목을 대체 텍스트로 사용
                             />
-                            <div className="main-list-profile">
-                                <img
-                                    src={group.usProfile ? group.usProfile : "/default-profile.svg"} // 유저 프로필 이미지
-                                    alt={group.usName} // 유저 이름을 대체 텍스트로 사용
-                                    style={{ width: '30px', height: '30px', borderRadius: '50%' }}
-                                />
-                            </div>
-                            <div className="main-list-text" style={{marginLeft:'95px' , marginBottom:'25px'}}>
+
+                            <img className="main-list-profile"
+                                src={`/s3/${group.usProfile || 'default-profile.svg'}`}
+
+                                alt={group.usName} // 유저 이름을 대체 텍스트로 사용
+                                style={{ width: '30px', height: '30px', borderRadius: '50%' }}
+                            />
+
+                            <div className="main-list-text" style={{ marginLeft: '95px', marginBottom: '25px' }}>
                                 <span className="bold" style={{ fontSize: '12px' }}>{group.tlTitle}</span><br />
                                 <span className="regular" style={{ fontSize: '12px' }}>{group.usName}</span> {/* 유저 이름 */}
                             </div>

@@ -26,11 +26,15 @@ export function MainTravelgroupsView({ mainTravelGroupsViewList }: { mainTravelG
                             onClick={() => router.push(`/travelgroups`)}
                             style={{ cursor: 'pointer' }}
                         >
-                            <img
-                                className="main-list-img"
-                                src={group.grProfile ? group.grProfile : "/default-img.svg"}
-                                alt={group.grProfile ? group.grProfile : "/default-img.svg"}
-                            />
+
+                            <div className="main-list-img" 
+                            style={{objectFit:'cover'}}>
+                                <img
+                                    style={{width:'100%' , height:"100%", borderRadius:'7%'}}
+                                    src={`/s3/${group.grProfile || 'default-img.svg'}`}
+                                    alt={group.grProfile ? group.grProfile : "/default-img.svg"}
+                                />
+                            </div>
                             <div className="main-list-text">
                                 <span className="bold" style={{ fontSize: '12px' }}>{group.grName}</span>
                             </div>

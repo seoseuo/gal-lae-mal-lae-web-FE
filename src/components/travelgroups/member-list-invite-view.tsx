@@ -16,7 +16,7 @@ export default function MemberListInviteView({ userList }: { userList: any }) {
             {userList[0] && userList[0].length > 0 ? (
                 userList[0].map((user: any) => (
                     <div className="search-location-si-result" id={user.usIdx} key={user.usIdx}>
-                        <img className="invite-profile" src={user.usProfile} alt="profile" />
+                        <img className="invite-profile" src={`/s3/${user.usProfile}`} alt="profile" />
                         <div className="invite-profile-text">
                             <span className='regular' style={{ fontSize: '12px', color: 'black' }}>
                                 {user.usName}

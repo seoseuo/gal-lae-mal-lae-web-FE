@@ -15,7 +15,7 @@ export default function MemberListViewAdmin() {
                     <div className="member-admin-profile" style={{ cursor: 'pointer' }} key={member.meUser.usIdx} onClick={() => {
                         router.push(`/travelgroups/patch-admin-check?user=${JSON.stringify(member.meUser)}`);
                     }}>
-                        <img className="member-admin-profile-img" src={member.meUser.usProfile} alt="member-profile-img" />
+                        <img className="member-admin-profile-img" src={`/s3/${member.meUser.usProfile}`} alt="member-profile-img" />
                         <span className="medium member-admin-profile-text">{member.meUser.usName}</span>
                     </div>
                 )

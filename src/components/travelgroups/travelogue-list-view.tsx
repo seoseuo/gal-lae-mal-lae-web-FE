@@ -22,7 +22,7 @@ export default function TravelogueListView({ travelogueList: initialList }) {
         if (!selectedTravelogue) return;
         try {
             await deleteTravelogue(selectedTravelogue.tlIdx);
-            setTravelogueList((prevList) => 
+            setTravelogueList((prevList) =>
                 prevList.filter((item) => item.tlIdx !== selectedTravelogue.tlIdx)
             );
         } catch (error) {
@@ -43,14 +43,15 @@ export default function TravelogueListView({ travelogueList: initialList }) {
                 <div key={travelogue.tlIdx} className="travelgroups-list-view">
                     <div className="travelgroups-list-view-profile">
                         <img className="travelgroups-list-view-profile-img"
-                            src={memberList.find(member => member.usIdx === travelogue.usIdx)?.meUser?.usProfile || '/default-profile.png'}
+                            src={`/s3/${memberList.find(member => member.usIdx === travelogue.usIdx)?.meUser?.usProfile || 'default-profile.png'}`}
                             alt="profile-img" />
                         <div className="travelgroups-list-view-profile-text">
                             <span className='regular' style={{ fontSize: '12px', marginLeft: '7px' }}>
                                 {memberList.find(member => member.usIdx === travelogue.usIdx)?.meUser?.usName || 'Unknown'}
                             </span>
                             <div style={{ display: 'flex', alignItems: 'center' }}>
-                                <img src={travelogue.tlPublic === 1 ? "/travelgroups/public-icon.svg" : "/travelgroups/private-icon.svg"}
+                                <img
+                                    src={`/travelgroups/${travelogue.tlPublic === 1 ? 'public-icon.svg' : 'private-icon.svg'}`}
                                     style={{ width: '12px', height: '12px', marginLeft: '7px' }}
                                     alt={travelogue.tlPublic === 1 ? "public-icon" : "private-icon"} />
                                 <span className='regular' style={{ fontSize: '12px' }}>

@@ -3,7 +3,7 @@ import { useRouter } from 'next/navigation';
 
 export default function TravelgroupListView({ travelGroupList }: { travelGroupList: any[] }) {
     const router = useRouter();
-    const NEXT_PUBLIC_UPLOAD_PATH = process.env.NEXT_PUBLIC_UPLOAD_PATH;
+    //const NEXT_PUBLIC_UPLOAD_PATH = process.env.NEXT_PUBLIC_UPLOAD_PATH;
     return (
         <div>
             {

@@ -8,6 +8,7 @@ import { getGroup } from "@/lib/travelgroup-api";
 import { useEffect, useState } from "react";
 
 export default function Home() {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [result, setResult] = useState<any>(null);
   const router = useRouter();
 

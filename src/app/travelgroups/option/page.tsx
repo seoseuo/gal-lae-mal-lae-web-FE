@@ -1,6 +1,6 @@
 "use client"
 import { useEffect, useState } from "react";
-import { getMe } from "@/lib/travelgroup-api";
+// import { getMe } from "@/lib/travelgroup-api";
 import Header from "../../header";
 import "@/styles/travelgroups/travelgroups-style.css";
 import { useRouter } from "next/navigation";

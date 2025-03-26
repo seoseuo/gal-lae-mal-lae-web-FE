@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import "@/styles/travelgroups/travelgroups-style.css";
-import { updateAdmin } from "@/lib/travelgroup-api";
+// import { updateAdmin } from "@/lib/travelgroup-api";
 
 export default function MemberListViewAdmin() {
     const router = useRouter();

@@ -4,7 +4,7 @@ import { useState, useEffect, useRef, useMemo } from 'react';
 import "@/styles/travelgroups/travelgroups-style.css";
 import { editScheduleTime, deleteSchedule } from "@/lib/travelgroup-api";
 
-export default function ScheduleTimeSetListView({ scheduleList, scDate }: { scheduleList: any[], scDate: string }) {
+export default function ScheduleTimeSetListView({ scheduleList }: { scheduleList: any[]}) {
   const [isModalVisible, setModalVisible] = useState(false);
   const [selectedSchedule, setSelectedSchedule] = useState<any>(null);
   const [localScheduleList, setLocalScheduleList] = useState(scheduleList);

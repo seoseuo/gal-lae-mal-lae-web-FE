@@ -5,7 +5,7 @@ import TourSpotsListView from "../../../../components/travelgroups/tour-spots-li
 import "@/styles/travelgroups/travelgroups-style.css";
 import { useState, useEffect, useRef } from "react";
 import { getTourSpotList } from "@/lib/travelgroup-api";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 
 export default function Home() {
     const [tourSpotList, setTourSpotList] = useState<any[]>([]);

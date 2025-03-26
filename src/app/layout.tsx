@@ -1,15 +1,15 @@
 "use client";
 
-import type { Metadata } from "next";
+// import type { Metadata } from "next";
 import "./globals.css";
 import Footer from "./footer";
 import { usePathname } from "next/navigation";
 
-const metadata: Metadata = {
-  title: "갈래말래",
-  description: "여행 모임 일정 관리 및 장소 추천 커뮤니티 웹 서비스",
-  manifest: "/manifest.json",
-};
+// const metadata: Metadata = {
+//   title: "갈래말래",
+//   description: "여행 모임 일정 관리 및 장소 추천 커뮤니티 웹 서비스",
+//   manifest: "/manifest.json",
+// };
 
 export default function RootLayout({
   children,

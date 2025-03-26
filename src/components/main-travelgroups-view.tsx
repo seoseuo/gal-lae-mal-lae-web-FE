@@ -27,11 +27,14 @@ export function MainTravelgroupsView({ mainTravelGroupsViewList }: { mainTravelG
                             style={{ cursor: 'pointer' }}
                         >
 
-                            <div className="main-list-img" 
-                            style={{objectFit:'cover'}}>
+                            <div className="main-list-img"
+                                style={{ objectFit: 'cover' }}>
                                 <img
-                                    style={{width:'100%' , height:"100%", borderRadius:'7%'}}
-                                    src={`/s3/${group.grProfile || 'default-img.svg'}`}
+                                    className="main-list-img"
+                                    style={{ width: '100%', height: "100%", borderRadius: '7%' }}
+                                    // src={`/s3/${group.grProfile || 'default-img.svg'}`}
+                                    // src="/default-profile.svg"
+                                    src="/travelgroups/delete.svg"
                                     alt={group.grProfile ? group.grProfile : "/default-img.svg"}
                                 />
                             </div>

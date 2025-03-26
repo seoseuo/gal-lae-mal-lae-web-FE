@@ -21,18 +21,21 @@ export function MainTraveloguesView({ mainTraveloguesViewList }: { mainTravelogu
                             onClick={() => router.push(`/travelogues`)} // 이동할 경로 설정
                             style={{ cursor: 'pointer' }}
                         >
-                            <img
-                                className="main-list-img"
-                                src={`/s3/${group.tlImage || 'default-img.svg'}`}
+                            <div className="main-list-img"
+                                style={{ objectFit: 'cover' }}>
+                                <img
+                                    className="main-list-img"
+                                    src={`/s3/${group.tlImage || 'default-img.svg'}`}
+                                    style={{ width: '100%', height: "100%", borderRadius: '7%' }}
+                                    alt={group.tlTitle} // 제목을 대체 텍스트로 사용
+                                />
+                            </div>
 
-                                alt={group.tlTitle} // 제목을 대체 텍스트로 사용
-                            />
 
                             <img className="main-list-profile"
                                 src={`/s3/${group.usProfile || 'default-profile.svg'}`}
-
+                                
                                 alt={group.usName} // 유저 이름을 대체 텍스트로 사용
-                                style={{ width: '30px', height: '30px', borderRadius: '50%' }}
                             />
 
                             <div className="main-list-text" style={{ marginLeft: '95px', marginBottom: '25px' }}>

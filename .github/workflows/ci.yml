@@ -14,11 +14,11 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Create .env.local file from Secrets
-        run: |                  
-          echo "NEXT_PUBLIC_SPRINGBOOT_URL=${{ secrets.NEXT_PUBLIC_SPRINGBOOT_URL }}" >> .env.local
+        run: |
+          echo "NEXT_PUBLIC_SPRINGBOOT_URL=${{ secrets.NEXT_PUBLIC_SPRINGBOOT_URL }}" > .env.local
           echo "NEXT_PUBLIC_S3_URL=${{ secrets.NEXT_PUBLIC_S3_URL }}" >> .env.local
           echo "NEXT_PUBLIC_WEBSOCKET_URL=${{ secrets.NEXT_PUBLIC_WEBSOCKET_URL }}" >> .env.local
 
-      - name: Build and deploy
+      - name: Build Docker image
         run: |
-          # Docker build and deploy commands here
+          docker build -t my-nextjs-app .

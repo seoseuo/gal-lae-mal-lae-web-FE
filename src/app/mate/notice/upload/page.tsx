@@ -1,7 +1,8 @@
 "use client";
 import axios from 'axios';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';  // Next.js Image 컴포넌트 추가
 
 // 인터페이스 추가
 interface Region {
@@ -35,16 +36,17 @@ export default function UploadPage() {
     { ldIdx: 0, lsIdx: 0, lsName: '없음' },
   ]);
 
-  useEffect(() => {
-    init();
-  }, []);
-
-  const init = () => {
+  // init 함수를 useCallback으로 메모이제이션
+  const init = useCallback(() => {
     getRegionList();
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
     }
-  }
+  }, []);  // getRegionList는 컴포넌트 내부에서 변경되지 않으므로 의존성 배열 비움
+
+  useEffect(() => {
+    init();
+  }, [init]);  // init을 의존성 배열에 추가
 
   // getRegionList 수정
   const getRegionList = async () => {
@@ -141,7 +143,13 @@ export default function UploadPage() {
       {/* Navigation Header */}
       <nav className="flex items-center gap-[30px] px-6 py-4">
         <button aria-label="뒤로 가기" onClick={() => router.push("/mate")}>
-          <img src="vector0.svg" alt="뒤로가기 화살표" className="w-[11.67px] h-[19.8px]" />
+          <Image 
+            src="/vector0.svg" 
+            alt="뒤로가기 화살표" 
+            width={12}
+            height={20}
+            className="w-[11.67px] h-[19.8px]"
+          />
         </button>
         <h1 className="text-[#1D0E07] font-['NotoSansKr-Bold'] text-[16px]">게시물 생성하기</h1>
       </nav>
@@ -159,9 +167,11 @@ export default function UploadPage() {
           />
           {previewImage ? (
             <>
-              <img 
+              <Image 
                 src={previewImage} 
                 alt="업로드된 이미지" 
+                width={240}
+                height={116}
                 className="w-full h-full object-cover rounded-[15px]"
               />
               <button
@@ -169,7 +179,13 @@ export default function UploadPage() {
                 onClick={handleImageDelete}
                 className="absolute -right-2 -top-2 w-6 h-6 bg-white rounded-full shadow-md flex items-center justify-center"
               >
-                <img src="/x.svg" alt="이미지 삭제" className="w-3 h-3" />
+                <Image 
+                  src="/x.svg" 
+                  alt="이미지 삭제" 
+                  width={12}
+                  height={12}
+                  className="w-3 h-3"
+                />
               </button>
             </>
           ) : (
@@ -177,7 +193,13 @@ export default function UploadPage() {
               <label htmlFor="imageUpload" className="text-black font-['NotoSansKr-Light'] text-[13px] mb-2 cursor-pointer">
                 Upload Image
               </label>
-              <img src="/upload.svg" alt="이미지 업로드 아이콘" className="w-[30px] h-[30.2px] opacity-50" />
+              <Image 
+                src="/upload.svg" 
+                alt="이미지 업로드 아이콘" 
+                width={30}
+                height={30}
+                className="opacity-50"
+              />
             </>
           )}
         </section>

@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 export default function Signup() {
   const router = useRouter();
@@ -30,18 +31,15 @@ export default function Signup() {
 
   const handleVerificationRequest = () => {
     const verificationEmail = `${email}@${domain === 'direct' ? customDomain : domain}`;
-    // 여기에 이메일 인증 요청 API 호출 로직 추가
-    console.log(verificationEmail);
     setIsVerified(0);
-    axios.post(`/api/auth/verification/email?email=${verificationEmail}`).then((response) => {
+    axios.post(`/api/auth/verification/email?email=${verificationEmail}`).then(() => {
       setIsVerifying(true);
       setTimeLeft(180);
     }).catch((error) => {
-      console.log(error);
+      console.error('이메일 인증 요청 실패:', error);
     });
-    // 타이머 시작
+
     const timer = setInterval(() => {
-      
       setTimeLeft((prevTime) => {
         if (prevTime <= 1) {
           clearInterval(timer);
@@ -59,57 +57,40 @@ export default function Signup() {
   };
 
   const signup = () => {
-    // 유효성 검사
-    if(email.length === 0)  {
-      return;
-    }
-    if(domain===""||(domain === "direct" && customDomain.length === 0)){
-      return;
-    }
-    if(isVerified === 0||isVerified === 2)  {
-      return;
-    }
-    if(password.length === 0)  {
-      return;
-    }
-    if(password !== confirmPassword)  {
-      return;
-    }
+    if(email.length === 0) return;
+    if(domain === "" || (domain === "direct" && customDomain.length === 0)) return;
+    if(isVerified === 0 || isVerified === 2) return;
+    if(password.length === 0) return;
+    if(password !== confirmPassword) return;
+
     const fullEmail = `${email}@${domain === 'direct' ? customDomain : domain}`;
-    // 세션스토리지에 데이터 저장
-    var data = {
-      usEmail:fullEmail,
-      usPassword:password
-    }
-    console.log(data);
-    axios.post(`/api/auth/signup/step1`,data).then((response) => {
+    const data = {
+      usEmail: fullEmail,
+      usPassword: password
+    };
+
+    axios.post(`/api/auth/signup/step1`, data).then(() => {
       try {
-        console.log(response);
         sessionStorage.setItem('email', JSON.stringify(fullEmail));
-        // 다음 페이지로 이동
         router.push('/profile-set');
       } catch (error) {
         console.error('세션스토리지 저장 실패:', error);
         alert('일시적인 오류가 발생했습니다. 다시 시도해주세요.');
       }
     }).catch((error) => {
-      console.log(error);
+      console.error('회원가입 실패:', error);
     });
-    
   };
 
   const handleSubmit = () => {
-    console.log("submit");
     axios.post(`/api/auth/verification/confirm?email=${email}@${domain === 'direct' ? customDomain : domain}&code=${verificationCode}`).then((response) => {
-      console.log(response);
       if(response.data.success === true) {
         setTimeLeft(0);
         setIsVerified(1);
-      }else{
+      } else {
         setIsVerified(2);
       }
-    }).catch((error) => {
-      console.log(error);
+    }).catch(() => {
       setIsVerified(2);
     });
   };
@@ -118,7 +99,13 @@ export default function Signup() {
     <main className="pt-[50px] min-h-screen bg-white flex flex-col">
       <nav className="pt-[px] flex items-center h-[44px] border-b border-[#DADADA] relative px-4">
         <button onClick={() => router.push('/login')} className="flex items-center justify-center left-4">
-          <img className="w-4" src="x.svg" alt="뒤로가기" />
+          <Image 
+            className="w-4" 
+            src="/x.svg" 
+            alt="뒤로가기" 
+            width={16}
+            height={16}
+          />
         </button>
         <h1 className="text-black text-center font-['NotoSansKr-Bold'] text-[17px] w-full">
           회원가입
@@ -168,7 +155,13 @@ export default function Signup() {
                     isVerified === 1 ? 'bg-[#E7E7E7] cursor-not-allowed' : ''
                   }`}
                 >
-                  <img src="drop-down.svg" alt="드롭다운" className={`w-3 h-3 ${isVerified === 1 ? 'opacity-50' : ''}`} />
+                  <Image 
+                    src="/drop-down.svg" 
+                    alt="드롭다운" 
+                    width={20}
+                    height={20}
+                    className={`w-3 h-3 ${isVerified === 1 ? 'opacity-50' : ''}`}
+                  />
                 </button>
                 {isDropdownOpen && !isVerified && (
                   <div className="absolute left-0 top-[39px] w-full bg-white border border-[#C4C4C4] rounded-[5px] z-10">
@@ -295,9 +288,11 @@ export default function Signup() {
               onClick={() => setShowPassword(!showPassword)}
               className="absolute right-3 top-1/2 transform -translate-y-1/2"
             >
-              <img 
+              <Image 
                 src={showPassword ? "/eye-off.svg" : "/eye.svg"} 
                 alt={showPassword ? "비밀번호 숨기기" : "비밀번호 보기"} 
+                width={20}
+                height={20}
                 className="w-5 h-5"
               />
             </button>
@@ -315,9 +310,11 @@ export default function Signup() {
               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
               className="absolute right-3 top-1/2 transform -translate-y-1/2"
             >
-              <img 
+              <Image 
                 src={showConfirmPassword ? "/eye-off.svg" : "/eye.svg"} 
                 alt={showConfirmPassword ? "비밀번호 숨기기" : "비밀번호 보기"} 
+                width={20}
+                height={20}
                 className="w-5 h-5"
               />
             </button>

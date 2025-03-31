@@ -1,21 +1,324 @@
+@import url("https://fonts.googleapis.com/earlyaccess/notosanskr.css");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* :root를 사용하여 배경색 변경 */
+  background-color: #ffffff; /* 작은 화면에서는 회색 배경 */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  zoom: 1;
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: #ffffff; /* 작은 화면에서는 흰색 배경 */
+  font-family: "Noto Sans KR", sans-serif; /* 폰트 적용 */
+  font-size: 14px; /* 작은 화면에서는 글씨 크기 줄이기 */
+  padding: 10px; /* 패딩을 줄여서 공간 확보 */  
+  width: 393px;
+  height: 852px;
+}
+
+/* 버튼 컴포넌트 */
+.active-button {
+  background-color: #490085;
+  color: #ffffff;
+  border-radius: 10px;
+  width: 144px;
+  height: 51px;
+  font-size: 17px;
+}
+
+.nomal-button {
+  background-color: #c4c4c4;
+  color: #ffffff;
+  border-radius: 10px;
+  width: 144px;
+  height: 51px;
+  font-size: 17px;
+}
+
+/* 긴 버튼 컴포넌트 */
+.long-active-button {
+  background-color: #490085;
+  color: #ffffff;
+  border-radius: 10px;
+  width: 327px;
+  height: 51px;
+  font-size: 17px;
+}
+
+.long-nomal-button {
+  background-color: #c4c4c4;
+  color: #ffffff;
+  border-radius: 10px;
+  width: 327px;
+  height: 51px;
+  font-size: 17px;
+}
+
+/* 중간 버튼 컴포넌트 */
+.middle-active-button {
+  background-color: #490085;
+  color: #ffffff;
+  border-radius: 10px;
+  width: 288px;
+  height: 51px;
+  font-size: 17px;
+}
+
+.middle-nomal-button {
+  background-color: #c4c4c4;
+  color: #ffffff;
+  border-radius: 10px;
+  width: 288px;
+  height: 51px;
+  font-size: 17px;
+}
+
+/* 블랙 - 가장 굵게 */
+.black {
+  font-weight: 900;
+}
+
+/* 볼드 */
+.bold {
+  font-weight: 700;
+}
+
+/* 미디엄 */
+.medium {
+  font-weight: 400;
+}
+
+/* 레귤러 */
+.regular {
+  font-weight: 300;
+}
+
+/* 라이트 */
+.light {
+  font-weight: 200;
+}
+
+/* 하단의 스타일들은 전체 화면에서도 아이폰 16화면으로 강제 적용 속성 */
+/* 버튼 컴포넌트 */
+.active-button {
+  background-color: #490085;
+  color: #ffffff;
+  border-radius: 10px;
+  width: 144px;
+  height: 51px;
+  font-size: 17px;
+  text-align: center;
+}
+
+.nomal-button {
+  background-color: #c4c4c4;
+  color: #ffffff;
+  border-radius: 10px;
+  width: 144px;
+  height: 51px;
+  font-size: 17px;
+  text-align: center;
+}
+
+/* 긴 버튼 컴포넌트 */
+.long-active-button {
+  background-color: #490085;
+  color: #ffffff;
+  border-radius: 10px;
+  width: 327px;
+  height: 51px;
+  font-size: 17px;
+  text-align: center;
+}
+
+.long-nomal-button {
+  background-color: #c4c4c4;
+  color: #ffffff;
+  border-radius: 10px;
+  width: 327px;
+  height: 51px;
+  font-size: 17px;
+  text-align: center;
+}
+
+/* 중간 버튼 컴포넌트 */
+.middle-active-button {
+  background-color: #490085;
+  color: #ffffff;
+  border-radius: 10px;
+  width: 288px;
+  height: 51px;
+  font-size: 17px;
+  text-align: center;
+}
+
+.middle-nomal-button {
+  background-color: #c4c4c4;
+  color: #ffffff;
+  border-radius: 10px;
+  width: 288px;
+  height: 51px;
+  font-size: 17px;
+  text-align: center;
+}
+
+.bottom-button-postion {
+  position: fixed;
+  top: 720px;
+  z-index: 99;
+}
+
+/* 블랙 - 가장 굵게 */
+.black {
+  font-weight: 900;
+}
+
+/* 볼드 */
+.bold {
+  font-weight: 700;
+}
+
+/* 미디엄 */
+.medium {
+  font-weight: 400;
+}
+
+/* 레귤러 */
+.regular {
+  font-weight: 300;
+}
+
+/* 라이트 */
+.light {
+  font-weight: 200;
+}
+
+/* 헤더 */
+.header {
+  margin: 30px 2px 20px 0px;
+  font-size: 18px;
+  display: flex;
+  /* border: red 1px solid; */
+  align-items: center; /* 수직 정렬 */
+  justify-content: center; /* 수평 정렬 */
+}
+
+.header-icon {
+  /* border: rgb(51, 0, 255) 1px solid; */
+  position: absolute; /* 부모 요소를 기준으로 위치 */
+  left: 15px;
+}
+
+.header-icon-option {
+  /* border: rgb(51, 0, 255) 1px solid; */
+  position: absolute; /* 부모 요소를 기준으로 위치 */
+  right: 15px;
+}
+
+.header-text {
+  text-align: center; /* 텍스트 가운데 정렬 */
+  /* border: rgb(51, 0, 255) 1px solid; */
+}
+
+.footer-container {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 80px; /* 원하는 높이 설정 */
+  z-index: 999;
+  background-color: white; /* 배경색 */
+  display: flex;
+  justify-content: space-around; /* 아이템 간 충분한 간격 */
+  align-items: center;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+.footer-item {
+  cursor: pointer; /* 마우스 올릴 때 포인터 */
+}
+
+.main-top {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between; /* 양 끝 배치 */
+  padding: 0 10 0 10;
+}
+
+.main-list-container {
+  display: flex;
+  gap: 10px;
+
+  margin-top: 10px;
+  width: 345px !important;
+  height: 300px !important;
+
+  overflow: auto;
+
+  scroll-behavior: smooth;
+
+  scrollbar-width: none; /* Firefox에서 스크롤바 숨기기 */
+  -webkit-scrollbar-width: none; /* Chrome, Safari에서 스크롤바 숨기기 */
+}
+
+.main-list-item {
+  position: relative;
+}
+
+.main-list-img {
+  width: 330px;
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;  
+}
+
+.main-list-text {
+  color: #ffffff;
+  z-index: 10;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  margin-left: 25px;
+  margin-bottom: 15px;
+  text-shadow: 0.5px 0.5px 7px rgba(0, 0, 0, 0.25),
+    -0.5px -0.5px 7px rgba(0, 0, 0, 0.25); /* 테두리 그림자 추가 */
+}
+
+.main-list-profile {
+  width: 60px !important;
+  height: 60px !important;
+  border-radius: 50%;
+  z-index: 10;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  margin-left: 25px;
+  margin-bottom: 15px;
+}
+
+/* .main-dot {
+  width: 10px;
+  height: 10px;
+  background-color: #490085; 
+  border-radius: 50%;
+  margin: 0 2px;
+  transition: background-color 0.3s ease;
+} */
+
+/* 아이폰 16 기준 반응형 설정  393 */
+/* @media screen and (max-width: 393px) {
+  
+} */
+
+
+button {
+  touch-action: manipulation;
 }

@@ -1,0 +1,727 @@
+html {
+  scroll-behavior: smooth;
+  scrollbar-width: none; /* Firefox에서 스크롤바 숨기기 */
+  -webkit-scrollbar-width: none; /* Chrome, Safari에서 스크롤바 숨기기 */
+}
+
+.travelgroup-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.travelgroup-list-view-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding: 0 0 0 10px;
+  margin-bottom: 25px;
+  width: 90vw;
+  
+}
+
+.travelgroup-get-container {
+  overflow: auto;
+}
+
+.travelgroup-list-view-img {
+  /* 동그라미 , 121*121 */
+  width: 121px;
+  height: 121px;
+  border-radius: 50%;
+  
+}
+
+.travelgroup-list-view-tag-container {
+  display: flex;
+  flex-direction: column;
+  margin-left: 30px;
+}
+
+.travelgroup-list-view-tag-row {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+
+  overflow-x: auto; /* 가로 스크롤 허용 */
+  white-space: nowrap; /* 요소들이 줄 바꿈되지 않도록 설정 */
+
+  scrollbar-width: none; /* Firefox에서 스크롤바 숨기기 */
+}
+
+.travelgroup-list-view-tag-row::-webkit-scrollbar {
+  display: none; /* Chrome, Safari에서 스크롤바 숨기기 */
+}
+
+.travelgroup-list-view-tag {
+  text-align: center;
+  padding: 0 5px 0 5px;
+  border: 1px solid #000000;
+  border-radius: 12px;
+  margin-bottom: 5px;
+  width: fit-content;
+}
+
+.add-button {
+  background-color: #ffffff;
+  border: 1px #490085 solid;
+  border-radius: 10px;
+  width: 327px;
+  height: 51px;
+  font-size: 17px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.add-button-text {
+  color: #ffffff;
+  background-color: #490085;
+  width: 23px;
+  border-radius: 50%;
+}
+
+.member-list-container {
+  margin: 20px 0 40px 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4열 */
+  row-gap: 10;
+  column-gap: 30;
+}
+
+.member-list-view-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.member-profile {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.member-profile-img {
+  width: 57px;
+  height: 57px;
+  border-radius: 50%;
+}
+
+.member-profile-text {
+  margin-top: 8;
+  font-size: 10px;
+}
+
+.travel-list-view {
+  margin-top: 20px;
+  width: 345px;
+  height: 284px;
+  border-radius: 26px;
+  border: 1px #787676 solid;
+  display: flex;
+  flex-direction: column;
+}
+
+.travel-list-view-text {
+  padding: 15px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.travel-list-img-view {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  padding: 0 8 0 8;
+  overflow-x: scroll;
+  scrollbar-width: none; /* Firefox에서 스크롤바 숨기기 */
+  -webkit-scrollbar-width: none; /* Chrome, Safari에서 스크롤바 숨기기 */
+}
+
+.travel-list-img {
+  width: 159px;
+  height: 201px;
+  border-radius: 13px;
+  
+}
+
+.travel-list-img-bar {
+  margin-top: 10px;
+  width: 54;
+  height: 11;
+  border: #490085 1px solid;
+  border-radius: 5.5;
+  background-color: #490085;
+}
+
+.travelgroups-option-button {
+  background-color: #490085;
+}
+
+.member-admin-list-container {
+  margin: 20px 0 40px 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 4열 */
+  row-gap: 10;
+  column-gap: 40;
+}
+
+.member-admin-profile {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.member-admin-profile-img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+}
+
+.member-admin-profile-text {
+  margin-top: 20;
+  font-size: 8px;
+}
+
+.location-do-list-view {
+  text-align: center;
+  align-items: center;
+  justify-items: center;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3열 */
+  gap: 30px;
+}
+
+.location-do-list-view-item {
+  border: #000000 1px solid;
+  width: 103px;
+  height: 42px;
+  border-radius: 56px;
+  display: flex;
+  align-items: center; /* 세로 중앙 정렬 */
+  justify-content: center; /* 수평 중앙 정렬 */
+}
+
+.location-do-list-view-item-spe {
+  border: #490085 1px solid;
+  color: #490085;
+  width: 103px;
+  height: 42px;
+  border-radius: 56px;
+  display: flex;
+  align-items: center; /* 세로 중앙 정렬 */
+  justify-content: center; /* 수평 중앙 정렬 */
+}
+
+.search-bar {  
+  width: 343px;
+  height: 44px;
+  padding: 3px;
+  border: #000000 1px solid;
+  border-radius: 56px;
+  display: flex;
+  flex-direction: row;
+}
+
+.search-location-si-result {
+  width: 343px;
+  margin: 0 15px 0 15px;
+  color: #490085;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 25px;
+  align-items: center; /* 세로 중앙 정렬 */
+}
+
+.location-si-select-btn {
+  width: 64px;
+  height: 28px;
+  border-radius: 56px;
+  color: #ffffff;
+  background-color: #490085;
+}
+
+.invite-profile {
+  width: 57px;
+  height: 57px;
+  border-radius: 50%;
+}
+
+.invite-profile-text {
+  display: flex;
+  flex-direction: column;
+  margin-right: 140px;
+  margin-left: 10px;
+}
+
+.random-dot-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 5px;
+}
+
+.random-dot {
+  width: 8px;
+  height: 8px;
+  background-color: #490085;
+  border-radius: 50%;
+}
+
+.travel-header-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-left: 20px;
+}
+
+.travel-box-container {
+  display: flex;
+  margin-top: 10px;
+  width: 100%;
+  height: 724px;
+  border: 1px solid black;
+  border-radius: 40px 40px 0px 0px;
+  flex-direction: column;
+}
+
+.travel-box-inner-container-1 {
+  margin-top: 30px;
+  display: flex;
+  width: 400px;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.custom-underline {
+  text-decoration: underline;
+  text-decoration-color: #490085; /* 밑줄 색상 */
+  text-decoration-thickness: 6px; /* 밑줄 두께 */
+  text-underline-offset: 15px; /* 글자와 밑줄 간격 */
+}
+
+.period-dot {
+  display: flex;
+  background-color: #ede6f3;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  color: #787676;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+}
+
+.travel-box-inner-container-2 {
+  margin-top: 30px;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  justify-content: space-around;
+}
+
+.travel-box-btn {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  z-index: 10;
+  position: fixed;
+}
+
+#ai-btn-postion {
+  right: 60px;
+  bottom: 90px;
+}
+
+#plus-btn-postion {
+  right: 30px;
+  bottom: 90px;
+}
+
+#tip-box {
+  position: absolute;
+  right: 60px;
+  bottom: 55px;
+  width: 268px;
+  height: 62px;
+}
+
+#tip-box-text {
+  position: absolute;
+  right: 42px;
+  bottom: 48px;
+  width: 268px;
+  height: 62px;
+}
+
+.tour-spots-container {
+  display: flex;
+  justify-content: center;
+  overflow-y: auto;
+  flex-direction: column;
+}
+
+.tour-spots-view {
+  display: flex;
+  width: 319px;
+  height: 55px;
+  margin-top: 15px;
+}
+
+.tour-spots-checkbox {
+  display: flex;
+  align-items: center;
+  width: 30px;
+  height: 55px;
+}
+
+.tour-spots-card {
+  display: flex;
+  align-items: center;
+  border: #000000 1px solid;
+  border-radius: 8px;
+  width: 279px;
+  height: 55px;
+  margin-left: 10px;
+}
+
+.tour-spots-img {
+  width: 111px;
+  height: 53px;
+  border-radius: 7px;
+}
+
+.tour-spots-detail {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 60%;
+}
+.tour-spots-detail-box {
+  display: flex;
+  margin-left: 5px;
+  margin-top: 7px;
+}
+
+.tour-span-img {
+  width: 5px;
+}
+
+.tour-span-text {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.schedule-set-modal-text {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  padding: 15px;
+}
+
+.schedule-list-view-container {
+  margin: 30px;
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+}
+
+.schedule-list-view {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.schedule-list-view-img {
+  width: 83px;
+  height: 83px;
+  border-radius: 12px;
+}
+.schedule-list-view-text {
+  display: flex;
+  flex-direction: row;
+  font-size: 12px;
+  margin-left: 15px;
+  align-items: center;
+}
+
+.travelgroups-font-size {
+  font-size: 13px;
+}
+
+.travelgroups-list-view-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 1;
+  background-color: #ffffff;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.travelgroups-list-view {
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
+  padding: 20px 0 20px 0;
+}
+
+.travelgroups-list-view-profile-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px 0 20px 0;
+}
+
+.travelgroups-list-view-profile {
+  display: flex;
+
+  align-items: center;
+}
+
+.travelgroups-list-view-profile-img {
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+}
+
+.travelgroups-list-view-content-img {
+  width: 324px;
+  height: 207px;
+  border-radius: 16px;  
+}
+
+.travelgroups-post-editer {
+  margin: 0 0 10px 10px;
+  font-size: 12px;
+  width: 95%;
+
+}
+
+.travelgroups-post-editer-icons {
+  display: flex;
+  justify-content: end;
+  margin-right: 20px;
+  gap: 40px;
+}
+
+.period-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.calander-container {
+  width: 284px;
+  height: 296px;
+}
+
+.calander-text-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.calander-day-container {
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+}
+
+.calander-item {
+  width: 37px;
+  height: 37px;
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.travel-box-parent-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.travel-box-parent-container-img {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  border: 1px solid rgb(199, 199, 199);
+}
+
+.delete-icon {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  z-index: 99;
+}
+
+.filter-container {
+  margin-top: 20px;
+
+  height: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #490085;
+  border-radius: 10px;
+  border: 1px solid #490085;
+  padding: 0 120px 0 120px;
+  background-color: #ffffff;
+}
+
+.filter-select {
+  background-color: #ffffff;
+  border: none;
+}
+
+.schedule-set-modal-container {
+  position: fixed;
+  bottom: -100%; /* 기본적으로 화면 아래에 숨겨짐 */
+  left: 0;
+  width: 100%;
+  height: 330px;
+  background-color: white;
+  transition: bottom 0.3s ease-in-out;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+  border: 1px solid black;
+  border-radius: 20px 20px 0 0;
+}
+
+.schedule-set-modal-container.show {
+  bottom: 0; /* 위로 슬라이드 */
+}
+
+.schedule-set-modal-text {
+  display: flex;
+  justify-content: space-around;
+  padding: 20px;
+}
+.time-set-slider {
+  margin-top: 10px;
+  width: 80%;
+  height: 52px;
+  border-radius: 10px;
+  background-color: #490085;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.time-set-slider-input {
+  width: 100%;
+  height: 30px;
+  border-radius: 5px;
+  background-color: #490085;
+  color: #ffffff;
+  text-align: center;
+}
+
+#bottom-button-postion-time {
+  position: fixed;
+  top: 700px;
+  left: 40px;
+  z-index: 99;
+}
+
+#bottom-button-postion-delete {
+  position: fixed;
+  right: 40px;
+  top: 700px;
+  z-index: 99;
+}
+
+/* 래퍼: 오버플로우 숨기고 전체 너비 지정 */
+.tour-spots-preview-wrapper {
+  overflow: hidden;
+  width: 100%;
+  position: relative;
+  margin: 10px 0; /* 필요에 따라 조정 */
+}
+
+/* 애니메이션 적용된 컨테이너: 내부 아이템들을 가로로 배치하고, 애니메이션으로 무한 스크롤 */
+.tour-spots-preview-container {
+  margin-top: 15px;
+  display: flex;
+  gap: 15px; /* 아이템 간 간격 */
+  width: max-content; /* 자식 콘텐츠 너비만큼 확장 */
+  height: 150px; /* 컨테이너 높이 */
+  align-items: center;
+  justify-content: center;
+  animation: scroll 45s linear infinite; /* 30초로 속도 조절 */
+}
+
+/* 개별 아이템: 가로 정렬 고정 */
+.tour-spots-preview-item {
+  flex: 0 0 auto;
+  margin-right: 10px; /* 아이템 간 간격 (필요 시) */
+}
+
+/* preview 카드 스타일 */
+.tour-spots-preview-card {
+  width: 100px;
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* 이미지 스타일 */
+.tour-spots-preview-card-img {
+  width: 100px;
+  height: 100px;
+  border-radius: 12px;
+}
+
+/* 스크롤 애니메이션 keyframes */
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    /* 리스트를 복제해서 붙였으므로 전체 너비의 절반만큼 이동 */
+    transform: translateX(-50%);
+  }
+}
+
+.travelogue-public-view-profile {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  border-radius: 16px;
+  
+  
+}
+
+.travelogue-public-view-profile-img {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+   
+}
+
+.travelogue-public-view-content-img {
+  margin-top: 10px;
+  width: 289px;
+  height: 184px;
+  border-radius: 16px;    
+}
+
+.travelogue-public-view-content-text {
+  
+  margin-bottom: 30px;
+}
+

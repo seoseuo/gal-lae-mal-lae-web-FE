@@ -1,12 +1,10 @@
 "use client";
 
+import { Suspense, useState, useEffect } from "react";
 import Header from "../../../header";
 import "@/styles/travelgroups/travelgroups-style.css";
-import { useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import { getLocationSiList, saveLocationSi } from '@/lib/travelgroup-api';
-
-
+import { useSearchParams } from "next/navigation";
+import { getLocationSiList, saveLocationSi } from "@/lib/travelgroup-api";
 
 // 초성 추출 함수
 const getChosung = (str: string) => {
@@ -21,10 +19,10 @@ const getChosung = (str: string) => {
   return result;
 };
 
-export default function Home() {
-    const [locationList, setLocationList] = useState([]);
-    const [filteredList, setFilteredList] = useState([]);
-    const [searchTerm, setSearchTerm] = useState('');
+function MainContent() {
+    const [locationList, setLocationList] = useState<any[]>([]);
+    const [filteredList, setFilteredList] = useState<any[]>([]);
+    const [searchTerm, setSearchTerm] = useState<string>('');
     const searchParams = useSearchParams();
     const ldIdx = searchParams.get('ldIdx');
 
@@ -40,14 +38,13 @@ export default function Home() {
     }, [ldIdx]);
 
     const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const searchTerm = e.target.value;
-        setSearchTerm(searchTerm);
+        const term = e.target.value;
+        setSearchTerm(term);
 
         const filtered = locationList.filter((location: { lsName: string }) => {
             const name = location.lsName.toLowerCase();
-            const search = searchTerm.toLowerCase();
+            const search = term.toLowerCase();
             const chosung = getChosung(location.lsName);
-            
             return name.includes(search) || chosung.includes(search);
         });
         setFilteredList(filtered);
@@ -55,21 +52,19 @@ export default function Home() {
 
     return (
         <div>
-            <Header text="여행지 설정" icon="back"></Header>
+            <Header text="여행지 설정" icon="back" />
             <div className="travelgroup-container">
                 <div className="search-bar">
-                    <img src="/travelgroups/search.svg" alt="search" style={{ width: '17.49px', margin: '0 15px 0 15px' }} />
+                    <img src="/travelgroups/search.svg" alt="search" style={{ width: '17.49px', margin: '0 15px' }} />
                     <input 
                         style={{ color: '#490085', width: '80%' }}
                         value={searchTerm}
                         onChange={handleSearch}
+                        placeholder="관광지 검색"
                     />
                 </div>
             </div>
-
-            <br />
-            <br />
-
+            <br /><br />
             {filteredList.map((locationSi: { lsIdx: number, lsName: string, ldIdx: number }) => (
                 <div key={locationSi.lsIdx} className="search-location-si-result">
                     <img src="/travelgroups/location.svg" alt="location" />
@@ -84,7 +79,14 @@ export default function Home() {
                     </button>
                 </div>
             ))}
-
         </div>
+    );
+}
+
+export default function HomePage() {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <MainContent />
+        </Suspense>
     );
 }

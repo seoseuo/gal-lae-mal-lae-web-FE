@@ -1,19 +1,47 @@
 'use client';
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "@/styles/travelgroups/travelgroups-style.css";
 import { deleteTravelogue } from "@/lib/travelgroup-api";
 
-export default function TravelogueListView({ travelogueList: initialList }) {
-    const memberList = JSON.parse(localStorage.getItem('memberList') || '[]');
-    const user = JSON.parse(localStorage.getItem('user') || '0');
+interface Travelogue {
+    tlIdx: number;
+    tlTitle: string;
+    tlContent: string;
+    tlImage: string;
+    tlPublic: number;
+    usIdx: number;
+    // 다른 필요한 필드를 추가하세요
+}
+
+interface Member {
+    usIdx: number;
+    meUser: {
+        usName: string;
+        usProfile: string;
+    };
+}
+
+export default function TravelogueListView({ travelogueList: initialList }: { travelogueList: Travelogue[] }) {
+    const [memberList, setMemberList] = useState<Member[]>([]);
+    const [user, setUser] = useState<any>(null);
+
+    // 클라이언트 사이드에서만 실행되도록 useEffect로 localStorage 접근
+    useEffect(() => {
+        if (typeof window !== "undefined") {
+            const storedMemberList = JSON.parse(localStorage.getItem('memberList') || '[]');
+            const storedUser = JSON.parse(localStorage.getItem('user') || '0');
+            setMemberList(storedMemberList);
+            setUser(storedUser);
+        }
+    }, []);
 
     // 내부 상태로 관리
     const [travelogueList, setTravelogueList] = useState(initialList);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-    const [selectedTravelogue, setSelectedTravelogue] = useState(null);
+    const [selectedTravelogue, setSelectedTravelogue] = useState<Travelogue | null>(null);
 
-    const handleDeleteClick = (travelogue) => {
+    const handleDeleteClick = (travelogue: Travelogue) => {
         setSelectedTravelogue(travelogue);
         setIsDeleteModalOpen(true);
     };
@@ -43,11 +71,11 @@ export default function TravelogueListView({ travelogueList: initialList }) {
                 <div key={travelogue.tlIdx} className="travelgroups-list-view">
                     <div className="travelgroups-list-view-profile">
                         <img className="travelgroups-list-view-profile-img"
-                            src={`/s3/${memberList.find(member => member.usIdx === travelogue.usIdx)?.meUser?.usProfile || 'default-profile.png'}`}
+                            src={`/s3/${memberList.find((member: Member) => member.usIdx === travelogue.usIdx)?.meUser?.usProfile || 'default-profile.png'}`}
                             alt="profile-img" />
                         <div className="travelgroups-list-view-profile-text">
                             <span className='regular' style={{ fontSize: '12px', marginLeft: '7px' }}>
-                                {memberList.find(member => member.usIdx === travelogue.usIdx)?.meUser?.usName || 'Unknown'}
+                                {memberList.find((member: Member) => member.usIdx === travelogue.usIdx)?.meUser?.usName || 'Unknown'}
                             </span>
                             <div style={{ display: 'flex', alignItems: 'center' }}>
                                 <img
@@ -57,7 +85,7 @@ export default function TravelogueListView({ travelogueList: initialList }) {
                                 <span className='regular' style={{ fontSize: '12px' }}>
                                     {travelogue.tlPublic === 1 ? "공개" : "비공개"}
                                 </span>
-                                {user.usIdx === travelogue.usIdx && (
+                                {user?.usIdx === travelogue.usIdx && (
                                     <img src="/travelgroups/delete.svg"
                                         style={{ width: '20px', height: '20px', marginLeft: '7px', position: 'absolute', right: '20px', cursor: 'pointer' }}
                                         onClick={() => handleDeleteClick(travelogue)}

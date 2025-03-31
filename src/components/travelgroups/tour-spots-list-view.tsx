@@ -45,6 +45,7 @@ export default function TourSpotsListView({ tourSpotList = [], scDate }: { tourS
                     value={tourSpot.tsIdx}
                     onChange={() => handleCheckboxChange(index, tourSpot.tsIdx)} // 체크박스 클릭 시 핸들러 호출
                   />
+                  
                   <label htmlFor={`checkbox-${index}`}>
                     <div className="tour-spots-card">
                       <img

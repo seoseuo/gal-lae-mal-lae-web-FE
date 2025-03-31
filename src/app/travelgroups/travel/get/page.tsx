@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { getTravel } from "@/lib/travelgroup-api";
 import ScheduleListView from "@/components/travelgroups/schedule-list-view";
@@ -11,48 +11,85 @@ import TravelogueListView from "@/components/travelgroups/travelogue-list-view";
 export default function Home() {
     const router = useRouter();
     const [show, setShow] = useState<string>("");
-    const [travel, setTravel] = useState<any[]>([]);
+
+    const [travel, setTravel] = useState<any>({});
+
     const [startDate, setStartDate] = useState<string>('');
     const [endDate, setEndDate] = useState<string>('');
     const [period, setPeriod] = useState<number>(0);
-    const travelGroup = JSON.parse(localStorage.getItem("travelGroup") || "{}");
-    const trIdx = localStorage.getItem("trIdx");
-    // const user = JSON.parse(localStorage.getItem("user") || "{}");
-    const memberList = JSON.parse(localStorage.getItem("memberList") || "{}");
+
+    const [travelGroup, setTravelGroup] = useState<any>({});
+    const [trIdx, setTrIdx] = useState<string | null>(null);
+    const [isAdmin, setIsAdmin] = useState<boolean>(false);
     const [travelogueList, setTravelogueList] = useState<any[]>([]);
-    const isAdmin = memberList.some((member: any) => member.meRole === 'ADMIN');
-
-
     const [scheduleList, setScheduleList] = useState<any[]>([]);
     const [empty, setEmpty] = useState<boolean>(false);
     const [scDate, setScDate] = useState<number>(1);
+
+    // 클라이언트 사이드에서만 실행되도록 useEffect로 데이터를 로드
+    useEffect(() => {
+        if (typeof window !== "undefined") {
+            const storedTravelGroup = JSON.parse(localStorage.getItem("travelGroup") || "{}");
+            const storedTrIdx = localStorage.getItem("trIdx");
+            const storedMemberList = JSON.parse(localStorage.getItem("memberList") || "[]");
+
+            setTravelGroup(storedTravelGroup);
+            setTrIdx(storedTrIdx);
+            setIsAdmin(storedMemberList.some((member: any) => member.meRole === 'ADMIN'));
+        }
+    }, []);
+
+    // 여행 데이터 가져오기
+    useEffect(() => {
+        if (trIdx) {
+            getTravel(Number(trIdx)).then((travelInfo) => {
+                setTravel(travelInfo);
+                const formattedStartDate = travelInfo.travel.trStartTime.split('T')[0].split('-').map((part: string, index: number) => index === 0 ? part.slice(2) : part).join('.');
+                const formattedEndDate = travelInfo.travel.trEndTime.split('T')[0].split('-').map((part: string, index: number) => index === 0 ? part.slice(2) : part).join('.');
+
+                setStartDate(formattedStartDate);
+                setEndDate(formattedEndDate);
+                setPeriod(travelInfo.travel.trPeriod);
+                setShowWhat("schedule");
+
+                localStorage.setItem("travel", JSON.stringify(travelInfo.travel));
+
+                const travelogueList = travelInfo.travelogueList;
+                setTravelogueList(travelogueList);
+                // 기본 스케쥴 리스트
+                const defaultScheduleList = travelInfo.scheduleList.filter((schedule: any) => schedule.scDate === 1);
+                setScheduleList(defaultScheduleList);
+                if (travelInfo.scheduleList.length === 0) {
+                    setEmpty(true);
+                }
+            });
+        }
+    }, [trIdx]);
+
+    // 일정 날짜 선택 클릭 이벤트
     const clickPeriod = (index: number) => {
         console.log("index", index);
 
-        // 이 요소의 글씨 색 바꾸기
-        // 다른 index 요소들의 글씨색은 초기화
-        const periodDot = document.querySelector(`.period-dot:nth-child(${index})`);
+        const periodDot = document.querySelector(`.period-dot:nth-child(${index})`) as HTMLElement | null;
         if (periodDot) {
             periodDot.style.color = '#490085';
 
-            //travel의 scheduleList 중 해당 scDate 일정 보여주기
-            const scheduleList = travel.scheduleList;
-            const filteredScheduleList = scheduleList.filter((schedule: any) => schedule.scDate === index);
+            // travel의 scheduleList 중 해당 scDate 일정 보여주기            
+            const filteredScheduleList = travel.scheduleList.filter((schedule: any) => schedule.scDate === index);
             setScDate(index);
-
             setScheduleList(filteredScheduleList);
             console.log("scheduleList", filteredScheduleList);
         }
         const periodDots = document.querySelectorAll('.period-dot');
         periodDots.forEach((dot) => {
             if (dot !== periodDot) {
-                dot.style.color = '#787676';
+                (dot as HTMLElement).style.color = '#787676';
             }
         });
     }
 
+    // 여행록 또는 일정 보기 탭 전환
     const setShowWhat = (what: string) => {
-        // 클릭하면 다른 요소는 밑줄 없고 클릭 된 요소만 밑줄 있게        
         const elements = document.querySelectorAll('.show');
         elements.forEach((element) => {
             element.classList.remove('custom-underline');
@@ -66,30 +103,29 @@ export default function Home() {
             document.querySelector('.show.schedule')?.classList.add('custom-underline');
         }
     }
+    
+    const handleFilteredScheduleClick = () => {
+        if (typeof window !== "undefined") {
+            localStorage.setItem("filteredScheduleList", JSON.stringify(scheduleList));
+            localStorage.setItem("scDate", scDate.toString());
+            router.push("/travelgroups/travel/schedule/edit");
+        }
+    };
 
+    const handleTravelogueClick = () => {
+        if (typeof window !== "undefined") {
+            localStorage.setItem("scDate", scDate.toString());
+            router.push("/travelgroups/travel/travelogues/post");
+        }
+    };
 
-    useEffect(() => {
-        getTravel(Number(trIdx)).then((travel) => {
-            setTravel(travel);
-            const formattedStartDate = travel.travel.trStartTime.split('T')[0].split('-').map((part: string, index: number) => index === 0 ? part.slice(2) : part).join('.');
-            const formattedEndDate = travel.travel.trEndTime.split('T')[0].split('-').map((part: string, index: number) => index === 0 ? part.slice(2) : part).join('.');
-            setStartDate(formattedStartDate);
-            setEndDate(formattedEndDate);
-            setPeriod(travel.travel.trPeriod);
-            setShowWhat("schedule");
+    const handleAddScheduleClick = () => {
+        if (typeof window !== "undefined") {
+            localStorage.setItem("scDate", scDate.toString());
+            router.push("/travelgroups/travel/tour-spots");
+        }
+    };
 
-            localStorage.setItem("travel", JSON.stringify(travel.travel));
-
-            const travelogueList = travel.travelogueList;
-            setTravelogueList(travelogueList);
-            // 기본 스케쥴 리스트
-            const defaultScheduleList = travel.scheduleList.filter((schedule: any) => schedule.scDate === 1);
-            setScheduleList(defaultScheduleList);
-            if (travel.scheduleList.length === 0) {
-                setEmpty(true);
-            }
-        });
-    }, []);
 
     return (
         <div>
@@ -108,42 +144,22 @@ export default function Home() {
                 <div className="travel-box-parent-container">
                     <div className="travel-box-container">
                         <div className="travel-box-inner-container-1" style={{ marginBottom: '40px' }}>
-                            <span className='regular show travelogue' style={{ fontSize: '16px', color: '#787676', cursor: 'pointer' }} onClick={() => {
-                                setShowWhat("travelogue");
-                            }}>여행록</span>
-                            <span className='regular show schedule custom-underline' style={{ fontSize: '16px', color: '#787676', cursor: 'pointer' }} onClick={() => {
-                                setShowWhat("schedule");
-                            }}>일정
-                            </span>
+                            <span className='regular show travelogue' style={{ fontSize: '16px', color: '#787676', cursor: 'pointer' }} onClick={() => setShowWhat("travelogue")}>여행록</span>
+                            <span className='regular show schedule custom-underline' style={{ fontSize: '16px', color: '#787676', cursor: 'pointer' }} onClick={() => setShowWhat("schedule")}>일정</span>
                         </div>
                         <br />
                         <br />
-
                         <hr />
-
-
 
                         {show === "schedule" && (
                             <>
                                 <div className="travel-box-inner-container-2">
                                     {Array.from({ length: period }).map((_, index) => (
-                                        index === 0 ? (
-                                            <div key={index} className="period-dot"
-                                                style={{ cursor: 'pointer', color: '#490085' }}
-                                                onClick={() => {
-                                                    clickPeriod(index + 1);
-                                                }}>
-                                                {index + 1}일차
-                                            </div>
-                                        ) : (
-                                            <div key={index} className="period-dot"
-                                                style={{ cursor: 'pointer' }}
-                                                onClick={() => {
-                                                    clickPeriod(index + 1);
-                                                }}>
-                                                {index + 1}일차
-                                            </div>
-                                        )
+                                        <div key={index} className="period-dot"
+                                            style={{ cursor: 'pointer', color: index === 0 ? '#490085' : '#787676' }}
+                                            onClick={() => clickPeriod(index + 1)}>
+                                            {index + 1}일차
+                                        </div>
                                     ))}
                                 </div>
 
@@ -153,29 +169,16 @@ export default function Home() {
                                     <div>
                                         {empty ? (
                                             <img className="travel-box-btn" id="plus-btn-postion" src="/travelgroups/plus-btn.svg" alt="edit-icon"
-                                                onClick={() => {
-                                                    localStorage.setItem("scDate", scDate.toString());
-                                                    router.push("/travelgroups/travel/tour-spots");
-                                                }}
-                                                style={{ cursor: 'pointer' }}
-                                            />
+                                                onClick={handleAddScheduleClick}
+                                                style={{ cursor: 'pointer' }} />
                                         ) : (
                                             <>
                                                 <img className="travel-box-btn" id="ai-btn-postion" src="/travelgroups/plus-btn.svg" alt="plus-icon"
-                                                    onClick={() => {
-                                                        localStorage.setItem("scDate", scDate.toString());
-                                                        router.push("/travelgroups/travel/tour-spots");
-                                                    }}
-                                                    style={{ cursor: 'pointer' }}
-                                                />
+                                                    onClick={handleAddScheduleClick}
+                                                    style={{ cursor: 'pointer' }} />
                                                 <img className="travel-box-btn" id="plus-btn-postion" src="/travelgroups/edit-icon.svg" alt="edit-icon"
-                                                    onClick={() => {
-                                                        localStorage.setItem("filteredScheduleList", JSON.stringify(scheduleList));
-                                                        localStorage.setItem("scDate", scDate.toString());
-                                                        router.push("/travelgroups/travel/schedule/edit");
-                                                    }}
-                                                    style={{ cursor: 'pointer' }}
-                                                />
+                                                    onClick={handleFilteredScheduleClick}
+                                                    style={{ cursor: 'pointer' }} />
                                             </>
                                         )}
                                     </div>
@@ -186,28 +189,15 @@ export default function Home() {
                         {show !== "schedule" && (
                             <div>
                                 <TravelogueListView travelogueList={travelogueList} />
-
-                                <div onClick={() => {
-                                    localStorage.setItem("scDate", scDate.toString());
-                                    router.push("/travelgroups/travel/travelogues/post");
-                                }}
-                                    style={{ cursor: 'pointer' }}
-                                >
+                                <div onClick={handleTravelogueClick} style={{ cursor: 'pointer' }}>
                                     <img className="travel-box-btn" id="plus-btn-postion" src="/travelgroups/plus-btn.svg" alt="plus-btn" />
                                 </div>
                             </div>
                         )}
 
-
-
-
                     </div>
                 </div>
-
-
-
             </div>
-
         </div>
     );
 }

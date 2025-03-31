@@ -26,21 +26,32 @@ api.interceptors.response.use(
     if (error instanceof AxiosError && error.response) {
       console.error("API 에러:", error.response.data.message);
 
-      // 401 Unauthorized 시, 리프레시 토큰 요청 가능 (선택적)
       if (error.response.status === 401) {
         console.warn("토큰 만료됨, 리프레시 시도...");
         try {
-          await api.post("/auth/refresh"); // 서버에서 자동으로 새로운 JWT 발급
-          return api(error.config); // 원래 요청 다시 시도
+          // 리프레시 토큰 요청
+          const refreshToken = localStorage.getItem("refreshToken"); // 로컬 스토리지에서 리프레시 토큰 가져오기
+          const response = await api.post("/auth/refresh", {}, {
+            headers: {
+              Authorization: `Bearer ${refreshToken}`
+            }
+          });
+
+          // 새로운 JWT 발급 후 원래 요청 재시도
+          api.defaults.headers.Authorization = `Bearer ${response.data.accessToken}`;
+          
+          // error.config가 undefined일 경우 빈 객체를 전달하여 오류를 방지
+          return api(error.config || {}); // config가 undefined일 때 빈 객체 전달
         } catch (refreshError) {
           console.error("리프레시 토큰 요청 실패:", refreshError);
-          window.location.href = "/login"; // 로그인 페이지로 이동
+          window.location.href = "/login";
         }
       }
     }
     return Promise.reject(error);
   }
 );
+
 
 // 토큰 만료 시 처리 함수
 export const handleTokenExpired = () => {

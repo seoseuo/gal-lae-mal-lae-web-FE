@@ -1,22 +1,49 @@
 "use client";
 
 import Header from "../../../header";
-import TourSpotsListView from "../../../../components/travelgroups/tour-spots-list-view"
+import TourSpotsListView from "../../../../components/travelgroups/tour-spots-list-view";
 import "@/styles/travelgroups/travelgroups-style.css";
 import { useState, useEffect, useRef } from "react";
 import { getTourSpotList } from "@/lib/travelgroup-api";
-// import { useRouter } from "next/navigation";
+
+interface Schedule {
+    tsIdx: number; // Index for the tour spot
+    scDate: number; // The date of the schedule
+    scStartTime: string | null; // Start time
+    scEndTime: string | null; // End time
+}
+
+interface TourSpot {
+    tsIdx: number; // Index for the tour spot
+    tsName: string; // Name of the tour spot
+    tsFirstImage: string | null; // Image URL
+    tsAddr1: string; // Address of the tour spot
+    tsTel: string | null; // Phone number
+}
 
 export default function Home() {
-    const [tourSpotList, setTourSpotList] = useState<any[]>([]);
+    const [tourSpotList, setTourSpotList] = useState<TourSpot[]>([]);
     const [page, setPage] = useState<number>(0);
     const [hasMore, setHasMore] = useState<boolean>(true);
     const [searchParams, setSearchParams] = useState({ searchValue: "", selectedValue: "" });
     const observer = useRef<IntersectionObserver | null>(null);
-    const travel = JSON.parse(localStorage.getItem("travel") || "{}");
-    const scDate = localStorage.getItem("scDate");
-    const filteredScheduleList = JSON.parse(localStorage.getItem("filteredScheduleList") || "[]");
 
+
+    // const travel = JSON.parse(localStorage.getItem("travel") || "{}");
+    // const scDate = localStorage.getItem("scDate");
+    // const filteredScheduleList: Schedule[] = JSON.parse(localStorage.getItem("filteredScheduleList") || "[]");
+
+    const [travel, setTravel] = useState<any>({});
+    const [scDate, setScDate] = useState<string | null>(null);
+    const [filteredScheduleList, setFilteredScheduleList] = useState<Schedule[]>([]);
+    
+    useEffect(() => {
+        if (typeof window !== "undefined") {
+            setTravel(JSON.parse(localStorage.getItem("travel") || "{}"));
+            setScDate(localStorage.getItem("scDate"));
+            setFilteredScheduleList(JSON.parse(localStorage.getItem("filteredScheduleList") || "[]"));
+        }
+    }, []);
     useEffect(() => {
         loadTourSpots(page, searchParams.searchValue, searchParams.selectedValue);
     }, [page, searchParams]);
@@ -47,22 +74,23 @@ export default function Home() {
         }
     }, [hasMore]);
 
-    const handleChange = (event: React.FormEvent<HTMLFormElement>) => {
+    const handleChange = (event: React.FormEvent<HTMLFormElement> | React.ChangeEvent<HTMLSelectElement>) => {
         event.preventDefault();
 
-        const searchInput = document.getElementById("search-input") as HTMLInputElement;
-        const searchValue = searchInput.value;
-
-        const selectedValue = (event.target as HTMLInputElement)?.value || "";
-
-        console.log("travel.ldIdx:", travel.ldIdx);
-        console.log("travel.lsIdx:", travel.lsIdx);
-        console.log("searchValue value:", searchValue);
-        console.log("selectedValue value:", selectedValue);
-
-        setSearchParams({ searchValue, selectedValue });
-        setPage(0); // 검색 시 페이지를 0으로 초기화
+        if (event.type === "submit") {
+            // form onSubmit 처리
+            const searchInput = document.getElementById("search-input") as HTMLInputElement;
+            const searchValue = searchInput.value;
+            setSearchParams(prevParams => ({ ...prevParams, searchValue }));
+            setPage(0); // 검색 시 페이지를 0으로 초기화
+        } else if (event.type === "change") {
+            // select onChange 처리
+            const selectedValue = (event.target as HTMLSelectElement).value;
+            setSearchParams(prevParams => ({ ...prevParams, selectedValue }));
+            setPage(0); // 선택 시 페이지를 0으로 초기화
+        }
     };
+
 
     // filteredScheduleList와 tsIdx가 겹치는 항목을 필터링
     const filteredTourSpotList = tourSpotList.filter(tourSpot =>
@@ -98,7 +126,7 @@ export default function Home() {
                 </div>
 
                 {/* 필터링된 tourSpotList를 TourSpotsListView로 전달 */}
-                <TourSpotsListView tourSpotList={filteredTourSpotList} scDate={scDate} />
+                <TourSpotsListView tourSpotList={filteredTourSpotList} scDate={Number(scDate)} />
                 <div ref={lastElementRef} style={{ height: '1px' }}></div>
             </div>
         </div>

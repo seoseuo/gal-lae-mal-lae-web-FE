@@ -1,20 +1,34 @@
-"use client"
+"use client";
 import { useEffect, useState } from "react";
-// import { getMe } from "@/lib/travelgroup-api";
 import Header from "../../header";
 import "@/styles/travelgroups/travelgroups-style.css";
 import { useRouter } from "next/navigation";
 
+// 유저 데이터 타입 정의
+interface User {
+  usIdx: number;
+  usName: string;
+  usEmail: string;
+  usProfile: string;
+}
+
+// 멤버 리스트 항목 타입 정의
+interface Member {
+  usIdx: number;
+  meRole: string;
+}
+
 export default function Home() {
-    const [user, setUser] = useState(null);
-    const [isAdmin, setIsAdmin] = useState(false);
+    const [user, setUser] = useState<User | null>(null);
+    const [isAdmin, setIsAdmin] = useState<boolean>(false);
     const router = useRouter();
 
     useEffect(() => {
         async function fetchData() {
             const userData = JSON.parse(localStorage.getItem('user') || '{}');
             setUser(userData);
-            const memberList = JSON.parse(localStorage.getItem('memberList') || '[]');
+
+            const memberList: Member[] = JSON.parse(localStorage.getItem('memberList') || '[]');
             const adminCheck = memberList.find((member) => member.usIdx === userData.usIdx)?.meRole === 'ADMIN';
             setIsAdmin(adminCheck);
         }

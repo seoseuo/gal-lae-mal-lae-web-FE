@@ -1,9 +1,10 @@
 'use client'
 import { useParams, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import { Client } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
+import Image from "next/image";
 
 interface User {
   usIdx: number;
@@ -36,18 +37,25 @@ export default function ChatRoom() {
   const [message, setMessage] = useState<string>('');
   const socket = new SockJS(`${process.env.NEXT_PUBLIC_WEBSOCKET_URL}`);
 
-  useEffect(() => {
-    getChatRoom();
+  const getChatList = useCallback(async () => {
+    try {
+      const response = await axios.get(`/api/chat/message/${chatRoom?.crIdx}`);
+      setChatList(response.data);
+    } catch (error) {
+      console.error('Error fetching chat list:', error)
+    }
+  }, [chatRoom?.crIdx]);
+  
+  const getChatRoom = useCallback(async () => {
+    try {
+      const response = await axios.get(`/api/chat/room?usIdx=${id}`);
+      setChatRoom(response.data);
+    } catch (error) {
+      console.error('Error fetching chat room:', error)
+    }
   }, [id]);
 
-  useEffect(() => {
-    if(chatRoom){
-      getChatList();
-      connectWebSocket();
-    }
-  }, [chatRoom]);
-
-  const connectWebSocket = () => {
+  const connectWebSocket = useCallback(() => {
     if(!chatRoom) return;
     const client = new Client({
       webSocketFactory: () => socket,
@@ -79,24 +87,18 @@ export default function ChatRoom() {
         client.deactivate();
       }
     }
-  }
-  const getChatList = async () => {
-    try {
-      const response = await axios.get(`/api/chat/message/${chatRoom?.crIdx}`);
-      setChatList(response.data);
-    } catch (error) {
-      console.error('Error fetching chat list:', error)
+  }, [chatRoom, socket]);
+
+  useEffect(() => {
+    getChatRoom();
+  }, [getChatRoom]);
+
+  useEffect(() => {
+    if(chatRoom){
+      getChatList();
+      connectWebSocket();
     }
-  }
-  
-  const getChatRoom = async () => {
-    try {
-      const response = await axios.get(`/api/chat/room?usIdx=${id}`);
-      setChatRoom(response.data);
-    } catch (error) {
-      console.error('Error fetching chat room:', error)
-    }
-  }
+  }, [chatRoom, getChatList, connectWebSocket]);
 
   const getFormattedDate = (date: string) => {
     const dateObj = new Date(date);
@@ -145,12 +147,23 @@ export default function ChatRoom() {
     setMessage(""); // 입력창 초기화
   };
   
+  const handleBack = () => {
+    router.back();
+  };
+
   return (
     <main className="min-h-screen bg-[#490085]/5 flex flex-col">
       {/* Header - Fixed */}
       <header className="fixed top-0 left-0 right-0 bg-white border-b border-[#DADADA] z-10">
         <div className="container mx-auto px-4 py-4 flex items-center">
-          <img src="arrow-back-ios0.svg" className="w-6 h-6 cursor-pointer" />
+          <Image
+            src="/arrow-back-ios0.svg"
+            alt="Back"
+            width={24}
+            height={24}
+            className="cursor-pointer"
+            onClick={handleBack}
+          />
           <div className="flex-1 flex items-center justify-center gap-2">
             <h1 className="text-[#490085] font-['NotoSansKr-Bold'] text-[18px]">
               {chatRoom?.otherUser.usName}

@@ -34,7 +34,13 @@ export default function ChatPage() {
         {chatList.map((chat, index) => (
           <Link href={`/chat/chatroom/${chat.usIdx}`} key={index} className="block w-full">
             <div className="flex items-center gap-3 p-3 hover:bg-gray-50 rounded-lg">
-              <img src={chat.usProfile} className="w-[48px] h-[48px] rounded-full object-cover flex-shrink-0" />
+              <Image 
+                src={`/s3/${chat.usProfile}`}
+                alt={`${chat.usName}의 프로필`}
+                width={48}
+                height={48}
+                className="rounded-full object-cover flex-shrink-0"
+              />
               <div className="min-w-0 flex-1">
                 <div className="text-black font-['NotoSansKr-Medium'] text-[15px] tracking-[-0.17px] mb-1 truncate">
                   {chat.usName}

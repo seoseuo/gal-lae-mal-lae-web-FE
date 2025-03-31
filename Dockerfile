@@ -14,8 +14,17 @@ RUN npm install
 # .env.local 파일 복사 (GitHub Actions에서 생성한 파일)
 COPY .env.local /app/.env.local
 
+# 📝 .env.local 파일이 제대로 복사되었는지 확인
+RUN ls -la /app
+RUN cat /app/.env.local
+
 # 애플리케이션 파일 복사
 COPY . .
+
+# 📝 환경 변수 로그 찍기
+RUN echo "NEXT_PUBLIC_SPRINGBOOT_URL=${NEXT_PUBLIC_SPRINGBOOT_URL}"
+RUN echo "NEXT_PUBLIC_S3_URL=${NEXT_PUBLIC_S3_URL}"
+RUN echo "NEXT_PUBLIC_WEBSOCKET_URL=${NEXT_PUBLIC_WEBSOCKET_URL}"
 
 # 애플리케이션 빌드
 RUN npm run build

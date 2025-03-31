@@ -24,7 +24,7 @@ jobs:
 
       - name: Build and Push Docker Image
         run: |
-          docker build -t seuo/wannago-fe-image:latest .
+          docker build --no-cache -t seuo/wannago-fe-image:latest .
           docker push seuo/wannago-fe-image:latest
 
       - name: Set up SSH key

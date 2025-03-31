@@ -1,3 +1,6 @@
+'use client';
+import Image from 'next/image';
+
 export default function ProfilePage() {
   return (
     <main className="min-h-screen bg-white relative overflow-hidden">
@@ -12,7 +15,13 @@ export default function ProfilePage() {
       <div className="absolute left-[179px] top-[143px] text-black font-['NotoSansKr-Regular'] text-[16px] tracking-[-0.17px]">최지호</div>
 
       {/* Profile Image */}
-      <img src="ellipse-2970.png" className="absolute left-[151px] top-[180px] w-[97px] h-[97px] rounded-full object-cover" />
+      <Image 
+        src="/ellipse-2970.png" 
+        alt="프로필 이미지" 
+        width={97} 
+        height={97} 
+        className="absolute left-[151px] top-[180px] w-[97px] h-[97px] rounded-full object-cover" 
+      />
 
       {/* Stats */}
       <div className="absolute left-[94px] top-[317px] text-black font-['NotoSansKr-Regular'] text-[18px] tracking-[-0.17px]">5</div>
@@ -41,9 +50,27 @@ export default function ProfilePage() {
       <div className="absolute left-0 top-[515px] w-[393px] h-[1px] border-t border-[#DADADA]"></div>
 
       {/* Image Grid */}
-      <img src="frame-17074819320.svg" className="absolute left-[calc(50%-157.5px)] top-[563px] w-[149px] h-[143px] rounded-[12px]" />
-      <img src="frame-17074819330.svg" className="absolute left-[calc(50%+15.5px)] top-[563px] w-[149px] h-[143px] rounded-[12px]" />
-      <img src="frame-17074819340.svg" className="absolute left-[calc(50%-157.5px)] top-[729px] w-[149px] h-[143px] rounded-[12px]" />
+      <Image 
+        src="/frame-17074819320.svg" 
+        alt="여행 이미지 1" 
+        width={149} 
+        height={143} 
+        className="absolute left-[calc(50%-157.5px)] top-[563px] w-[149px] h-[143px] rounded-[12px]" 
+      />
+      <Image 
+        src="/frame-17074819330.svg" 
+        alt="여행 이미지 2" 
+        width={149} 
+        height={143} 
+        className="absolute left-[calc(50%+15.5px)] top-[563px] w-[149px] h-[143px] rounded-[12px]" 
+      />
+      <Image 
+        src="/frame-17074819340.svg" 
+        alt="여행 이미지 3" 
+        width={149} 
+        height={143} 
+        className="absolute left-[calc(50%-157.5px)] top-[729px] w-[149px] h-[143px] rounded-[12px]" 
+      />
     </main>
   );
 }

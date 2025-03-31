@@ -1,6 +1,7 @@
 "use client";
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 export default function TipPage() {
   const [step, setStep] = useState(1);
@@ -10,18 +11,34 @@ export default function TipPage() {
     <div className="min-h-[852px] bg-white flex flex-col items-center px-5">
       <div className="w-full max-w-[390px] h-[48px] flex items-center justify-between mt-0">
         <div className="text-black text-[15px] font-['NotoSansKr-Bold'] tracking-[-0.17px]">9:41</div>
-        <img src="container0.svg" className="h-auto" />
+        <Image 
+          src="/container0.svg" 
+          alt="상태 아이콘"
+          width={67}
+          height={11}
+          className="h-auto"
+        />
       </div>
 
       <div className="w-full flex items-center mt-[42px] relative">
-        <img src="arrow-back-ios0.svg" className="w-6 h-6 ml-[14px]" />
+        <Image 
+          src="/arrow-back-ios0.svg" 
+          alt="뒤로가기"
+          width={24}
+          height={24}
+          className="w-6 h-6 ml-[14px]"
+          onClick={() => router.back()}
+        />
         <div className="text-[#1D0E07] text-center font-['NotoSansKr-Bold'] text-[16px] ml-[37px]">
           게시물 업로드 TIP
         </div>
       </div>
 
-      <img 
+      <Image 
         src="/Romantic-Messages.png" 
+        alt="여행 메이트 업로드 가이드 이미지"
+        width={281}
+        height={281}
         className="w-[281px] h-[281px] object-cover mt-6" 
       />
 

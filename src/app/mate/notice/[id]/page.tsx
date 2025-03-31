@@ -1,7 +1,8 @@
 'use client'
 import { useRouter, useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import axios from "axios";
+import Image from 'next/image';
 
 interface Board {
   boIdx: number;
@@ -14,7 +15,7 @@ interface Board {
   usIdx: number;
   boDate: string;
   usName: string;
-  boAge: String;
+  boAge: string;
   usProfile: string;
 }
 
@@ -25,31 +26,32 @@ export default function NoticePage() {
   const [board, setBoard] = useState<Board>();
   const [chatCheck, setChatCheck] = useState<boolean>(false);
 
+  const getBoard = useCallback(() => {
+    axios.get(`/api/mate/board/${id}`).then((res) => {
+      setBoard(res.data);
+      console.log(res.data);
+    });
+  }, [id]);
+
+  const checkChat = useCallback(() => {
+    axios.get(`/api/chat/room/check?usIdx=${board?.usIdx}`).then((res) => {
+      console.log(res.data);
+      setChatCheck(res.data.success);
+    });
+  }, [board?.usIdx]);
+
   useEffect(() => {
     if (id) {
       getBoard();
     }
-  }, [id]);
+  }, [id, getBoard]);
 
   useEffect(() => {
     if (board) {
       checkChat();
     }
-  }, [board]);
+  }, [board, checkChat]);
 
-  const getBoard = () => {
-    axios.get(`/api/mate/board/${id}`).then((res) => {
-      setBoard(res.data);
-      console.log(res.data);
-    });
-  };
-
-  const checkChat = () => {
-    axios.get(`/api/chat/room/check?usIdx=${board?.usIdx}`).then((res) => {
-      console.log(res.data);
-      setChatCheck(res.data.success);
-    });
-  };
   const getDate = (date: string) => {
     const dateObj = new Date(date);
     const year = dateObj.getFullYear();
@@ -103,10 +105,12 @@ export default function NoticePage() {
       {/* 프로필 영역 */}
       <div className="flex items-center gap-4 mb-[67px]">
         {board?.usProfile && (
-          <img 
-            src={`/s3/${board.usProfile}`} 
-            className="w-[45px] h-[45px] rounded-full object-cover" 
-            alt="프로필 이미지"
+          <Image 
+            src={`/s3/${board.usProfile}`}
+            alt={`${board.usName}의 프로필 이미지`}
+            width={45}
+            height={45}
+            className="rounded-full object-cover"
           />
         )}
         <div>
@@ -133,10 +137,12 @@ export default function NoticePage() {
       {/* 메인 이미지 */}
       <div className="flex justify-center mb-[38px]">
         {board?.boImg && (
-          <img 
-            src={`/s3/${board.boImg}`} 
-            className="w-[305px] h-[198px] rounded-xl" 
-            alt="게시글 이미지"
+          <Image 
+            src={`/s3/${board.boImg}`}
+            alt={board.boTitle}
+            width={305}
+            height={198}
+            className="rounded-xl"
           />
         )}
       </div>
@@ -157,7 +163,12 @@ export default function NoticePage() {
       {/* 좋아요 영역 */}
       <div className="flex items-center gap-6">
         <button className="flex items-center gap-2" onClick={handleLike}>
-          <img src="/heart.svg" className="w-[18px] h-[16px]" />
+          <Image 
+            src="/heart.svg"
+            alt="좋아요"
+            width={18}
+            height={16}
+          />
           <span className="text-black font-['NotoSansKr-Regular'] text-[16px] tracking-[-0.17px]">
             {board?.boLike}
           </span>

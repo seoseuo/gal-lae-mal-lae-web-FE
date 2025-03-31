@@ -1,5 +1,5 @@
-# Node.js 이미지를 베이스로 사용
-FROM node:16-alpine
+# Node.js 20 버전 사용 (Next.js 지원 버전)
+FROM node:20-alpine
 
 # 명시적으로 /app 디렉토리 생성
 RUN mkdir -p /app

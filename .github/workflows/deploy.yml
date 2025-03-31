@@ -10,11 +10,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    steps:
-      # GitHub Secrets에서 PEM_KEY의 길이를 확인하여 유효성 검사
-      - name: GitHub Secrets 키 길이 확인
-        run: echo "${{ secrets.PEM_KEY }}" | wc -c
-
       # 리포지토리 체크아웃
       - name: Checkout Repository
         uses: actions/checkout@v3
@@ -54,6 +49,7 @@ jobs:
         run: |
           echo "${{ secrets.PEM_KEY }}" | base64 --decode > private-key.pem
           chmod 600 private-key.pem
+          wc -c < private-key.pem  # 이 명령어로 파일 크기를 확인
 
       # 서버에 배포 스크립트 실행
       - name: Deploy to Server

@@ -2,6 +2,7 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 export default function ForgotPassword() {
   const router = useRouter();
@@ -38,8 +39,14 @@ export default function ForgotPassword() {
         type="button" 
         aria-label="뒤로 가기"
         className="absolute left-[47px] top-[84px] w-[24px] h-[24px]"
+        onClick={() => router.back()}
       >
-        <img src="arrow-back-ios0.svg" alt="" />
+        <Image 
+          src="/arrow-back-ios0.svg" 
+          alt="뒤로 가기" 
+          width={24} 
+          height={24} 
+        />
       </button>
       <h1 className="absolute left-1/2 -translate-x-1/2 top-[84px] text-black text-center font-['NotoSansKr-Bold'] text-xl tracking-[-0.17px] font-bold">
         비밀번호 찾기
@@ -83,7 +90,13 @@ export default function ForgotPassword() {
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}
               className="absolute left-[336px] top-[206px] w-[20px] h-[39px] rounded-r-[5px] bg-white border-y border-r border-[#C4C4C4] flex items-center justify-center"
             >
-              <img src="drop-down.svg" alt="드롭다운" className="w-3 h-3" />
+              <Image 
+                src="/drop-down.svg" 
+                alt="드롭다운" 
+                width={12} 
+                height={12} 
+                className="w-3 h-3" 
+              />
             </button>
             {isDropdownOpen && (
               <div className="absolute left-[213px] top-[245px] w-[153px] bg-white border border-[#C4C4C4] rounded-[5px] z-10">
@@ -127,10 +140,13 @@ export default function ForgotPassword() {
 
       <button 
         type="button"
-        className="absolute left-1/2 -translate-x-1/2 top-[374px] flex flex-col gap-2 items-center w-[292px]"
+        className={`absolute left-1/2 -translate-x-1/2 top-[374px] flex flex-col gap-2 items-center w-[292px]`}
         onClick={forgotPassword}
+        disabled={!email || !selectedDomain}
       >
-        <div className="w-full flex items-center justify-center gap-[13px] bg-[#C4C4C4] rounded-xl px-6 py-[15px]">
+        <div className={`w-full flex items-center justify-center gap-[13px] rounded-xl px-6 py-[15px] ${
+          email && selectedDomain ? 'bg-[#490085]' : 'bg-[#C4C4C4]'
+        }`}>
           <span className="text-white text-right font-['NotoSansKr-Medium'] text-[17px] leading-[22px] tracking-[-0.41px] font-medium">
             다음
           </span>

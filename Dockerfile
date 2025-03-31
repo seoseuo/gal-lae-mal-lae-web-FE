@@ -11,7 +11,7 @@ COPY package*.json ./
 RUN npm install
 
 # .env.local 파일 복사 (GitHub Actions에서 생성한 파일)
-COPY .env.local ./.env.local
+COPY .env.local .    # 루트 디렉토리로 복사 (컨테이너의 /app)
 
 # 애플리케이션 파일 복사
 COPY . .

@@ -45,20 +45,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # SSH 키를 설정하여 서버에 연결
-      - name: Set up SSH key
-        run: |
-          echo "${{ secrets.PEM_KEY }}" | base64 --decode > private-key.pem
-          chmod 600 private-key.pem
-          wc -c < private-key.pem  # 이 명령어로 파일 크기를 확인
-
       # 서버에 배포 스크립트 실행
       - name: Deploy to Server
         uses: appleboy/ssh-action@v0.1.6
         with:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USER }}
-          key_path: private-key.pem
+          key_path: ${{ secrets.PEM_KEY }}
           script: |
             docker pull seuo/wannago-fe-image:latest
             docker stop wannago_fe || true  # 이전에 실행 중인 컨테이너 종료

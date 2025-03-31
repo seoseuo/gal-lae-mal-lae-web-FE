@@ -4,6 +4,7 @@ import { useEffect, useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
+
 export default function First() {
   const router = useRouter();
   const [currentPage, setCurrentPage] = useState(1);
@@ -25,6 +26,7 @@ export default function First() {
   const textStyles = "font-['NotoSansKr-Medium'] text-[17px] font-medium leading-[22px] tracking-[-0.41px] text-white";
 
   return (
+    
     <main className="min-h-screen bg-white flex flex-col">
       {/* Header */}
       <header className="flex justify-end items-center px-6 pt-[78px] mb-10">

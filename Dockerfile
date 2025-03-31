@@ -1,7 +1,8 @@
 # Node.js 이미지를 베이스로 사용
 FROM node:16-alpine
 
-# 작업 디렉토리 설정
+# 명시적으로 /app 디렉토리 생성
+RUN mkdir -p /app
 WORKDIR /app
 
 # package.json과 package-lock.json을 복사
@@ -11,7 +12,7 @@ COPY package*.json ./
 RUN npm install
 
 # .env.local 파일 복사 (GitHub Actions에서 생성한 파일)
-COPY .env.local .    # 루트 디렉토리로 복사 (컨테이너의 /app)
+COPY .env.local /app/.env.local
 
 # 애플리케이션 파일 복사
 COPY . .

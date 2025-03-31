@@ -3,7 +3,7 @@ name: Deploy with Docker
 on:
   push:
     branches:
-      - main  # main 브랜치에 push될 때 실행됨
+      - main
 
 jobs:
   build:
@@ -12,6 +12,13 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
+
+      # 추가: deploy job에서도 .env.local 파일을 생성
+      - name: Create .env.local file from Secrets
+        run: |
+          echo "NEXT_PUBLIC_SPRINGBOOT_URL=http://54.180.124.87" >> .env.local
+          echo "NEXT_PUBLIC_S3_URL=https://wannagobucket.s3.ap-northeast-2.amazonaws.com" >> .env.local
+          echo "NEXT_PUBLIC_WEBSOCKET_URL=http://54.180.124.87/ws" >> .env.local
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
@@ -28,7 +35,7 @@ jobs:
           docker push seuo/wannago-fe-image:latest
 
   deploy:
-    needs: build  # 🔥 'build' Job이 완료된 후에 실행되도록 강제
+    needs: build
     runs-on: ubuntu-latest
 
     steps:

@@ -6,7 +6,7 @@ on:
       - main  # main 브랜치에 push될 때 실행됨
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -27,6 +27,11 @@ jobs:
           docker build --no-cache -t seuo/wannago-fe-image:latest .
           docker push seuo/wannago-fe-image:latest
 
+  deploy:
+    needs: build  # 🔥 'build' Job이 완료된 후에 실행되도록 강제
+    runs-on: ubuntu-latest
+
+    steps:
       - name: Set up SSH key
         run: |
           echo "${{ secrets.PEM_KEY }}" > private-key.pem

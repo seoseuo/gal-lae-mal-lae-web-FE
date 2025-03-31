@@ -219,7 +219,13 @@ export default function ChatRoom() {
                   ) : (
                     // Received Message
                     <div key={chat.msgIdx} className="flex items-start gap-2">
-                      <img src={`/s3/${user.usProfile}`} className="w-9 h-9 rounded-full object-cover" />
+                      <Image 
+                        src={`/s3/${user.usProfile}`}
+                        alt={`${user.usName}의 프로필`}
+                        width={36}  // w-9 = 36px
+                        height={36} // h-9 = 36px
+                        className="rounded-full object-cover"
+                      />
                       <div className="flex flex-col">
                         <span className="text-sm text-[#490085] mb-1">{user.usName}</span>
                         <div className="flex items-end gap-2">
@@ -257,10 +263,13 @@ export default function ChatRoom() {
             />
           </div>
           <button className="w-10 h-10 flex items-center justify-center bg-[#490085] rounded-full" onClick={sendMessage}>
-          <img 
-            src="/send.svg" 
-              className="w-5 h-5 brightness-0 invert" 
-          />
+            <Image 
+              src="/send.svg"
+              alt="메시지 보내기"
+              width={20}  // w-5 = 20px
+              height={20} // h-5 = 20px
+              className="brightness-0 invert"
+            />
           </button>
         </div>
       </div>

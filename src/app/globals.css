@@ -317,3 +317,8 @@ body {
 /* @media screen and (max-width: 393px) {
   
 } */
+
+
+button {
+  touch-action: manipulation;
+}

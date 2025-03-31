@@ -20,7 +20,7 @@ export default function Login() {
 
   const login = () => {
     console.log("로그인 버튼 클릭됨");
-    if(email == "" || password == "" ){
+    if (email == "" || password == "") {
       alert("이메일과 비밀번호를 입력해주세요.");
       return;
     }
@@ -33,9 +33,9 @@ export default function Login() {
     axios.post('api/auth/login', data)
       .then((response) => {
         console.log(response);
-        if(response.data.success){
+        if (response.data.success) {
           router.push('/');
-        }else{
+        } else {
           alert("로그인 실패");
         }
       })
@@ -46,14 +46,14 @@ export default function Login() {
 
   return (
     <section className="relative h-[852px] overflow-hidden bg-white">
-      <button 
-        type="button" 
+      <button
+        type="button"
         aria-label="뒤로 가기"
         className="absolute right-[88.04%] left-[7.89%] bottom-[87.79%] top-[10.33%] w-[4.07%] h-[1.88%]"
       >
         <img src="vector0.svg" alt="" />
       </button>
-      
+
       <h1 className="absolute left-[calc(50%-26.5px)] top-[84px] text-black text-center font-['NotoSansKr-Bold'] text-xl tracking-[-0.17px] font-bold">
         로그인
       </h1>
@@ -61,13 +61,13 @@ export default function Login() {
 
       <form>
         <div>
-          <label 
+          <label
             htmlFor="email"
             className="absolute left-[calc(50%-167.5px)] top-[calc(50%-256px)] text-black text-center font-['NotoSansKr-Regular'] text-base tracking-[-0.17px]"
           >
             이메일
           </label>
-          <input 
+          <input
             id="email"
             type="text"
             placeholder="이메일"
@@ -78,7 +78,7 @@ export default function Login() {
         </div>
 
         <div>
-          <label 
+          <label
             htmlFor="password"
             className="absolute left-[calc(50%-167.5px)] top-[calc(50%-155px)] text-black text-center font-['NotoSansKr-Regular'] text-base tracking-[-0.17px]"
           >
@@ -99,7 +99,7 @@ export default function Login() {
               aria-label={showPassword ? "비밀번호 숨기기" : "비밀번호 보기"}
               className="absolute right-[40px] top-[315px] w-[24px] h-[24px] flex items-center justify-center"
             >
-              <img 
+              <img
                 src={showPassword ? "/eye-off.svg" : "/eye.svg"}
                 alt=""
                 className="w-[20px] h-[20px]"
@@ -108,38 +108,36 @@ export default function Login() {
           </div>
         </div>
 
-        <a 
+        <a
           href="/forgot-password"
           className="absolute left-[calc(50%-168.5px)] top-[calc(50%-73px)] text-black text-center font-['NotoSansKr-Regular'] text-[8px] tracking-[-0.17px]"
         >
           비밀번호를 잊어버리셨나요?
         </a>
-        <a 
+        <a
           href="/signup"
           className="absolute left-[calc(50%-168.5px)] top-[calc(50%-53px)] text-black text-center font-['NotoSansKr-Regular'] text-[8px] tracking-[-0.17px]"
         >
           아직 회원이 아니신가요?
         </a>
 
-        <button 
+        <button
           type="button"
           className="absolute left-1/2 -translate-x-1/2 top-[651px] flex flex-col gap-2 items-center w-[292px]"
-          onClick={(e) => {
-            e.preventDefault();
-            login();
-          }}
+          onClick={login}
+          
           disabled={!email || !password}
         >
-          <div className={`w-full flex items-center justify-center gap-[13px] rounded-xl px-6 py-[15px] ${
-            email && password 
-              ? 'bg-[#490085] hover:bg-[#3a006c] cursor-pointer' 
+          <div className={`w-full flex items-center justify-center gap-[13px] rounded-xl px-6 py-[15px] ${email && password
+              ? 'bg-[#490085] hover:bg-[#3a006c] cursor-pointer'
               : 'bg-[#C4C4C4] cursor-not-allowed'
-          }`}>
+            }`}>
             <span className="text-white text-right font-['NotoSansKr-Medium'] text-[17px] leading-[22px] tracking-[-0.41px] font-medium">
               다음
             </span>
           </div>
         </button>
+
       </form>
     </section>
   );

@@ -63,4 +63,4 @@ jobs:
             docker pull seuo/wannago-fe-image:latest
             docker stop wannago_fe || true  # 이전에 실행 중인 컨테이너 종료
             docker rm wannago_fe || true    # 이전에 실행 중인 컨테이너 삭제
-            docker run -d --name wannago_fe -p 3000:3000 seuo/wannago-fe-image:latest  # 새 컨테이너 실행
+            docker run -d --name wannago_fe -p 80:80 seuo/wannago-fe-image:latest  # 새 컨테이너 실행

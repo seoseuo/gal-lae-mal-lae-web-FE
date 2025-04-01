@@ -18,9 +18,9 @@ jobs:
       # .env.local 파일 생성
       - name: Create .env.local file from Secrets
         run: |
-          echo "NEXT_PUBLIC_SPRINGBOOT_URL=http://54.180.124.87" >> .env.local
-          echo "NEXT_PUBLIC_S3_URL=https://wannagobucket.s3.ap-northeast-2.amazonaws.com" >> .env.local
-          echo "NEXT_PUBLIC_WEBSOCKET_URL=http://54.180.124.87/ws" >> .env.local
+          echo "NEXT_PUBLIC_SPRINGBOOT_URL=$NEXT_PUBLIC_SPRINGBOOT_URL" >> .env.local
+          echo "NEXT_PUBLIC_S3_URL=$NEXT_PUBLIC_S3_URL" >> .env.local
+          echo "NEXT_PUBLIC_WEBSOCKET_URL=$NEXT_PUBLIC_WEBSOCKET_URL" >> .env.local
 
       # Docker Buildx 설정
       - name: Set up Docker Buildx

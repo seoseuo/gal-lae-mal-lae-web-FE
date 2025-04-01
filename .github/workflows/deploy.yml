@@ -18,9 +18,9 @@ jobs:
       # .env.local 파일 생성
       - name: Create .env.local file from Secrets
         run: |
-          echo "NEXT_PUBLIC_SPRINGBOOT_URL=$NEXT_PUBLIC_SPRINGBOOT_URL" >> .env.local
-          echo "NEXT_PUBLIC_S3_URL=$NEXT_PUBLIC_S3_URL" >> .env.local
-          echo "NEXT_PUBLIC_WEBSOCKET_URL=$NEXT_PUBLIC_WEBSOCKET_URL" >> .env.local
+          echo "NEXT_PUBLIC_SPRINGBOOT_URL=${{ secrets.NEXT_PUBLIC_SPRINGBOOT_URL }}" >> .env.local
+          echo "NEXT_PUBLIC_S3_URL=${{ secrets.NEXT_PUBLIC_S3_URL }}" >> .env.local
+          echo "NEXT_PUBLIC_WEBSOCKET_URL=${{ secrets.NEXT_PUBLIC_WEBSOCKET_URL }}" >> .env.local
 
       # Docker Buildx 설정
       - name: Set up Docker Buildx

@@ -21,11 +21,6 @@ RUN cat /app/.env.local
 # 애플리케이션 파일 복사
 COPY . .
 
-# 환경 변수 로그 찍기
-RUN echo "NEXT_PUBLIC_SPRINGBOOT_URL=${{ secrets.NEXT_PUBLIC_SPRINGBOOT_URL }}"
-RUN echo "NEXT_PUBLIC_S3_URL=${{ secrets.NEXT_PUBLIC_S3_URL }}"
-RUN echo "NEXT_PUBLIC_WEBSOCKET_URL=${{ secrets.NEXT_PUBLIC_WEBSOCKET_URL }}"
-
 # 애플리케이션 빌드
 RUN npm run build
 

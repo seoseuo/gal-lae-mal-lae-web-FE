@@ -24,6 +24,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, user-scalable=no, viewport-fit=cover"
         />
         <meta name="theme-color" content="#ffffff" />
+        {/* manifest.json 링크 추가 */}
+        <link rel="manifest" href="/manifest.json" />
+        {/* title 추가 */}
+        <title>갈래말래</title>
       </head>
       <body>
         {children}

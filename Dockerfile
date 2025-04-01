@@ -22,9 +22,9 @@ RUN cat /app/.env.local
 COPY . .
 
 # 환경 변수 로그 찍기
-RUN echo "NEXT_PUBLIC_SPRINGBOOT_URL=http://54.180.124.87"
-RUN echo "NEXT_PUBLIC_S3_URL=https://wannagobucket.s3.ap-northeast-2.amazonaws.com"
-RUN echo "NEXT_PUBLIC_WEBSOCKET_URL=http://54.180.124.87/ws"
+RUN echo "NEXT_PUBLIC_SPRINGBOOT_URL=${{ secrets.NEXT_PUBLIC_SPRINGBOOT_URL }}"
+RUN echo "NEXT_PUBLIC_S3_URL=${{ secrets.NEXT_PUBLIC_S3_URL }}"
+RUN echo "NEXT_PUBLIC_WEBSOCKET_URL=${{ secrets.NEXT_PUBLIC_WEBSOCKET_URL }}"
 
 # 애플리케이션 빌드
 RUN npm run build

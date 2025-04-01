@@ -15,9 +15,9 @@ jobs:
 
       - name: Create .env.local file from Secrets
         run: |
-          echo "NEXT_PUBLIC_SPRINGBOOT_URL=http://54.180.124.87" >> .env.local
-          echo "NEXT_PUBLIC_S3_URL=https://wannagobucket.s3.ap-northeast-2.amazonaws.com" >> .env.local
-          echo "NEXT_PUBLIC_WEBSOCKET_URL=http://54.180.124.87/ws" >> .env.local
+          echo "NEXT_PUBLIC_SPRINGBOOT_URL=${{ secrets.NEXT_PUBLIC_SPRINGBOOT_URL }}" >> .env.local
+          echo "NEXT_PUBLIC_S3_URL=${{ secrets.NEXT_PUBLIC_S3_URL }}" >> .env.local
+          echo "NEXT_PUBLIC_WEBSOCKET_URL=${{ secrets.NEXT_PUBLIC_WEBSOCKET_URL }}" >> .env.local
 
       - name: Build Docker image
         run: |

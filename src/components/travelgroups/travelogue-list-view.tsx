@@ -72,7 +72,8 @@ export default function TravelogueListView({ travelogueList: initialList }: { tr
                     <div className="travelgroups-list-view-profile">
                         <img className="travelgroups-list-view-profile-img"
                             src={`/s3/${memberList.find((member: Member) => member.usIdx === travelogue.usIdx)?.meUser?.usProfile || 'default-profile.png'}`}
-                            alt="profile-img" />
+                            alt="profile-img" 
+                            style={{objectFit:'cover'}}/>
                         <div className="travelgroups-list-view-profile-text">
                             <span className='regular' style={{ fontSize: '12px', marginLeft: '7px' }}>
                                 {memberList.find((member: Member) => member.usIdx === travelogue.usIdx)?.meUser?.usName || 'Unknown'}
@@ -80,9 +81,9 @@ export default function TravelogueListView({ travelogueList: initialList }: { tr
                             <div style={{ display: 'flex', alignItems: 'center' }}>
                                 <img
                                     src={`/travelgroups/${travelogue.tlPublic === 1 ? 'public-icon.svg' : 'private-icon.svg'}`}
-                                    style={{ width: '12px', height: '12px', marginLeft: '7px' }}
+                                    style={{ width: '12px', height: '12px', marginLeft: '7px' ,  }}
                                     alt={travelogue.tlPublic === 1 ? "public-icon" : "private-icon"} />
-                                <span className='regular' style={{ fontSize: '12px' }}>
+                                <span className='regular' style={{ fontSize: '12px' , marginLeft: '4px' }}>
                                     {travelogue.tlPublic === 1 ? "공개" : "비공개"}
                                 </span>
                                 {user?.usIdx === travelogue.usIdx && (
@@ -96,7 +97,7 @@ export default function TravelogueListView({ travelogueList: initialList }: { tr
                     </div>
                     <span className='regular' style={{ fontSize: '12px', marginBottom: '12px' }}>{travelogue.tlTitle}</span>
                     <span className='regular' style={{ fontSize: '12px', marginBottom: '12px' }}>{travelogue.tlContent}</span>
-                    <img className="travelgroups-list-view-content-img" src={travelogue.tlImage} alt={travelogue.tlTitle} />
+                    <img className="travelgroups-list-view-content-img" src={`/s3/${travelogue.tlImage}`} alt={travelogue.tlTitle} />
                 </div>
             ))}
 

@@ -26,15 +26,16 @@ export function MainTraveloguesView({ mainTraveloguesViewList }: { mainTravelogu
                                 <img
                                     className="main-list-img"
                                     src={`/s3/${group.tlImage || 'default-img.svg'}`}
-                                    style={{ width: '100%', height: "100%", borderRadius: '7%' }}
+                                    style={{ width: '100%', height: "100%", borderRadius: '7%' , objectFit:'cover' }}
                                     alt={group.tlTitle} // 제목을 대체 텍스트로 사용
+                                    
                                 />
                             </div>
 
 
                             <img className="main-list-profile"
                                 src={`/s3/${group.usProfile || 'default-profile.svg'}`}
-                                
+                                style={{objectFit:'cover'}}
                                 alt={group.usName} // 유저 이름을 대체 텍스트로 사용
                             />
 

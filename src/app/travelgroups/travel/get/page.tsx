@@ -35,7 +35,20 @@ export default function Home() {
 
             setTravelGroup(storedTravelGroup);
             setTrIdx(storedTrIdx);
-            setIsAdmin(storedMemberList.some((member: any) => member.meRole === 'ADMIN'));
+            
+            //console.log("storedMemberList", storedMemberList);
+
+            // localStorage에서 'user' 데이터를 꺼냄
+            const storedUserData = JSON.parse(localStorage.getItem("user") || "{}");
+            // storedMemberList 배열에서 'ADMIN' 역할을 가진 멤버를 찾음
+            
+            const isAdmin = storedMemberList.some((member: any) =>
+                member.usIdx === storedUserData.usIdx && member.meRole === "ADMIN"
+            );
+
+            console.log("isAdmin ?",isAdmin);
+            // isAdmin 값에 따라 setIsAdmin 호출
+            setIsAdmin(isAdmin);                    
         }
     }, []);
 
@@ -103,7 +116,7 @@ export default function Home() {
             document.querySelector('.show.schedule')?.classList.add('custom-underline');
         }
     }
-    
+
     const handleFilteredScheduleClick = () => {
         if (typeof window !== "undefined") {
             localStorage.setItem("filteredScheduleList", JSON.stringify(scheduleList));
@@ -147,9 +160,9 @@ export default function Home() {
                             <span className='regular show travelogue' style={{ fontSize: '16px', color: '#787676', cursor: 'pointer' }} onClick={() => setShowWhat("travelogue")}>여행록</span>
                             <span className='regular show schedule custom-underline' style={{ fontSize: '16px', color: '#787676', cursor: 'pointer' }} onClick={() => setShowWhat("schedule")}>일정</span>
                         </div>
-                        <br />
-                        <br />
-                        <hr />
+
+
+                        <hr style={{ marginTop: '5px' }} />
 
                         {show === "schedule" && (
                             <>

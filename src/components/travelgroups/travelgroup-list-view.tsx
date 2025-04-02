@@ -15,7 +15,7 @@ export default function TravelgroupListView({ travelGroupList }: { travelGroupLi
                     }}>
                         <div className="travelgroup-list-view-container" style={{ cursor: 'pointer', minWidth: '400px' }}>
                             <div style={{ flex: '0 0 121px' }}>
-                                <img className="travelgroup-list-view-img" src={`/s3/${group.grProfile}`} alt={group.grName} />
+                                <img className="travelgroup-list-view-img" src={`/s3/${group.grProfile}`} alt={group.grName} style={{objectFit:'cover'}}/>
                             </div>
                             <div className="travelgroup-list-view-tag-container" style={{ flex: 1, minWidth: 0 }}>
                                 <div className="bold" style={{ fontSize: "20px", color: "#490085" }}>{group.grName}</div>

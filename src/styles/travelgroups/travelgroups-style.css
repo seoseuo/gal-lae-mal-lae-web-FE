@@ -85,8 +85,8 @@ html {
   margin: 20px 0 40px 0;
   display: grid;
   grid-template-columns: repeat(4, 1fr); /* 4열 */
-  row-gap: 10;
-  column-gap: 30;
+  row-gap: 10px;
+  column-gap: 30px;
 }
 
 .member-list-view-container {

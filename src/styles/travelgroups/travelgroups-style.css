@@ -4,6 +4,8 @@ html {
   -webkit-scrollbar-width: none; /* Chrome, Safari에서 스크롤바 숨기기 */
 }
 
+
+
 .travelgroup-container {
   display: flex;
   flex-direction: column;
@@ -28,8 +30,7 @@ html {
   /* 동그라미 , 121*121 */
   width: 121px;
   height: 121px;
-  border-radius: 50%;
-  
+  border-radius: 50%;  
 }
 
 .travelgroup-list-view-tag-container {
@@ -104,7 +105,7 @@ html {
 .member-profile-img {
   width: 57px;
   height: 57px;
-  border-radius: 50%;
+  border-radius: 50%;  
 }
 
 .member-profile-text {

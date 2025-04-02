@@ -55,7 +55,14 @@ export default function Home() {
                     id="profile-icon"
                     src={user.usProfile ? `/s3/${user.usProfile}` : "/travelgroups/profile.png"}
                     alt="profile"
+                    style={{
+                        borderRadius: '50%',
+                        width: '200px',
+                        height: '200px',
+                        objectFit: 'cover', // 이미지 비율을 유지하며 영역을 채움
+                    }}
                 />
+
                 <br />
                 <span className='regular' style={{ fontSize: '16px', marginTop: '10px' }}>{user.usName}</span>
 

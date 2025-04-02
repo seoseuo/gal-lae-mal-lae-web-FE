@@ -81,9 +81,9 @@ export default function TravelogueListView({ travelogueList: initialList }: { tr
                             <div style={{ display: 'flex', alignItems: 'center' }}>
                                 <img
                                     src={`/travelgroups/${travelogue.tlPublic === 1 ? 'public-icon.svg' : 'private-icon.svg'}`}
-                                    style={{ width: '12px', height: '12px', marginLeft: '7px' , objectFit:'cover' }}
+                                    style={{ width: '12px', height: '12px', marginLeft: '7px' ,  }}
                                     alt={travelogue.tlPublic === 1 ? "public-icon" : "private-icon"} />
-                                <span className='regular' style={{ fontSize: '12px' }}>
+                                <span className='regular' style={{ fontSize: '12px' , marginLeft: '4px' }}>
                                     {travelogue.tlPublic === 1 ? "공개" : "비공개"}
                                 </span>
                                 {user?.usIdx === travelogue.usIdx && (

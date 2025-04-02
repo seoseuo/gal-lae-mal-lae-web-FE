@@ -25,6 +25,8 @@ body {
   height: 852px;
 }
 
+
+
 /* 버튼 컴포넌트 */
 .active-button {
   background-color: #490085;
@@ -204,7 +206,7 @@ body {
 
 /* 헤더 */
 .header {
-  margin: 30px 2px 20px 0px;
+  margin: 10px 2px 20px 0px;
   font-size: 18px;
   display: flex;
   /* border: red 1px solid; */

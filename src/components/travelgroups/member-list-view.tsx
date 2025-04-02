@@ -11,7 +11,8 @@ export default function MemberListView({ memberList }: { memberList: any[] }) {
 
             <div className="member-profile">
                 <img src="/travelgroups/admin.svg" />
-                <img className="member-profile-img" src={`/s3/${memberList[0].meUser.usProfile}`} alt="admin-profile-img" />
+                <img className="member-profile-img" src={`/s3/${memberList[0].meUser.usProfile}`} alt="admin-profile-img"
+                style={{objectFit:'cover'}} />
                 <span className="medium member-profile-text">{memberList[0].meUser.usName}</span>
             </div>
 
@@ -19,7 +20,8 @@ export default function MemberListView({ memberList }: { memberList: any[] }) {
             {memberList.slice(1).map((member) => (
                 <div className="member-profile" key={member.usIdx}>
                     <div style={{ height: '16px' }}></div>
-                    <img className="member-profile-img" src={`/s3/${member.meUser.usProfile}`} alt="member-profile-img" />
+                    <img className="member-profile-img" src={`/s3/${member.meUser.usProfile}`} alt="member-profile-img"
+                    style={{objectFit:'cover'}} />
                     <span className="medium member-profile-text">{member.meUser.usName}</span>
                 </div>
             ))}
@@ -28,7 +30,8 @@ export default function MemberListView({ memberList }: { memberList: any[] }) {
 
             <div className="member-profile" style={{ cursor: 'pointer' }} onClick={() => router.push('/travelgroups/invite')}>
                 <div style={{ height: '16px' }}></div>
-                <img className="member-profile-img" src="/travelgroups/invite-btn.svg" alt="admin-profile-img" />
+                <img className="member-profile-img" src="/travelgroups/invite-btn.svg" alt="admin-profile-img" 
+                style={{objectFit:'cover'}}/>
                 <span className="medium member-profile-text">NEW</span>
             </div>
 

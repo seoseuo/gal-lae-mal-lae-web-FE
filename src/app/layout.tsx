@@ -13,7 +13,7 @@ import { usePathname } from "next/navigation";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const noFooterPaths = ["/login", "/forgot-password", "/first", "/signup"];
+  const noFooterPaths = ["/login", "/forgot-password", "/first", "/signup", "/profile-set"];
   const shouldShowFooter = !noFooterPaths.includes(pathname);
 
   return (

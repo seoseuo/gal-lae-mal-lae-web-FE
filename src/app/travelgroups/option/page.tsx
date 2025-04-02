@@ -6,16 +6,16 @@ import { useRouter } from "next/navigation";
 
 // 유저 데이터 타입 정의
 interface User {
-  usIdx: number;
-  usName: string;
-  usEmail: string;
-  usProfile: string;
+    usIdx: number;
+    usName: string;
+    usEmail: string;
+    usProfile: string;
 }
 
 // 멤버 리스트 항목 타입 정의
 interface Member {
-  usIdx: number;
-  meRole: string;
+    usIdx: number;
+    meRole: string;
 }
 
 export default function Home() {
@@ -51,7 +51,11 @@ export default function Home() {
                     </>
                 )}
 
-                <img id="profile-icon" src="/travelgroups/profile.png" alt="profile" />
+                <img
+                    id="profile-icon"
+                    src={user.usProfile ? `/s3/${user.usProfile}` : "/travelgroups/profile.png"}
+                    alt="profile"
+                />
                 <br />
                 <span className='regular' style={{ fontSize: '16px', marginTop: '10px' }}>{user.usName}</span>
 

@@ -36,18 +36,18 @@ export default function PasswordChange() {
   };
 
   return (
-    <main className="min-h-screen bg-white flex flex-col relative">
+    <main className="min-h-screen bg-white flex flex-col relative p-6">
 
       {/* Title */}
-      <h1 className="absolute left-1/2 -translate-x-1/2 top-[84px] text-black text-center font-['NotoSansKr-Bold'] text-[20px] tracking-[-0.17px] font-bold">
+      <h1 className="text-black text-center font-['NotoSansKr-Bold'] text-[20px] tracking-[-0.17px] font-bold mb-4">
         비밀번호 변경
       </h1>
 
       {/* Divider */}
-      <div className="absolute left-0 top-[134px] w-[393px] h-[1px] border-t border-[#DADADA]"></div>
+      <div className="w-full h-[1px] border-t border-[#DADADA] mb-8"></div>
 
       {/* Back Button */}
-      <button className="absolute left-[8.91%] top-[10.09%]" onClick={() => router.back()}>
+      <button className="mb-4" onClick={() => router.back()}>
         <Image 
           src="/vector0.svg" 
           alt="뒤로가기" 
@@ -58,25 +58,25 @@ export default function PasswordChange() {
       </button>
 
       {/* Subtitle */}
-      <h2 className="absolute left-[44px] top-[176px] w-[96px] h-[18px] text-black font-['NotoSansKr-Regular'] text-[16px] tracking-[-0.17px]">
+      <h2 className="text-black font-['NotoSansKr-Regular'] text-[16px] tracking-[-0.17px] mb-6">
         비밀번호 변경
       </h2>
 
       {/* Password Inputs */}
-      <div className="absolute left-[44px] top-[226px] w-[235px] h-[32px] bg-white border border-[#DADADA] rounded-[5px] flex items-center px-[6px]">
+      <div className="w-[235px] h-[32px] bg-white border border-[#DADADA] rounded-[5px] flex items-center px-[6px] mb-4">
         <input type="password" value={currentPassword} onChange={(e) => setCurrentPassword(e.target.value)} placeholder="현재 비밀번호" className="text-[#C4C4C4] font-['NotoSansKr-Regular'] text-[12px] tracking-[-0.17px] w-full" />
       </div>
 
-      <div className="absolute left-[44px] top-[271px] w-[235px] h-[33px] bg-white border border-[#DADADA] rounded-[5px] flex items-center px-[6px]">
+      <div className="w-[235px] h-[33px] bg-white border border-[#DADADA] rounded-[5px] flex items-center px-[6px] mb-4">
         <input type="password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} placeholder="새 비밀번호" className="text-[#C4C4C4] font-['NotoSansKr-Regular'] text-[12px] tracking-[-0.17px] w-full" />
       </div>
 
-      <div className="absolute left-[44px] top-[317px] w-[235px] h-[32px] bg-white border border-[#DADADA] rounded-[5px] flex items-center px-[6px]">
+      <div className="w-[235px] h-[32px] bg-white border border-[#DADADA] rounded-[5px] flex items-center px-[6px] mb-8">
         <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} placeholder="새 비밀번호 재입력" className="text-[#C4C4C4] font-['NotoSansKr-Regular'] text-[12px] tracking-[-0.17px] w-full" />
       </div>
 
       {/* Submit Button */}
-      <div className="absolute left-1/2 -translate-x-1/2 top-[647px] w-[292px]" onClick={handlePasswordChange}>
+      <div className="w-[292px] mx-auto">
         <button className="w-full bg-[#C4C4C4] rounded-[12px] py-[15px] px-6 text-white font-['NotoSansKr-Medium'] text-[17px] leading-[22px] tracking-[-0.41px]">
           비밀번호 변경
         </button>

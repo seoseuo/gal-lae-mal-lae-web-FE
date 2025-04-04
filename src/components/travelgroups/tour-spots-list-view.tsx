@@ -37,17 +37,22 @@ export default function TourSpotsListView({ tourSpotList = [], scDate }: { tourS
           {tourSpotList.map((tourSpot, index) => (
             <div key={index}>
               <div className="tour-spots-view">
-                <div className="tour-spots-checkbox">
+                <div className="tour-spots-checkbox"
+                >
                   <input
                     id={`checkbox-${index}`}
                     type="checkbox"
                     name="tour-spots-name"
                     value={tourSpot.tsIdx}
                     onChange={() => handleCheckboxChange(index, tourSpot.tsIdx)} // 체크박스 클릭 시 핸들러 호출
+                    
                   />
                   
-                  <label htmlFor={`checkbox-${index}`}>
-                    <div className="tour-spots-card">
+                  <label htmlFor={`checkbox-${index}`}
+                  //  style={{marginLeft:'20px'}}
+                   >
+                    <div className="tour-spots-card"
+                    >
                       <img
                         src={tourSpot.tsFirstImage || "/travelgroups/tour-spot.png"}
                         alt="img"

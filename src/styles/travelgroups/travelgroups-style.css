@@ -366,6 +366,7 @@ html {
 
 .tour-spots-view {
   display: flex;
+  align-items: center;
   width: 319px;
   height: 55px;
   margin-top: 15px;
@@ -374,8 +375,9 @@ html {
 .tour-spots-checkbox {
   display: flex;
   align-items: center;
-  width: 30px;
+  /* width: 30px; */
   height: 55px;
+  z-index: 10;
 }
 
 .tour-spots-card {
@@ -569,8 +571,7 @@ html {
 
 .filter-container {
   margin-top: 20px;
-
-  height: 25px;
+  height: 30px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -634,7 +635,7 @@ html {
   position: fixed;
   top: 650px;
   left: 40px;
-  z-index: 99;
+  z-index: 999;
 }
 
 #bottom-button-postion-delete {

@@ -362,7 +362,7 @@ html {
   justify-content: center;
   overflow-y: auto;
   flex-direction: column;
-  padding-bottom: ;
+  padding-bottom: 180px;
 }
 
 .tour-spots-view {

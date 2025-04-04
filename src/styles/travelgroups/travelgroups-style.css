@@ -121,7 +121,7 @@ html {
   border: 1px #787676 solid;
   display: flex;
   flex-direction: column;
-  padding-bottom: 8px;
+  padding-bottom: 1px;
 }
 
 .travel-list-view-text {
@@ -134,7 +134,7 @@ html {
 .travel-list-img-view {
   display: flex;
   flex-direction: row;
-  gap: 20px;
+  gap: 10px;
   padding: 0px 8px 0px 8px;
   overflow-x: scroll;
   scrollbar-width: none; /* Firefox에서 스크롤바 숨기기 */
@@ -145,8 +145,7 @@ html {
 .travel-list-img {  
   width: 170px;
   /* height: 201px; */
-  border-radius: 13px;
-  border: 1px solid black;
+  border-radius: 13px;  
    
 }
 

@@ -16,6 +16,11 @@ html {
   zoom: 1;
 }
 
+
+img {
+  object-fit: cover;
+}
+
 body {
   background-color: #ffffff; /* 작은 화면에서는 흰색 배경 */
   font-family: "Noto Sans KR", sans-serif; /* 폰트 적용 */

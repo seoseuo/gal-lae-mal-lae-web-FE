@@ -52,7 +52,7 @@ export default function TravelListView({ travelList }: { travelList: any[] }) {
                         
                         {/* isAdmin이 true일 때만 삭제 아이콘 표시 */}
                         {isAdmin && (
-                            <img className="delete-icon" src="/travelgroups/delete.svg" alt="delete"
+                            <img className="delete-icon" src="/travelgroups/delete.svg" alt="delete" style={{objectFit:'contain'}}
                                 onClick={(e) => {
                                     e.stopPropagation();
                                     handleDeleteClick(travel.trIdx);

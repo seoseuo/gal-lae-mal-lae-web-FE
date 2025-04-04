@@ -62,21 +62,21 @@ export default function TravelListView({ travelList }: { travelList: any[] }) {
 
                     {travel.tlImgList.length === 0 && (
                         <div className="travel-list-img-view">
-                            <img className="travel-list-img" src="/travelgroups/travelView.png" alt="travelImg" style={{ width: '100%', objectFit: 'cover' }} />
+                            <img className="travel-list-img" src="/travelgroups/travelView.png" alt="travelImg" style={{ width: '100%'}} />
                         </div>
                     )}
 
                     {travel.tlImgList.length === 1 && (
                         <div className="travel-list-img-view">
-                            <img className="travel-list-img" src={`/s3/${travel.tlImgList[0]}`} alt={travel.tlImgList[0]} style={{ width: '345px', objectFit: 'cover' }} />
-                            <img className="travel-list-img" src="/travelgroups/travelView.png" alt="travelImg" style={{ width: '345px', objectFit: 'cover' }} />
+                            <img className="travel-list-img" src={`/s3/${travel.tlImgList[0]}`} alt={travel.tlImgList[0]}  />
+                            <img className="travel-list-img" src="/travelgroups/travelView.png" alt="travelImg"/>
                         </div>
                     )}
 
                     {travel.tlImgList.length > 1 && (
                         <div className="travel-list-img-view">
                             {travel.tlImgList.map((img: string) => (
-                                <img className="travel-list-img" src={`/s3/${img}`} alt={img} key={img} style={{ objectFit: 'cover' , width: '345px'  }} />
+                                <img className="travel-list-img" src={`/s3/${img}`} alt={img} key={img} style={{  }} />
                             ))}
                         </div>
                     )}

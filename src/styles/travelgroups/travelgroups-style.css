@@ -632,7 +632,7 @@ html {
 
 #bottom-button-postion-time {
   position: fixed;
-  top: 700px;
+  top: 650px;
   left: 40px;
   z-index: 99;
 }
@@ -640,7 +640,7 @@ html {
 #bottom-button-postion-delete {
   position: fixed;
   right: 40px;
-  top: 700px;
+  top: 650px;
   z-index: 99;
 }
 

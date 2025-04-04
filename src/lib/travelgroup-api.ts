@@ -357,6 +357,15 @@ export const getTourSpotList = async (
 ) => {
   try {
     const grIdx = localStorage.getItem("grIdx");
+    
+    console.log("page",page);
+    console.log("size",size);
+    console.log("lsIdx",lsIdx);
+    console.log("ldIdx",ldIdx);
+    console.log("c1Code",c1Code);
+    console.log("grIdx",grIdx);
+    console.log("tsName",tsName);
+    
     const response = await api.get(
       `/travelgroups/${grIdx}/travel/location/tour-spots`,
       {

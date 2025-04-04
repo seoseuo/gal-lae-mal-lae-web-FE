@@ -121,6 +121,7 @@ html {
   border: 1px #787676 solid;
   display: flex;
   flex-direction: column;
+  padding-bottom: 8px;
 }
 
 .travel-list-view-text {
@@ -133,18 +134,20 @@ html {
 .travel-list-img-view {
   display: flex;
   flex-direction: row;
-  gap: 10px;
-  padding: 0 8 0 8;
+  gap: 20px;
+  padding: 0px 8px 0px 8px;
   overflow-x: scroll;
   scrollbar-width: none; /* Firefox에서 스크롤바 숨기기 */
   -webkit-scrollbar-width: none; /* Chrome, Safari에서 스크롤바 숨기기 */
+   
 }
 
-.travel-list-img {
-  width: 159px;
-  height: 201px;
+.travel-list-img {  
+  width: 170px;
+  /* height: 201px; */
   border-radius: 13px;
-  
+  border: 1px solid black;
+   
 }
 
 .travel-list-img-bar {
@@ -362,10 +365,12 @@ html {
   justify-content: center;
   overflow-y: auto;
   flex-direction: column;
+  padding-bottom: 180px;
 }
 
 .tour-spots-view {
   display: flex;
+  align-items: center;
   width: 319px;
   height: 55px;
   margin-top: 15px;
@@ -374,8 +379,9 @@ html {
 .tour-spots-checkbox {
   display: flex;
   align-items: center;
-  width: 30px;
+  /* width: 30px; */
   height: 55px;
+  z-index: 10;
 }
 
 .tour-spots-card {
@@ -569,8 +575,7 @@ html {
 
 .filter-container {
   margin-top: 20px;
-
-  height: 25px;
+  height: 30px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -632,15 +637,16 @@ html {
 
 #bottom-button-postion-time {
   position: fixed;
-  top: 700px;
+  top: 650px;
   left: 40px;
-  z-index: 99;
+  z-index: 999;
 }
+
 
 #bottom-button-postion-delete {
   position: fixed;
   right: 40px;
-  top: 700px;
+  top: 650px;
   z-index: 99;
 }
 

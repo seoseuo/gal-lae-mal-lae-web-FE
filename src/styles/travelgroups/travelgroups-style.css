@@ -362,6 +362,7 @@ html {
   justify-content: center;
   overflow-y: auto;
   flex-direction: column;
+  padding-bottom: ;
 }
 
 .tour-spots-view {
@@ -637,6 +638,7 @@ html {
   left: 40px;
   z-index: 999;
 }
+
 
 #bottom-button-postion-delete {
   position: fixed;

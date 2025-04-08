@@ -43,8 +43,9 @@ export default function Home() {
         <span className="bold" style={{ fontSize: '16px', color: 'black' }}>갈래말래</span>
         <img 
           src="/talk.svg" 
-          style={{ cursor: 'pointer' }} 
+          style={{ cursor: 'pointer' , objectFit:'contain' }} 
           onClick={() => router.push('/chat')} 
+
         />
       </div>
 

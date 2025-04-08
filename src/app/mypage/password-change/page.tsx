@@ -1,5 +1,5 @@
 'use client';
-import { useState} from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import Image from 'next/image';
@@ -27,7 +27,7 @@ export default function PasswordChange() {
       });
       if (response.data.success) {
         router.push('/mypage');
-      }else{
+      } else {
         alert(response.data.message);
       }
     } catch (error) {
@@ -48,11 +48,11 @@ export default function PasswordChange() {
 
       {/* Back Button */}
       <button className="mb-4" onClick={() => router.back()}>
-        <Image 
-          src="/vector0.svg" 
-          alt="뒤로가기" 
-          width={12} 
-          height={16} 
+        <Image
+          src="/vector0.svg"
+          alt="뒤로가기"
+          width={12}
+          height={16}
           className="w-[2.97%] h-[2.32%]"
         />
       </button>
@@ -77,7 +77,9 @@ export default function PasswordChange() {
 
       {/* Submit Button */}
       <div className="w-[292px] mx-auto">
-        <button className="w-full bg-[#C4C4C4] rounded-[12px] py-[15px] px-6 text-white font-['NotoSansKr-Medium'] text-[17px] leading-[22px] tracking-[-0.41px]">
+        <button
+          onClick={handlePasswordChange}
+          className="w-full bg-[#C4C4C4] rounded-[12px] py-[15px] px-6 text-white font-['NotoSansKr-Medium'] text-[17px] leading-[22px] tracking-[-0.41px]">
           비밀번호 변경
         </button>
       </div>

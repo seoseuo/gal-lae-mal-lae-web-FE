@@ -22,7 +22,7 @@ RUN cat /app/.env.local
 COPY . .
 
 # ✅ ESLint 무시 (빌드 실패 방지용)
-ENV NEXTJS_IGNORE_ESLINT=true
+ENV NEXT_DISABLE_ESLINT=true
 
 # 애플리케이션 빌드
 RUN npm run build

@@ -9,17 +9,6 @@ export default function TipPage() {
 
   return (
     <div className="min-h-[852px] bg-white flex flex-col items-center px-5">
-      <div className="w-full max-w-[390px] h-[48px] flex items-center justify-between mt-0">
-        <div className="text-black text-[15px] font-['NotoSansKr-Bold'] tracking-[-0.17px]">9:41</div>
-        <Image 
-          src="/container0.svg" 
-          alt="상태 아이콘"
-          width={67}
-          height={11}
-          className="h-auto"
-        />
-      </div>
-
       <div className="w-full flex items-center mt-[42px] relative">
         <Image 
           src="/arrow-back-ios0.svg" 

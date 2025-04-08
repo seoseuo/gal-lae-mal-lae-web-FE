@@ -114,17 +114,17 @@ export default function Signup() {
 
       <form className="px-4 flex-1 flex flex-col justify-center">
         <section className="mb-2">
-          <label className=" text-black font-['NotoSansKr-Regular'] text-base tracking-[-0.17px] block mb-2">
+          <label className="text-black font-['NotoSansKr-Regular'] text-base tracking-[-0.17px] block mb-2">
             이메일
           </label>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
             <input 
               type="text"
               placeholder="이메일"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               disabled={isVerified === 1}
-              className={`bg-white rounded-[5px] border border-[#C4C4C4] flex-1 h-[39px] text-[10px] p-3 ${
+              className={`bg-white rounded-[5px] border border-[#C4C4C4] w-[120px] h-[39px] text-[10px] p-3 ${
                 isVerified === 1 ? 'bg-[#E7E7E7] cursor-not-allowed' : ''
               }`}
             />
@@ -143,7 +143,7 @@ export default function Signup() {
                     }
                   }}
                   disabled={isVerified === 1}
-                  className={`bg-white rounded-l-[5px] border border-r-0 border-[#C4C4C4] w-[78px] h-[39px] text-[10px] p-3 ${
+                  className={`bg-white rounded-l-[5px] border border-r-0 border-[#C4C4C4] w-[100px] h-[39px] text-[10px] p-3 ${
                     isVerified === 1 ? 'bg-[#E7E7E7] cursor-not-allowed' : ''
                   }`}
                 />
@@ -186,7 +186,7 @@ export default function Signup() {
                 value={domain}    
                 onChange={(e) => setDomain(e.target.value)}
                 disabled={isVerified === 1}
-                className={`bg-white rounded-[5px] border border-[#C4C4C4] w-[78px] h-[39px] flex items-center justify-center px-2 ${
+                className={`bg-white rounded-[5px] border border-[#C4C4C4] w-[100px] h-[39px] flex items-center justify-center px-2 ${
                   isVerified === 1 ? 'bg-[#E7E7E7] cursor-not-allowed' : ''
                 }`}
               >
@@ -202,7 +202,7 @@ export default function Signup() {
               type="button"
               onClick={handleVerificationRequest}
               disabled={!isVerificationEnabled || isVerified === 1}
-              className={`rounded-[5px] w-[100px] flex items-center justify-center h-[39px] ${
+              className={`rounded-[5px] w-[80px] flex items-center justify-center h-[39px] ${
                 isVerificationEnabled && isVerified !== 1 ? 'bg-[#2D2D2D]' : 'bg-[#E7E7E7]'
               }`}
             >
@@ -217,8 +217,8 @@ export default function Signup() {
 
         {isVerifying && (
           <>
-            <div className="mt-2 flex items-center gap-3">
-              <div className="relative w-[292px]">
+            <div className="mt-2 flex items-center gap-2">
+              <div className="relative w-[220px]">
                 <input
                   type="text"
                   placeholder="인증번호 입력"
@@ -236,7 +236,7 @@ export default function Signup() {
               <button 
                 type="button"
                 disabled={timeLeft === 0}
-                className={`rounded-[5px] w-[70px] h-[39px] ${
+                className={`rounded-[5px] w-[60px] h-[39px] ${
                   timeLeft === 0 ? 'bg-[#E7E7E7]' : 'bg-[#2D2D2D]'
                 }`}
                 onClick={handleSubmit}

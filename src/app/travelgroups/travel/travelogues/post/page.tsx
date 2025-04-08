@@ -15,10 +15,11 @@ export default function Home() {
     console.log("tlPublic:", !tlPublic);
   };
 
-  const saveLogue = () => {    
-    const tlTitle = document.querySelector('input[name="tlTitle"]')?.value;
-    const tlContent = document.querySelector('textarea[name="tlContent"]')?.value;
-    const setTlImage = document.querySelector('input[name="setTlImage"]')?.files;
+  const saveLogue = () => {
+    const tlTitle = (document.querySelector('input[name="tlTitle"]') as HTMLInputElement)?.value;
+    const tlContent = (document.querySelector('textarea[name="tlContent"]') as HTMLTextAreaElement)?.value;
+    const setTlImage = (document.querySelector('input[name="setTlImage"]') as HTMLInputElement)?.files;
+
 
     const titleWarningElement = document.getElementById("title-warning");
     const imgWarningElement = document.getElementById("img-warning");
@@ -47,8 +48,8 @@ export default function Home() {
       }
     }
     console.log(tlTitle, tlContent, setTlImage, tlPublic);
-    
-    
+
+
     saveTravelogue(tlTitle, tlContent, setTlImage, tlPublic);
   };
 
@@ -57,8 +58,8 @@ export default function Home() {
     document.getElementById("fileInput")?.click();
   };
 
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
     const allowedExtensions = ["image/jpeg", "image/png", "image/jpg"];  // 허용되는 확장자
     const maxSize = 5 * 1024 * 1024; // 5MB (용량 제한)
 
@@ -91,7 +92,7 @@ export default function Home() {
     // 파일이 유효한 경우, 이미지 미리보기 설정
     const reader = new FileReader();
     reader.onloadend = () => {
-      setImagePreview(reader.result);
+      setImagePreview(reader.result as string);
       if (warningElement) {
         warningElement.textContent = ""; // 경고 메시지 초기화
       }
@@ -166,10 +167,10 @@ Tip) 자물쇠를 통해 여행록을 우리 모임만 보게 하거나
               type="file"
               name="setTlImage"
               multiple
-              style={{ display: "none"}}
+              style={{ display: "none" }}
               onChange={handleFileChange}
 
-            
+
             />
             <img
               src={imagePreview}

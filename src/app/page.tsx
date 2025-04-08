@@ -30,7 +30,7 @@ export default function Home() {
 
   useEffect(() => {
     async function fetchTravelogueData() {
-      const data = await getPublicTravelogueList();
+      const data = await getPublicTravelogueList(0,10,"");
       setTravelogueList(data.travelogueList);
       
     }

@@ -31,10 +31,10 @@ export function MainTravelgroupsView({ mainTravelGroupsViewList }: { mainTravelG
                                 style={{ objectFit: 'cover' }}>
                                 <img
                                     className="main-list-img"
-                                    style={{ width: '100%', height: "100%", borderRadius: '7%' }}
-                                    // src={`/s3/${group.grProfile || 'default-img.svg'}`}
+                                    style={{ width: '100%', height: "100%", borderRadius: '7%' , objectFit:'cover' }}
+                                    src={`/s3/${group.grProfile || 'default-img.svg'}`}
                                     // src="/default-profile.svg"
-                                    src="/travelgroups/delete.svg"
+                                    // src="/travelgroups/delete.svg"
                                     alt={group.grProfile ? group.grProfile : "/default-img.svg"}
                                 />
                             </div>

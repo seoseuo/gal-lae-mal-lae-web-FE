@@ -1,9 +1,5 @@
 "use client";
-
 // import type { Metadata } from "next";
-import "./globals.css";
-import Footer from "./footer";
-import { usePathname } from "next/navigation";
 
 // const metadata: Metadata = {
 //   title: "갈래말래",
@@ -11,29 +7,31 @@ import { usePathname } from "next/navigation";
 //   manifest: "/manifest.json",
 // };
 
-export default function RootLayout({
-  children,
-  showFooter = true,
-}: Readonly<{
-  children: React.ReactNode;
-  showFooter?: boolean;
-}>) {
+import "./globals.css";
+import Footer from "./footer";
+import { usePathname } from "next/navigation";
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const noFooterPaths = ["/login", "/forgot-password", "/first" , "/signup"];
-  const shouldShowFooter = showFooter && !noFooterPaths.includes(pathname);
+  const noFooterPaths = ["/login", "/forgot-password", "/first", "/signup", "/profile-set"];
+  const shouldShowFooter = !noFooterPaths.includes(pathname);
 
   return (
     <html lang="en">
       <head>
         <meta
-          name='viewport'
-          content='minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, user-scalable=no, viewport-fit=cover'
+          name="viewport"
+          content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, user-scalable=no, viewport-fit=cover"
         />
         <meta name="theme-color" content="#ffffff" />
+        {/* manifest.json 링크 추가 */}
+        <link rel="manifest" href="/manifest.json" />
+        {/* title 추가 */}
+        <title>갈래말래</title>
       </head>
       <body>
         {children}
-        {shouldShowFooter && <Footer />} {/* shouldShowFooter가 true일 경우에만 Footer 렌더링 */}
+        {shouldShowFooter && <Footer />} {/* shouldShowFooter가 true이면 Footer 렌더링 */}
       </body>
     </html>
   );

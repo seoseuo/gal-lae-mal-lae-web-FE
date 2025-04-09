@@ -130,7 +130,7 @@ export default function MyPage() {
         <button className="flex items-center w-full" onClick={() => router.push('/mypage/travel-log')}>
           <div className="flex items-center gap-4">
             <Image 
-              src="/location.svg" 
+              src="/Location.svg" 
               alt="여행록" 
               width={21} 
               height={21} 

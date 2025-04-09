@@ -57,6 +57,12 @@ export default function ChatRoom() {
 
   const connectWebSocket = useCallback(() => {
     if(!chatRoom) return;
+    
+    // 이미 연결된 클라이언트가 있으면 새로 연결하지 않음
+    if(stompClient && stompClient.connected) {
+      return;
+    }
+
     const client = new Client({
       webSocketFactory: () => socket,
       debug: (str) => {
@@ -81,12 +87,12 @@ export default function ChatRoom() {
     setStompClient(client);
 
     return () => {
-      if(client){
+      if(client && client.connected){
         console.log('WebSocket 연결 해제 채팅방 번호:', chatRoom?.crIdx);
         client.deactivate();
       }
     }
-  }, [chatRoom, socket]);
+  }, [chatRoom, socket, stompClient]);
 
   useEffect(() => {
     getChatRoom();
@@ -95,7 +101,10 @@ export default function ChatRoom() {
   useEffect(() => {
     if(chatRoom){
       getChatList();
-      connectWebSocket();
+      const cleanup = connectWebSocket();
+      return () => {
+        if(cleanup) cleanup();
+      };
     }
   }, [chatRoom, getChatList, connectWebSocket]);
 

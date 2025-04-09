@@ -62,7 +62,6 @@ export default function ChatRoom() {
       debug: (str) => {
         console.log(str);
       },
-      reconnectDelay: 5000,
       onConnect: () => {
         console.log('WebSocket 연결 성공 채팅방 번호:', chatRoom?.crIdx);
         client.subscribe(`/sub/chat/${chatRoom?.crIdx}`, (message) => {

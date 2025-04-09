@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
+import Header from '@/app/header';
 
 export default function TipPage() {
   const [step, setStep] = useState(1);
@@ -10,17 +11,7 @@ export default function TipPage() {
   return (
     <div className="min-h-[852px] bg-white flex flex-col items-center px-5">
       <div className="w-full flex items-center mt-[42px] relative">
-        <Image 
-          src="/arrow-back-ios0.svg" 
-          alt="뒤로가기"
-          width={24}
-          height={24}
-          className="w-6 h-6 ml-[14px]"
-          onClick={() => router.back()}
-        />
-        <div className="text-[#1D0E07] text-center font-['NotoSansKr-Bold'] text-[16px] ml-[37px]">
-          게시물 업로드 TIP
-        </div>
+        <Header text="게시물 업로드 TIP" icon="back" parent="/mate"></Header>
       </div>
 
       <Image 

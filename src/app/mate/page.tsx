@@ -223,10 +223,10 @@ export default function Mate() {
             <Link href={`/mate/notice/${board.boIdx}`} key={board.boIdx}>
               <div className="flex gap-[14px]">
                 <Image 
-                  src={board.boImg}
+                  src={`/s3/${board.boImg}`}
                   alt={`${board.boTitle} 이미지`}
-                  width={149}
-                  height={114}
+                  width={120}
+                  height={92}
                   className="rounded-xl"
                 />
                 
@@ -242,11 +242,11 @@ export default function Mate() {
                         </div>
                     </div>
 
-                    <h2 className="mt-[13px] text-xs tracking-[-0.17px]">
+                    <h2 className="mt-[13px] text-sm tracking-[-0.17px]">
                         {board.boTitle}
                     </h2>
 
-                    <p className="mt-[9px] text-xs tracking-[-0.17px] text-[#C4C4C4]">
+                    <p className="mt-[9px] text-sm tracking-[-0.17px] text-[#C4C4C4]">
                         {board.boContent}
                     </p>
 

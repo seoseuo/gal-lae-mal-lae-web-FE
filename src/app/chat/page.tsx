@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Header from "../header";
 
 interface Chat {
     usIdx: number;
@@ -25,9 +26,8 @@ export default function ChatPage() {
     <main className="min-h-screen bg-white flex flex-col">
 
       {/* 제목 */}
-      <h1 className="fixed top-0 w-full bg-white text-black text-center font-['NotoSansKr-Bold'] text-[20px] tracking-[-0.17px] font-bold py-4 z-20">
-        체팅방
-      </h1>
+      
+      <Header text="체팅방" icon="back" parent="/mate"></Header>
 
       {/* 채팅 목록 */}
       <div className="flex flex-col gap-4 p-4 relative z-10 mt-[60px]">

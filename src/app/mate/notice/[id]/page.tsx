@@ -3,6 +3,7 @@ import { useRouter, useParams } from "next/navigation";
 import { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import Image from 'next/image';
+import Header from "@/app/header";
 
 interface Board {
   boIdx: number;
@@ -95,9 +96,7 @@ export default function NoticePage() {
   return (
     <main className="min-h-screen bg-white flex flex-col px-[43px] py-[65px]">
       {/* 제목 */}
-      <h1 className="text-black text-center font-['NotoSansKr-Bold'] text-[20px] tracking-[-0.17px] font-bold mb-[35px]">
-        여행 메이트
-      </h1>
+      <Header text="여행 메이트" icon="back" parent="/mate"></Header>
 
       {/* 구분선 */}
       <div className="w-full h-[1px] border-t border-[#DADADA] mb-[75px]"></div>

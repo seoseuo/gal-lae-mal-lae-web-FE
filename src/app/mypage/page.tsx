@@ -54,7 +54,7 @@ export default function MyPage() {
       {/* Profile Section */}
       <section className="flex flex-col items-center mt-8 space-y-4">
         <Image 
-          src={`s3/${userInfo?.usProfile}` || 'BasicProfile.svg'} 
+          src={`/s3/${userInfo?.usProfile}` || 'BasicProfile.svg'} 
           alt="프로필 이미지" 
           width={107} 
           height={107} 

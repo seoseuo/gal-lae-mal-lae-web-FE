@@ -157,7 +157,7 @@ export default function ChatRoom() {
       <header className="fixed top-0 left-0 right-0 bg-white border-b border-[#DADADA] z-10">
         <div className="container mx-auto px-4 py-4 flex items-center">
           <Image
-            src="/arrow-back-ios0.svg"
+            src="/back.svg"
             alt="Back"
             width={24}
             height={24}

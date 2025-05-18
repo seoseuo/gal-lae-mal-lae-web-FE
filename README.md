@@ -30,11 +30,78 @@
 
 ## 모임 여행 생성 및 관리
 
-![image](https://github.com/user-attachments/assets/653abd88-27f0-4729-8218-cee7888174b3)
+![image](https://github.com/user-attachments/assets/3c26a34b-c5d8-45ac-b581-0fe5a17a71ea)
 
+> 모임 여행 생성 시, 각 도/시, 날짜 단계별 데이터를 Redis에 순차적으로 저장 처리
+```java
+// 여행지 도 선정
+    public TravelDTO selectLocationDo(int ldIdx, int grIdx) {
 
-> 모임 여행 생성 시, 각 도/시 단계별 데이터를 Redis에 순차적으로 저장 처리
-> 
+        // 2. travleDTO 객체 생성
+        TravelDTO travelDTO = new TravelDTO();
+        // 3. travleDTO 객체에 grIdx, ldIdx, state = 1, createdAt 현재 시각 setter로 등록
+
+        travelDTO.setGrIdx(grIdx);
+        travelDTO.setLdIdx(ldIdx);
+        travelDTO.setTrState(1);
+        travelDTO.setTrCreatedAt(new Date());
+
+        log.info("travelDTO  {}", travelDTO);
+
+        // 4. redis에 nowTravelDTO 키로 저장
+        redisService.setTravelInfo(grIdx + "nowTravelDTO", travelDTO);
+
+        return travelDTO;
+    }
+
+    // 여행지 시 선정
+    public TravelDTO selectLocationSi(int lsIdx, int grIdx) {
+        // 1. redis에서 nowTravelDTO 가져오기
+        // 키 : 값 문자열 형태인 Object 타입을 TravelDTO 타입으로 변환
+        TravelDTO travelDTO = (TravelDTO) redisService.getTravelInfo(grIdx + "nowTravelDTO");
+
+        // 2. travelDTO 에 lsIdx 선정
+        travelDTO.setLsIdx(lsIdx);
+        log.info("travelDTO  {}", travelDTO);
+        // 3. redis에 nowTravelDTO 키로 저장
+        redisService.setTravelInfo(grIdx + "nowTravelDTO", travelDTO);
+        return travelDTO;
+    }
+
+    // 여행 기간 선정
+    public TravelDTO selectTravelPeriod(TravelDTO newTravelDTO, int grIdx) {
+        // 1. redis에 nowTravelDTO 가져오기
+        TravelDTO travelDTO = (TravelDTO) redisService.getTravelInfo(grIdx + "nowTravelDTO");
+
+        // 2. travelDTO 에 trStartTime, trEndTime 선정
+        travelDTO.setGrIdx(newTravelDTO.getGrIdx());
+        travelDTO.setTrStartTime(newTravelDTO.getTrStartTime());
+        travelDTO.setTrEndTime(newTravelDTO.getTrEndTime());
+
+        // 3. trPeriod 선정
+        // ISO 8601 형식에서 날짜의 차이를 구해야 함. ex) 2025-12-18T00:00:00.000+0900 를 20251218 형식으로
+        // 날짜 포맷 설정
+        SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        // travelDTO의 시작과 끝 시간을 "yyyy-MM-dd" 형식으로 변환
+        // 날짜 차이를 구하기
+        // 0-9 까지 인덱싱 한 다음 '-' 제거 후 정수형으로 변환
+        int period = Integer.parseInt(outputFormat.format(travelDTO.getTrEndTime()).substring(0, 10).replace("-", ""))
+                - Integer.parseInt(outputFormat.format(travelDTO.getTrStartTime()).substring(0, 10).replace("-", ""))
+                + 1;
+
+        travelDTO.setTrPeriod(period);
+
+        // 3. travel 테이블에 저장
+        int trIdx = travelRepository.save(travelMapper.toEntity(travelDTO)).getTrIdx();
+        travelDTO.setTrIdx(trIdx);
+
+        // 4. redis에 nowTravelDTO 삭제
+        redisService.deleteTravelInfo(grIdx + "nowTravelDTO");
+
+        return travelDTO;
+    }
+```
 
 # 기술
 
